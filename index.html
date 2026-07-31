@@ -24,29 +24,51 @@
         .formula-piece:active {
             cursor: grabbing !important;
         }
+        /* Animasi transisi halaman sederhana */
+        .fade-in {
+            animation: fadeIn 0.4s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
-<body class="bg-slate-50 font-sans text-slate-800 antialiased selection:bg-indigo-200">
+<body class="bg-slate-50 font-sans text-slate-800 antialiased selection:bg-indigo-200 flex flex-col min-h-screen">
 
-    <!-- HERO SECTION -->
-    <header class="relative overflow-hidden bg-gradient-to-r from-indigo-600 to-blue-600 text-white py-20 px-6 sm:px-12 text-center shadow-xl">
-        <div class="relative z-10 max-w-3xl mx-auto">
-            <h1 class="text-4xl sm:text-5xl font-extrabold mb-4 tracking-tight">Jago Excel Dasar:<br><span class="text-yellow-300">Misi Menaklukkan Data!</span></h1>
-            <p class="text-lg sm:text-xl font-medium text-indigo-100 mb-8">
-                Halo Sobat TIK! Selamat datang di markas para pengolah data. Di sini kita akan belajar dasar-dasar Microsoft Excel dengan interaktif, seru, dan mudah dimengerti. Siap mulai petualanganmu?
-            </p>
-            <a href="#materi-1" class="inline-block bg-yellow-400 text-indigo-900 font-bold text-lg py-3 px-8 rounded-full shadow-lg hover:bg-yellow-300 transition-all duration-300">
-                Mulai Belajar Sekarang
-            </a>
-        </div>
-    </header>
+    <!-- PAGE: HERO / COVER -->
+    <div id="page-hero" class="page-section block flex-grow">
+        <header class="relative overflow-hidden bg-gradient-to-r from-indigo-600 to-blue-600 text-white py-20 px-6 sm:px-12 text-center shadow-xl min-h-screen flex flex-col justify-center items-center">
+            <div class="relative z-10 max-w-4xl mx-auto w-full">
+                <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-6 tracking-tight">Jago Excel Dasar:<br><span class="text-yellow-300">Misi Menaklukkan Data!</span></h1>
+                <p class="text-lg sm:text-xl font-medium text-indigo-100 mb-10 max-w-2xl mx-auto">
+                    Halo Sobat TIK! Selamat datang di markas para pengolah data. Di sini kita akan belajar dasar-dasar Microsoft Excel dengan interaktif, seru, dan mudah dimengerti.
+                </p>
+                
+                <!-- Tombol Utama -->
+                <button onclick="pindahHalaman('page-materi-1')" class="inline-block bg-yellow-400 text-indigo-900 font-black text-xl py-4 px-12 rounded-full shadow-lg hover:bg-yellow-300 hover:scale-105 transition-all duration-300 mb-8 animate-bounce">
+                    🚀 Mulai Belajar Dari Awal
+                </button>
 
-    <main class="max-w-5xl mx-auto px-6 py-12 space-y-16">
+                <!-- Tombol Pintasan (Menu) -->
+                <div class="pt-8 border-t border-indigo-400/50 max-w-3xl mx-auto">
+                    <p class="text-sm font-bold text-indigo-200 mb-4 uppercase tracking-widest">Atau Lompat ke Bagian Tertentu:</p>
+                    <div class="flex flex-wrap justify-center gap-3">
+                        <button onclick="pindahHalaman('page-materi-1')" class="bg-indigo-800/50 hover:bg-indigo-700 border border-indigo-400 text-white text-sm font-semibold py-2 px-6 rounded-full transition-colors">📖 Materi 1: Tabel</button>
+                        <button onclick="pindahHalaman('page-materi-2')" class="bg-indigo-800/50 hover:bg-indigo-700 border border-indigo-400 text-white text-sm font-semibold py-2 px-6 rounded-full transition-colors">🧮 Materi 2: Fungsi Dasar</button>
+                        <button onclick="pindahHalaman('page-simulasi')" class="bg-indigo-800/50 hover:bg-indigo-700 border border-indigo-400 text-white text-sm font-semibold py-2 px-6 rounded-full transition-colors">🧩 Simulasi Rumus</button>
+                        <button onclick="pindahHalaman('page-kuis')" class="bg-indigo-800/50 hover:bg-indigo-700 border border-indigo-400 text-white text-sm font-semibold py-2 px-6 rounded-full transition-colors">🏆 Kuis Uji Nyali</button>
+                    </div>
+                </div>
+            </div>
+        </header>
+    </div>
 
-        <!-- MATERI 1: PENGENALAN TABEL INTERAKTIF -->
-        <section id="materi-1" class="scroll-mt-10">
-            <div class="bg-white rounded-3xl p-8 sm:p-10 shadow-lg border-t-4 border-indigo-500">
-                <h2 class="text-3xl font-bold text-slate-800 mb-6">Mengenal Tabel Excel</h2>
+    <!-- PAGE: MATERI 1 -->
+    <div id="page-materi-1" class="page-section hidden flex-grow py-12">
+        <main class="max-w-5xl mx-auto px-6">
+            <div class="bg-white rounded-3xl p-8 sm:p-10 shadow-lg border-t-4 border-indigo-500 fade-in">
+                <h2 class="text-3xl font-bold text-slate-800 mb-6">Materi 1: Mengenal Tabel Excel</h2>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                     <div>
@@ -78,12 +100,11 @@
                         </ul>
                     </div>
 
-                    <!-- Interaktif Tabel Model (Eksplorasi) -->
+                    <!-- Interaktif Tabel Model -->
                     <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200">
                         <p class="font-bold text-center mb-2 text-slate-700">Ayo Eksplorasi Tabel Ini!</p>
                         <p class="text-sm text-center text-slate-500 mb-4">Klik pada huruf (A/B/C), angka (1/2/3), atau kotak kosong di bawah untuk mencari tahu letaknya.</p>
                         
-                        <!-- Papan Info Interaktif -->
                         <div class="bg-indigo-50 p-4 rounded-xl border border-indigo-200 mb-6 text-center h-20 flex items-center justify-center transition-all">
                             <p id="info-tabel" class="text-indigo-900 font-bold text-sm sm:text-base">Pilih salah satu bagian tabel di bawah!</p>
                         </div>
@@ -122,15 +143,22 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
 
-        <!-- MATERI 2: FUNGSI DASAR & RUMUS -->
-        <section id="materi-2" class="scroll-mt-10">
-            <h2 class="text-3xl font-bold text-center text-slate-800 mb-4">5 Fungsi Dasar (The Magic Formulas)</h2>
+                <!-- Navigasi Bawah -->
+                <div class="flex justify-between items-center mt-12 pt-6 border-t border-slate-200">
+                    <button onclick="pindahHalaman('page-hero')" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-3 px-6 rounded-lg transition-colors flex items-center gap-2">⬅ <span class="hidden sm:inline">Kembali ke Menu</span></button>
+                    <button onclick="pindahHalaman('page-materi-2')" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition-colors flex items-center gap-2">Selanjutnya: Fungsi Dasar ➡</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- PAGE: MATERI 2 -->
+    <div id="page-materi-2" class="page-section hidden flex-grow py-12">
+        <main class="max-w-5xl mx-auto px-6 fade-in">
+            <h2 class="text-3xl font-bold text-center text-slate-800 mb-4">Materi 2: 5 Fungsi Dasar (The Magic Formulas)</h2>
             <p class="text-center text-slate-600 mb-8 max-w-2xl mx-auto">Mari kita pelajari cara membaca rumus menggunakan tabel contoh di bawah ini.</p>
             
-            <!-- Tabel Contoh Referensi -->
             <div class="bg-white p-6 rounded-2xl shadow-md border border-slate-200 mb-10 max-w-2xl mx-auto">
                 <h3 class="font-bold text-slate-700 mb-4 text-center">Tabel Referensi Untuk Contoh Rumus</h3>
                 <div class="overflow-x-auto rounded-lg border border-slate-300">
@@ -179,9 +207,7 @@
                 </div>
             </div>
 
-            <!-- Grid Fungsi -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                
                 <!-- SUM -->
                 <div class="bg-white p-6 rounded-2xl shadow-md border-t-8 border-indigo-500 flex flex-col">
                     <h3 class="text-xl font-bold text-indigo-700 mb-2">SUM</h3>
@@ -241,20 +267,26 @@
                         <p class="text-xs text-slate-500 mt-1">Menghitung jumlah kotak yang terisi angka dari C1 sampai C5.</p>
                     </div>
                 </div>
-
             </div>
-        </section>
 
-        <!-- SIMULASI MENYUSUN RUMUS -->
-        <section id="simulasi" class="scroll-mt-10">
-            <div class="bg-white rounded-3xl p-8 sm:p-10 shadow-xl border border-slate-200">
+            <!-- Navigasi Bawah -->
+            <div class="flex justify-between items-center mt-12 pt-6 border-t border-slate-200">
+                <button onclick="pindahHalaman('page-materi-1')" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-3 px-6 rounded-lg transition-colors flex items-center gap-2">⬅ <span class="hidden sm:inline">Materi 1: Tabel</span></button>
+                <button onclick="pindahHalaman('page-simulasi')" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition-colors flex items-center gap-2">Selanjutnya: Simulasi Rumus ➡</button>
+            </div>
+        </main>
+    </div>
+
+    <!-- PAGE: SIMULASI -->
+    <div id="page-simulasi" class="page-section hidden flex-grow py-12">
+        <main class="max-w-5xl mx-auto px-6">
+            <div class="bg-white rounded-3xl p-8 sm:p-10 shadow-xl border border-slate-200 fade-in">
                 <div class="text-center mb-8">
                     <h2 class="text-3xl font-bold text-slate-800 mb-2">Simulasi: Menyusun Rumus</h2>
                     <p class="text-slate-600">Isi tabel dengan angka bebas. Lalu <strong>Tarik (Drag)</strong> kepingan rumus ke Papan Konstruksi di sebelah kanan untuk menyelesaiakan misi! <br><span class="text-sm italic text-indigo-500">(Bisa juga dengan cara klik kepingannya satu per satu)</span></p>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
-                    
                     <!-- Area Input Tabel -->
                     <div class="overflow-x-auto rounded-xl border border-slate-300 shadow-sm self-start">
                         <table class="w-full text-center border-collapse min-w-[250px]">
@@ -309,8 +341,6 @@
 
                     <!-- Area Papan Susun Rumus -->
                     <div class="flex flex-col gap-4">
-                        
-                        <!-- Checklist Misi -->
                         <div class="bg-indigo-50 rounded-xl p-4 border border-indigo-100">
                             <h4 class="font-bold text-indigo-900 mb-2">Misi Kamu Hari Ini:</h4>
                             <ul class="text-sm space-y-1 text-slate-700 grid grid-cols-2 gap-2">
@@ -322,24 +352,19 @@
                             </ul>
                         </div>
 
-                        <!-- Bank Kepingan Rumus -->
                         <div class="bg-slate-100 border border-slate-200 rounded-xl p-4">
                             <h4 class="font-bold text-slate-700 mb-3 text-center">Bank Kepingan Rumus</h4>
                             <div class="flex flex-wrap justify-center gap-3">
-                                <!-- Tanda -->
                                 <div draggable="true" ondragstart="dragStart(event)" onclick="bankClick(event)" data-value="=" class="formula-piece bg-rose-500 hover:bg-rose-600 text-white font-bold px-4 py-2 rounded shadow cursor-grab">=</div>
-                                <!-- Fungsi -->
                                 <div draggable="true" ondragstart="dragStart(event)" onclick="bankClick(event)" data-value="SUM" class="formula-piece bg-indigo-500 hover:bg-indigo-600 text-white font-bold px-4 py-2 rounded shadow cursor-grab">SUM</div>
                                 <div draggable="true" ondragstart="dragStart(event)" onclick="bankClick(event)" data-value="AVERAGE" class="formula-piece bg-indigo-500 hover:bg-indigo-600 text-white font-bold px-4 py-2 rounded shadow cursor-grab">AVERAGE</div>
                                 <div draggable="true" ondragstart="dragStart(event)" onclick="bankClick(event)" data-value="MAX" class="formula-piece bg-indigo-500 hover:bg-indigo-600 text-white font-bold px-4 py-2 rounded shadow cursor-grab">MAX</div>
                                 <div draggable="true" ondragstart="dragStart(event)" onclick="bankClick(event)" data-value="MIN" class="formula-piece bg-indigo-500 hover:bg-indigo-600 text-white font-bold px-4 py-2 rounded shadow cursor-grab">MIN</div>
                                 <div draggable="true" ondragstart="dragStart(event)" onclick="bankClick(event)" data-value="COUNT" class="formula-piece bg-indigo-500 hover:bg-indigo-600 text-white font-bold px-4 py-2 rounded shadow cursor-grab">COUNT</div>
-                                <!-- Range -->
                                 <div draggable="true" ondragstart="dragStart(event)" onclick="bankClick(event)" data-value="(A1:C3)" class="formula-piece bg-amber-500 hover:bg-amber-600 text-white font-bold px-4 py-2 rounded shadow cursor-grab">(A1:C3)</div>
                             </div>
                         </div>
 
-                        <!-- Papan Konstruksi Drop Zone -->
                         <div class="bg-white border-2 border-indigo-200 rounded-xl p-6 shadow-sm">
                             <h4 class="font-bold text-slate-700 mb-4 text-center">Papan Konstruksi Rumus</h4>
                             <div class="flex items-center justify-center gap-2 mb-6">
@@ -354,19 +379,24 @@
                             </div>
                         </div>
 
-                        <!-- Area Hasil Akhir -->
                         <div id="hasil-simulasi" class="mt-2"></div>
-
                     </div>
                 </div>
-            </div>
-        </section>
 
-        <!-- KUIS INTERAKTIF (5 SOAL) -->
-        <section id="kuis" class="scroll-mt-10 mb-16">
+                <!-- Navigasi Bawah -->
+                <div class="flex justify-between items-center mt-12 pt-6 border-t border-slate-200">
+                    <button onclick="pindahHalaman('page-materi-2')" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-3 px-6 rounded-lg transition-colors flex items-center gap-2">⬅ <span class="hidden sm:inline">Materi 2: Fungsi</span></button>
+                    <button onclick="pindahHalaman('page-kuis')" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition-colors flex items-center gap-2">Selanjutnya: Kuis Uji Nyali ➡</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- PAGE: KUIS -->
+    <div id="page-kuis" class="page-section hidden flex-grow py-12">
+        <main class="max-w-5xl mx-auto px-6 fade-in">
             <h2 class="text-3xl font-bold text-center text-slate-800 mb-8">Uji Nyali: 5 Pertanyaan Terakhir!</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                
                 <!-- Soal 1 -->
                 <div class="bg-white p-6 rounded-2xl shadow-md border-t-4 border-indigo-500">
                     <h3 class="font-bold mb-4 text-slate-700">1. Perpotongan antara Kolom dan Baris disebut?</h3>
@@ -405,7 +435,7 @@
 
                 <!-- Soal 4 -->
                 <div class="bg-white p-6 rounded-2xl shadow-md border-t-4 border-indigo-500">
-                    <h3 class="font-bold mb-4 text-slate-700">4. Kumpulan dari beberapa Cell sekaligus (misal A1 sampai C3) disebut apa?</h3>
+                    <h3 class="font-bold mb-4 text-slate-700">4. Kumpulan dari beberapa Cell sekaligus disebut apa?</h3>
                     <form id="kuis-4" class="space-y-2 mb-4">
                         <label class="flex items-center space-x-3 p-2 bg-slate-50 rounded cursor-pointer hover:bg-indigo-50"><input type="radio" name="q4" value="a" class="text-indigo-600"><span>A. Range</span></label>
                         <label class="flex items-center space-x-3 p-2 bg-slate-50 rounded cursor-pointer hover:bg-indigo-50"><input type="radio" name="q4" value="b" class="text-indigo-600"><span>B. Baris</span></label>
@@ -426,30 +456,54 @@
                     <button type="button" onclick="cekJawaban('kuis-5', 'c', 'res-5')" class="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 rounded">Cek Jawaban</button>
                     <div id="res-5" class="mt-3"></div>
                 </div>
-
             </div>
-        </section>
 
-    </main>
+            <!-- Navigasi Bawah -->
+            <div class="flex justify-between items-center mt-12 pt-6 border-t border-slate-200">
+                <button onclick="pindahHalaman('page-simulasi')" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-3 px-6 rounded-lg transition-colors flex items-center gap-2">⬅ <span class="hidden sm:inline">Kembali ke Simulasi</span></button>
+                <button onclick="pindahHalaman('page-hero')" class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition-colors flex items-center gap-2">🏁 Selesai & Kembali ke Menu</button>
+            </div>
+        </main>
+    </div>
 
-    <footer class="bg-indigo-900 text-indigo-200 py-6 text-center">
+    <!-- FOOTER (Selalu tampil di bawah) -->
+    <footer class="bg-indigo-900 text-indigo-200 py-6 text-center mt-auto">
         <p>Modul TIK Interaktif - Belajar Excel Jadi Mudah!</p>
     </footer>
 
     <!-- LOGIKA JAVASCRIPT -->
     <script>
+        // --- 0. LOGIKA NAVIGASI HALAMAN (NEXT-NEXT) ---
+        function pindahHalaman(idHalamanTujuan) {
+            // Sembunyikan semua halaman yang memiliki class 'page-section'
+            const semuaHalaman = document.querySelectorAll('.page-section');
+            semuaHalaman.forEach(halaman => {
+                halaman.classList.remove('block');
+                halaman.classList.add('hidden');
+            });
+
+            // Tampilkan halaman tujuan
+            const halamanTujuan = document.getElementById(idHalamanTujuan);
+            if(halamanTujuan) {
+                halamanTujuan.classList.remove('hidden');
+                halamanTujuan.classList.add('block');
+            }
+
+            // Scroll otomatis ke paling atas saat pindah halaman
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+
         // --- 1. LOGIKA INTERAKTIF TABEL (MATERI 1) ---
         function resetHighlight() {
             const cells = document.querySelectorAll('#tabel-model th, #tabel-model td');
             cells.forEach(cell => cell.classList.remove('highlight-cell'));
         }
 
-        // Fungsi baru untuk interaksi tebak tabel
         function cekTabel(tipe, target) {
             resetHighlight();
             const infoText = document.getElementById('info-tabel');
             
-            // Ganti warna kotak info agar lebih menarik saat diklik
             const infoBox = infoText.parentElement;
             infoBox.classList.remove('bg-indigo-50', 'border-indigo-200');
             infoBox.classList.add('bg-yellow-100', 'border-yellow-400');
@@ -473,22 +527,11 @@
         }
 
         // --- 2. LOGIKA DRAG & DROP MENYUSUN RUMUS ---
-        let slots = [null, null, null]; // Indeks 0: Tanda, Indeks 1: Fungsi, Indeks 2: Range
+        let slots = [null, null, null]; 
 
-        // Event Drag
-        function dragStart(ev) {
-            ev.dataTransfer.setData("text/plain", ev.target.dataset.value);
-        }
-
-        function dragOver(ev) {
-            ev.preventDefault();
-            ev.currentTarget.classList.add('bg-indigo-100', 'border-indigo-400');
-        }
-
-        function dragLeave(ev) {
-            ev.currentTarget.classList.remove('bg-indigo-100', 'border-indigo-400');
-        }
-
+        function dragStart(ev) { ev.dataTransfer.setData("text/plain", ev.target.dataset.value); }
+        function dragOver(ev) { ev.preventDefault(); ev.currentTarget.classList.add('bg-indigo-100', 'border-indigo-400'); }
+        function dragLeave(ev) { ev.currentTarget.classList.remove('bg-indigo-100', 'border-indigo-400'); }
         function drop(ev, slotIndex) {
             ev.preventDefault();
             ev.currentTarget.classList.remove('bg-indigo-100', 'border-indigo-400');
@@ -496,18 +539,13 @@
             fillSlot(slotIndex, val);
         }
 
-        // Fitur Klik untuk pengguna Mobile/HP
         function bankClick(ev) {
             const val = ev.currentTarget.dataset.value;
             const emptyIndex = slots.findIndex(s => s === null);
-            if (emptyIndex !== -1) {
-                fillSlot(emptyIndex, val);
-            } else {
-                alert("Papan Konstruksi sudah penuh! Hapus salah satu kotak dulu.");
-            }
+            if (emptyIndex !== -1) { fillSlot(emptyIndex, val); } 
+            else { alert("Papan Konstruksi sudah penuh! Hapus salah satu kotak dulu."); }
         }
 
-        // Memasukkan nilai ke dalam Slot
         function fillSlot(index, val) {
             slots[index] = val;
             const slotEl = document.getElementById(`slot-${index}`);
@@ -516,7 +554,6 @@
             slotEl.classList.add('text-indigo-900', 'font-bold', 'bg-indigo-100', 'border-solid', 'border-indigo-400');
         }
 
-        // Menghapus nilai dari Slot
         function removeSlot(index) {
             if (slots[index] === null) return;
             slots[index] = null;
@@ -526,33 +563,26 @@
             slotEl.classList.remove('text-indigo-900', 'font-bold', 'bg-indigo-100', 'border-solid', 'border-indigo-400');
         }
 
-        // Reset semua Slot
         function resetSlots() {
             removeSlot(0); removeSlot(1); removeSlot(2);
             document.getElementById('hasil-simulasi').innerHTML = "";
         }
 
-        // Menjalankan dan Menghitung Rumus
         const formatNum = (num) => Number.isInteger(num) ? num : parseFloat(num.toFixed(2));
 
         function jalankanRumus() {
             const resArea = document.getElementById('hasil-simulasi');
             
-            // Validasi Susunan Rumus
             if (slots[0] !== "=") {
-                tampilkanPesan(resArea, "❌ Ups! Rumus Excel selalu diawali dengan tanda sama dengan (=).", "red");
-                return;
+                tampilkanPesan(resArea, "❌ Ups! Rumus Excel selalu diawali dengan tanda sama dengan (=).", "red"); return;
             }
             if (!['SUM', 'AVERAGE', 'MAX', 'MIN', 'COUNT'].includes(slots[1])) {
-                tampilkanPesan(resArea, "❌ Wah, fungsi di tengah belum tepat. Coba masukkan nama fungsi (contoh: SUM).", "red");
-                return;
+                tampilkanPesan(resArea, "❌ Wah, fungsi di tengah belum tepat. Coba masukkan nama fungsi (contoh: SUM).", "red"); return;
             }
             if (slots[2] !== "(A1:C3)") {
-                tampilkanPesan(resArea, "❌ Area range data salah. Kita ingin menghitung semua tabel, pilih range (A1:C3)!", "red");
-                return;
+                tampilkanPesan(resArea, "❌ Area range data salah. Kita ingin menghitung semua tabel, pilih range (A1:C3)!", "red"); return;
             }
 
-            // Ambil data dari tabel input
             let values = [];
             document.querySelectorAll('.excel-input').forEach(input => {
                 let val = parseFloat(input.value);
@@ -560,27 +590,22 @@
             });
 
             if (values.length === 0) {
-                tampilkanPesan(resArea, "⚠️ Tabelnya masih kosong! Ketik beberapa angka dulu di dalam tabel ya.", "yellow");
-                return;
+                tampilkanPesan(resArea, "⚠️ Tabelnya masih kosong! Ketik beberapa angka dulu di dalam tabel ya.", "yellow"); return;
             }
 
-            // Hitung berdasarkan Fungsi
-            let res = 0;
-            const fungsi = slots[1];
+            let res = 0; const fungsi = slots[1];
             if (fungsi === 'SUM') res = values.reduce((a, b) => a + b, 0);
             if (fungsi === 'AVERAGE') res = values.reduce((a, b) => a + b, 0) / values.length;
             if (fungsi === 'MAX') res = Math.max(...values);
             if (fungsi === 'MIN') res = Math.min(...values);
             if (fungsi === 'COUNT') res = values.length;
 
-            // Update Checklist Misi
             const checkEl = document.getElementById(`check-${fungsi.toLowerCase()}`);
             if(checkEl) {
                 checkEl.innerText = "✅";
                 checkEl.parentElement.classList.add("text-emerald-600", "font-bold");
             }
 
-            // Tampilkan Hasil Sukses
             resArea.innerHTML = `
                 <div class="bg-emerald-100 text-emerald-800 p-4 rounded-xl border border-emerald-300 text-center animate-bounce-slow">
                     <p class="mb-1">Kerja bagus! Hasil perhitungan rumus <strong>=${fungsi}(A1:C3)</strong> adalah:</p>
@@ -600,8 +625,7 @@
             const jawabanDipilih = form.querySelector('input[type="radio"]:checked');
 
             if (!jawabanDipilih) {
-                resultBox.innerHTML = `<div class="p-2 bg-yellow-100 text-yellow-700 rounded text-sm text-center font-bold">Pilih jawaban dulu ya!</div>`;
-                return;
+                resultBox.innerHTML = `<div class="p-2 bg-yellow-100 text-yellow-700 rounded text-sm text-center font-bold">Pilih jawaban dulu ya!</div>`; return;
             }
 
             if (jawabanDipilih.value === jawabanBenar) {
