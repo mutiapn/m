@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jago Excel Dasar - Misi Menaklukkan Data!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+        .highlight-cell {
+            background-color: #fef08a !important; /* bg-yellow-200 */
+            transition: all 0.3s ease;
+        }
+        .formula-piece {
+            user-select: none;
+        }
+        .formula-piece:active {
+            cursor: grabbing !important;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 font-sans text-slate-800 antialiased selection:bg-indigo-200">
+
+    <!-- HERO SECTION -->
+    <header class="relative overflow-hidden bg-gradient-to-r from-indigo-600 to-blue-600 text-white py-20 px-6 sm:px-12 text-center shadow-xl">
+        <div class="relative z-10 max-w-3xl mx-auto">
+            <h1 class="text-4xl sm:text-5xl font-extrabold mb-4 tracking-tight">Jago Excel Dasar:<br><span class="text-yellow-300">Misi Menaklukkan Data!</span></h1>
+            <p class="text-lg sm:text-xl font-medium text-indigo-100 mb-8">
+                Halo Sobat TIK! Selamat datang di markas para pengolah data. Di sini kita akan belajar dasar-dasar Microsoft Excel dengan interaktif, seru, dan mudah dimengerti. Siap mulai petualanganmu?
+            </p>
+            <a href="#materi-1" class="inline-block bg-yellow-400 text-indigo-900 font-bold text-lg py-3 px-8 rounded-full shadow-lg hover:bg-yellow-300 transition-all duration-300">
+                Mulai Belajar Sekarang
+            </a>
+        </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-6 py-12 space-y-16">
+
+        <!-- MATERI 1: PENGENALAN TABEL INTERAKTIF -->
+        <section id="materi-1" class="scroll-mt-10">
+            <div class="bg-white rounded-3xl p-8 sm:p-10 shadow-lg border-t-4 border-indigo-500">
+                <h2 class="text-3xl font-bold text-slate-800 mb-6">Mengenal Tabel Excel</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <p class="text-slate-600 mb-6">
+                            Excel menggunakan sistem kotak-kotak. Ayo kita kenali 3 istilah utamanya:
+                        </p>
+                        <ul class="space-y-4">
+                            <li class="flex gap-4 items-start">
+                                <div class="bg-indigo-100 text-indigo-700 font-bold px-4 py-2 rounded-lg">KOLOM</div>
+                                <div>
+                                    <h3 class="font-bold text-lg">Kolom (Column)</h3>
+                                    <p class="text-slate-600 text-sm">Bagian yang membentang dari <strong>atas ke bawah</strong> (huruf A, B, C, dst).</p>
+                                </div>
+                            </li>
+                            <li class="flex gap-4 items-start">
+                                <div class="bg-indigo-100 text-indigo-700 font-bold px-4 py-2 rounded-lg">BARIS</div>
+                                <div>
+                                    <h3 class="font-bold text-lg">Baris (Row)</h3>
+                                    <p class="text-slate-600 text-sm">Bagian yang membentang dari <strong>kiri ke kanan</strong> (angka 1, 2, 3, dst).</p>
+                                </div>
+                            </li>
+                            <li class="flex gap-4 items-start">
+                                <div class="bg-indigo-100 text-indigo-700 font-bold px-4 py-2 rounded-lg">CELL</div>
+                                <div>
+                                    <h3 class="font-bold text-lg">Cell (Sel)</h3>
+                                    <p class="text-slate-600 text-sm">Titik potong antara Kolom dan Baris. (Contoh: B2 = Kolom B, Baris 2).</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Interaktif Tabel Model (Eksplorasi) -->
+                    <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200">
+                        <p class="font-bold text-center mb-2 text-slate-700">Ayo Eksplorasi Tabel Ini!</p>
+                        <p class="text-sm text-center text-slate-500 mb-4">Klik pada huruf (A/B/C), angka (1/2/3), atau kotak kosong di bawah untuk mencari tahu letaknya.</p>
+                        
+                        <!-- Papan Info Interaktif -->
+                        <div class="bg-indigo-50 p-4 rounded-xl border border-indigo-200 mb-6 text-center h-20 flex items-center justify-center transition-all">
+                            <p id="info-tabel" class="text-indigo-900 font-bold text-sm sm:text-base">Pilih salah satu bagian tabel di bawah!</p>
+                        </div>
+
+                        <div class="overflow-x-auto rounded-lg border border-slate-300 shadow-sm">
+                            <table class="w-full text-center border-collapse bg-white cursor-crosshair" id="tabel-model">
+                                <thead>
+                                    <tr>
+                                        <th class="border border-slate-300 p-2 bg-slate-200 w-12"></th>
+                                        <th class="border border-slate-300 p-3 bg-slate-100 col-A text-slate-600 hover:bg-slate-200 cursor-pointer transition-colors" onclick="cekTabel('kolom', 'A')">A</th>
+                                        <th class="border border-slate-300 p-3 bg-slate-100 col-B text-slate-600 hover:bg-slate-200 cursor-pointer transition-colors" onclick="cekTabel('kolom', 'B')">B</th>
+                                        <th class="border border-slate-300 p-3 bg-slate-100 col-C text-slate-600 hover:bg-slate-200 cursor-pointer transition-colors" onclick="cekTabel('kolom', 'C')">C</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="row-1">
+                                        <th class="border border-slate-300 p-3 bg-slate-100 text-slate-600 hover:bg-slate-200 cursor-pointer transition-colors" onclick="cekTabel('baris', '1')">1</th>
+                                        <td class="border border-slate-300 p-5 col-A cell-A1 hover:bg-slate-50 cursor-pointer transition-colors" onclick="cekTabel('cell', 'A1')"></td>
+                                        <td class="border border-slate-300 p-5 col-B cell-B1 hover:bg-slate-50 cursor-pointer transition-colors" onclick="cekTabel('cell', 'B1')"></td>
+                                        <td class="border border-slate-300 p-5 col-C cell-C1 hover:bg-slate-50 cursor-pointer transition-colors" onclick="cekTabel('cell', 'C1')"></td>
+                                    </tr>
+                                    <tr class="row-2">
+                                        <th class="border border-slate-300 p-3 bg-slate-100 text-slate-600 hover:bg-slate-200 cursor-pointer transition-colors" onclick="cekTabel('baris', '2')">2</th>
+                                        <td class="border border-slate-300 p-5 col-A cell-A2 hover:bg-slate-50 cursor-pointer transition-colors" onclick="cekTabel('cell', 'A2')"></td>
+                                        <td class="border border-slate-300 p-5 col-B cell-B2 hover:bg-slate-50 cursor-pointer transition-colors" onclick="cekTabel('cell', 'B2')"></td>
+                                        <td class="border border-slate-300 p-5 col-C cell-C2 hover:bg-slate-50 cursor-pointer transition-colors" onclick="cekTabel('cell', 'C2')"></td>
+                                    </tr>
+                                    <tr class="row-3">
+                                        <th class="border border-slate-300 p-3 bg-slate-100 text-slate-600 hover:bg-slate-200 cursor-pointer transition-colors" onclick="cekTabel('baris', '3')">3</th>
+                                        <td class="border border-slate-300 p-5 col-A cell-A3 hover:bg-slate-50 cursor-pointer transition-colors" onclick="cekTabel('cell', 'A3')"></td>
+                                        <td class="border border-slate-300 p-5 col-B cell-B3 hover:bg-slate-50 cursor-pointer transition-colors" onclick="cekTabel('cell', 'B3')"></td>
+                                        <td class="border border-slate-300 p-5 col-C cell-C3 hover:bg-slate-50 cursor-pointer transition-colors" onclick="cekTabel('cell', 'C3')"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MATERI 2: FUNGSI DASAR & RUMUS -->
+        <section id="materi-2" class="scroll-mt-10">
+            <h2 class="text-3xl font-bold text-center text-slate-800 mb-4">5 Fungsi Dasar (The Magic Formulas)</h2>
+            <p class="text-center text-slate-600 mb-8 max-w-2xl mx-auto">Mari kita pelajari cara membaca rumus menggunakan tabel contoh di bawah ini.</p>
+            
+            <!-- Tabel Contoh Referensi -->
+            <div class="bg-white p-6 rounded-2xl shadow-md border border-slate-200 mb-10 max-w-2xl mx-auto">
+                <h3 class="font-bold text-slate-700 mb-4 text-center">Tabel Referensi Untuk Contoh Rumus</h3>
+                <div class="overflow-x-auto rounded-lg border border-slate-300">
+                    <table class="w-full text-center border-collapse bg-slate-50">
+                        <thead>
+                            <tr>
+                                <th class="border border-slate-300 p-2 bg-slate-200 w-12 text-slate-500"></th>
+                                <th class="border border-slate-300 p-2 bg-indigo-100 text-indigo-900 font-bold">A</th>
+                                <th class="border border-slate-300 p-2 bg-indigo-100 text-indigo-900 font-bold">B</th>
+                                <th class="border border-slate-300 p-2 bg-indigo-100 text-indigo-900 font-bold">C</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-slate-700">
+                            <tr>
+                                <th class="border border-slate-300 p-2 bg-slate-200 text-slate-600">1</th>
+                                <td class="border border-slate-300 p-2 bg-white">10</td>
+                                <td class="border border-slate-300 p-2 bg-white">25</td>
+                                <td class="border border-slate-300 p-2 bg-white">80</td>
+                            </tr>
+                            <tr>
+                                <th class="border border-slate-300 p-2 bg-slate-200 text-slate-600">2</th>
+                                <td class="border border-slate-300 p-2 bg-white">20</td>
+                                <td class="border border-slate-300 p-2 bg-white">30</td>
+                                <td class="border border-slate-300 p-2 bg-white">85</td>
+                            </tr>
+                            <tr>
+                                <th class="border border-slate-300 p-2 bg-slate-200 text-slate-600">3</th>
+                                <td class="border border-slate-300 p-2 bg-white">30</td>
+                                <td class="border border-slate-300 p-2 bg-white">45</td>
+                                <td class="border border-slate-300 p-2 bg-white">90</td>
+                            </tr>
+                            <tr>
+                                <th class="border border-slate-300 p-2 bg-slate-200 text-slate-600">4</th>
+                                <td class="border border-slate-300 p-2 bg-white">40</td>
+                                <td class="border border-slate-300 p-2 bg-white">50</td>
+                                <td class="border border-slate-300 p-2 bg-slate-100 text-slate-400 italic">kosong</td>
+                            </tr>
+                            <tr>
+                                <th class="border border-slate-300 p-2 bg-slate-200 text-slate-600">5</th>
+                                <td class="border border-slate-300 p-2 bg-white">50</td>
+                                <td class="border border-slate-300 p-2 bg-white">60</td>
+                                <td class="border border-slate-300 p-2 bg-slate-100 text-slate-400 italic">kosong</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Grid Fungsi -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <!-- SUM -->
+                <div class="bg-white p-6 rounded-2xl shadow-md border-t-8 border-indigo-500 flex flex-col">
+                    <h3 class="text-xl font-bold text-indigo-700 mb-2">SUM</h3>
+                    <p class="text-slate-600 text-sm mb-4 flex-grow">Berfungsi untuk menjumlahkan total keseluruhan angka pada blok data (range).</p>
+                    <div class="bg-indigo-50 p-3 rounded-lg text-sm border border-indigo-100">
+                        <code class="block bg-white p-2 rounded border border-indigo-200 text-indigo-700 font-mono mb-2">=SUM(range)</code>
+                        <p class="font-bold text-indigo-900 mb-1">Contoh pada Tabel:</p>
+                        <code class="block font-mono text-slate-700 font-bold bg-white p-1 mb-1">=SUM(A1:A5)</code>
+                        <p class="text-xs text-slate-500 mt-1">Menjumlahkan semua angka dari kotak A1 sampai A5.</p>
+                    </div>
+                </div>
+
+                <!-- AVERAGE -->
+                <div class="bg-white p-6 rounded-2xl shadow-md border-t-8 border-indigo-500 flex flex-col">
+                    <h3 class="text-xl font-bold text-indigo-700 mb-2">AVERAGE</h3>
+                    <p class="text-slate-600 text-sm mb-4 flex-grow">Berfungsi untuk mencari nilai rata-rata dari sekumpulan data angka.</p>
+                    <div class="bg-indigo-50 p-3 rounded-lg text-sm border border-indigo-100">
+                        <code class="block bg-white p-2 rounded border border-indigo-200 text-indigo-700 font-mono mb-2">=AVERAGE(range)</code>
+                        <p class="font-bold text-indigo-900 mb-1">Contoh pada Tabel:</p>
+                        <code class="block font-mono text-slate-700 font-bold bg-white p-1 mb-1">=AVERAGE(C1:C3)</code>
+                        <p class="text-xs text-slate-500 mt-1">Mencari rata-rata nilai dari kotak C1 sampai C3.</p>
+                    </div>
+                </div>
+
+                <!-- MAX -->
+                <div class="bg-white p-6 rounded-2xl shadow-md border-t-8 border-indigo-500 flex flex-col">
+                    <h3 class="text-xl font-bold text-indigo-700 mb-2">MAX</h3>
+                    <p class="text-slate-600 text-sm mb-4 flex-grow">Berfungsi untuk mencari nilai yang paling besar (tertinggi) dalam suatu kumpulan data.</p>
+                    <div class="bg-indigo-50 p-3 rounded-lg text-sm border border-indigo-100">
+                        <code class="block bg-white p-2 rounded border border-indigo-200 text-indigo-700 font-mono mb-2">=MAX(range)</code>
+                        <p class="font-bold text-indigo-900 mb-1">Contoh pada Tabel:</p>
+                        <code class="block font-mono text-slate-700 font-bold bg-white p-1 mb-1">=MAX(B1:B5)</code>
+                        <p class="text-xs text-slate-500 mt-1">Mencari nilai tertinggi antara kotak B1 sampai B5.</p>
+                    </div>
+                </div>
+
+                <!-- MIN -->
+                <div class="bg-white p-6 rounded-2xl shadow-md border-t-8 border-indigo-500 flex flex-col">
+                    <h3 class="text-xl font-bold text-indigo-700 mb-2">MIN</h3>
+                    <p class="text-slate-600 text-sm mb-4 flex-grow">Kebalikan dari MAX. Berfungsi mencari nilai yang paling kecil (terendah).</p>
+                    <div class="bg-indigo-50 p-3 rounded-lg text-sm border border-indigo-100">
+                        <code class="block bg-white p-2 rounded border border-indigo-200 text-indigo-700 font-mono mb-2">=MIN(range)</code>
+                        <p class="font-bold text-indigo-900 mb-1">Contoh pada Tabel:</p>
+                        <code class="block font-mono text-slate-700 font-bold bg-white p-1 mb-1">=MIN(A1:C3)</code>
+                        <p class="text-xs text-slate-500 mt-1">Mencari nilai terendah dari seluruh area A1 hingga C3.</p>
+                    </div>
+                </div>
+
+                <!-- COUNT -->
+                <div class="bg-white p-6 rounded-2xl shadow-md border-t-8 border-indigo-500 lg:col-start-2 flex flex-col">
+                    <h3 class="text-xl font-bold text-indigo-700 mb-2">COUNT</h3>
+                    <p class="text-slate-600 text-sm mb-4 flex-grow">Berfungsi menghitung "ada berapa banyak kotak" yang isinya berupa angka.</p>
+                    <div class="bg-indigo-50 p-3 rounded-lg text-sm border border-indigo-100">
+                        <code class="block bg-white p-2 rounded border border-indigo-200 text-indigo-700 font-mono mb-2">=COUNT(range)</code>
+                        <p class="font-bold text-indigo-900 mb-1">Contoh pada Tabel:</p>
+                        <code class="block font-mono text-slate-700 font-bold bg-white p-1 mb-1">=COUNT(C1:C5)</code>
+                        <p class="text-xs text-slate-500 mt-1">Menghitung jumlah kotak yang terisi angka dari C1 sampai C5.</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SIMULASI MENYUSUN RUMUS -->
+        <section id="simulasi" class="scroll-mt-10">
+            <div class="bg-white rounded-3xl p-8 sm:p-10 shadow-xl border border-slate-200">
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl font-bold text-slate-800 mb-2">Simulasi: Menyusun Rumus</h2>
+                    <p class="text-slate-600">Isi tabel dengan angka bebas. Lalu <strong>Tarik (Drag)</strong> kepingan rumus ke Papan Konstruksi di sebelah kanan untuk menyelesaiakan misi! <br><span class="text-sm italic text-indigo-500">(Bisa juga dengan cara klik kepingannya satu per satu)</span></p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                    
+                    <!-- Area Input Tabel -->
+                    <div class="overflow-x-auto rounded-xl border border-slate-300 shadow-sm self-start">
+                        <table class="w-full text-center border-collapse min-w-[250px]">
+                            <thead>
+                                <tr>
+                                    <th class="border border-slate-300 p-2 bg-slate-200 text-slate-500 w-12"></th>
+                                    <th class="border border-slate-300 p-2 bg-indigo-50 text-indigo-900 font-bold">A</th>
+                                    <th class="border border-slate-300 p-2 bg-indigo-50 text-indigo-900 font-bold">B</th>
+                                    <th class="border border-slate-300 p-2 bg-indigo-50 text-indigo-900 font-bold">C</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th class="border border-slate-300 p-2 bg-indigo-50 text-indigo-900 font-bold">1</th>
+                                    <td class="border border-slate-300 p-0 bg-white hover:bg-slate-50 transition-colors">
+                                        <input type="number" class="excel-input w-full h-full p-4 text-center outline-none bg-transparent font-bold text-slate-700 placeholder-slate-300" placeholder="Ketik">
+                                    </td>
+                                    <td class="border border-slate-300 p-0 bg-white hover:bg-slate-50 transition-colors">
+                                        <input type="number" class="excel-input w-full h-full p-4 text-center outline-none bg-transparent font-bold text-slate-700 placeholder-slate-300" placeholder="Ketik">
+                                    </td>
+                                    <td class="border border-slate-300 p-0 bg-white hover:bg-slate-50 transition-colors">
+                                        <input type="number" class="excel-input w-full h-full p-4 text-center outline-none bg-transparent font-bold text-slate-700 placeholder-slate-300" placeholder="Ketik">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="border border-slate-300 p-2 bg-indigo-50 text-indigo-900 font-bold">2</th>
+                                    <td class="border border-slate-300 p-0 bg-white hover:bg-slate-50 transition-colors">
+                                        <input type="number" class="excel-input w-full h-full p-4 text-center outline-none bg-transparent font-bold text-slate-700 placeholder-slate-300" placeholder="Ketik">
+                                    </td>
+                                    <td class="border border-slate-300 p-0 bg-white hover:bg-slate-50 transition-colors">
+                                        <input type="number" class="excel-input w-full h-full p-4 text-center outline-none bg-transparent font-bold text-slate-700 placeholder-slate-300" placeholder="Ketik">
+                                    </td>
+                                    <td class="border border-slate-300 p-0 bg-white hover:bg-slate-50 transition-colors">
+                                        <input type="number" class="excel-input w-full h-full p-4 text-center outline-none bg-transparent font-bold text-slate-700 placeholder-slate-300" placeholder="Ketik">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="border border-slate-300 p-2 bg-indigo-50 text-indigo-900 font-bold">3</th>
+                                    <td class="border border-slate-300 p-0 bg-white hover:bg-slate-50 transition-colors">
+                                        <input type="number" class="excel-input w-full h-full p-4 text-center outline-none bg-transparent font-bold text-slate-700 placeholder-slate-300" placeholder="Ketik">
+                                    </td>
+                                    <td class="border border-slate-300 p-0 bg-white hover:bg-slate-50 transition-colors">
+                                        <input type="number" class="excel-input w-full h-full p-4 text-center outline-none bg-transparent font-bold text-slate-700 placeholder-slate-300" placeholder="Ketik">
+                                    </td>
+                                    <td class="border border-slate-300 p-0 bg-white hover:bg-slate-50 transition-colors">
+                                        <input type="number" class="excel-input w-full h-full p-4 text-center outline-none bg-transparent font-bold text-slate-700 placeholder-slate-300" placeholder="Ketik">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Area Papan Susun Rumus -->
+                    <div class="flex flex-col gap-4">
+                        
+                        <!-- Checklist Misi -->
+                        <div class="bg-indigo-50 rounded-xl p-4 border border-indigo-100">
+                            <h4 class="font-bold text-indigo-900 mb-2">Misi Kamu Hari Ini:</h4>
+                            <ul class="text-sm space-y-1 text-slate-700 grid grid-cols-2 gap-2">
+                                <li class="flex items-center gap-2"><span id="check-sum">⬜</span> Hitung Total</li>
+                                <li class="flex items-center gap-2"><span id="check-average">⬜</span> Cari Rata-rata</li>
+                                <li class="flex items-center gap-2"><span id="check-max">⬜</span> Cari Tertinggi</li>
+                                <li class="flex items-center gap-2"><span id="check-min">⬜</span> Cari Terendah</li>
+                                <li class="flex items-center gap-2"><span id="check-count">⬜</span> Hitung Jml Data</li>
+                            </ul>
+                        </div>
+
+                        <!-- Bank Kepingan Rumus -->
+                        <div class="bg-slate-100 border border-slate-200 rounded-xl p-4">
+                            <h4 class="font-bold text-slate-700 mb-3 text-center">Bank Kepingan Rumus</h4>
+                            <div class="flex flex-wrap justify-center gap-3">
+                                <!-- Tanda -->
+                                <div draggable="true" ondragstart="dragStart(event)" onclick="bankClick(event)" data-value="=" class="formula-piece bg-rose-500 hover:bg-rose-600 text-white font-bold px-4 py-2 rounded shadow cursor-grab">=</div>
+                                <!-- Fungsi -->
+                                <div draggable="true" ondragstart="dragStart(event)" onclick="bankClick(event)" data-value="SUM" class="formula-piece bg-indigo-500 hover:bg-indigo-600 text-white font-bold px-4 py-2 rounded shadow cursor-grab">SUM</div>
+                                <div draggable="true" ondragstart="dragStart(event)" onclick="bankClick(event)" data-value="AVERAGE" class="formula-piece bg-indigo-500 hover:bg-indigo-600 text-white font-bold px-4 py-2 rounded shadow cursor-grab">AVERAGE</div>
+                                <div draggable="true" ondragstart="dragStart(event)" onclick="bankClick(event)" data-value="MAX" class="formula-piece bg-indigo-500 hover:bg-indigo-600 text-white font-bold px-4 py-2 rounded shadow cursor-grab">MAX</div>
+                                <div draggable="true" ondragstart="dragStart(event)" onclick="bankClick(event)" data-value="MIN" class="formula-piece bg-indigo-500 hover:bg-indigo-600 text-white font-bold px-4 py-2 rounded shadow cursor-grab">MIN</div>
+                                <div draggable="true" ondragstart="dragStart(event)" onclick="bankClick(event)" data-value="COUNT" class="formula-piece bg-indigo-500 hover:bg-indigo-600 text-white font-bold px-4 py-2 rounded shadow cursor-grab">COUNT</div>
+                                <!-- Range -->
+                                <div draggable="true" ondragstart="dragStart(event)" onclick="bankClick(event)" data-value="(A1:C3)" class="formula-piece bg-amber-500 hover:bg-amber-600 text-white font-bold px-4 py-2 rounded shadow cursor-grab">(A1:C3)</div>
+                            </div>
+                        </div>
+
+                        <!-- Papan Konstruksi Drop Zone -->
+                        <div class="bg-white border-2 border-indigo-200 rounded-xl p-6 shadow-sm">
+                            <h4 class="font-bold text-slate-700 mb-4 text-center">Papan Konstruksi Rumus</h4>
+                            <div class="flex items-center justify-center gap-2 mb-6">
+                                <div id="slot-0" class="drop-slot w-16 h-12 flex items-center justify-center border-2 border-dashed border-slate-300 rounded text-slate-400 font-medium transition-all" ondrop="drop(event, 0)" ondragover="dragOver(event)" ondragleave="dragLeave(event)" onclick="removeSlot(0)"></div>
+                                <div id="slot-1" class="drop-slot w-24 h-12 flex items-center justify-center border-2 border-dashed border-slate-300 rounded text-slate-400 font-medium transition-all" ondrop="drop(event, 1)" ondragover="dragOver(event)" ondragleave="dragLeave(event)" onclick="removeSlot(1)"></div>
+                                <div id="slot-2" class="drop-slot w-24 h-12 flex items-center justify-center border-2 border-dashed border-slate-300 rounded text-slate-400 font-medium transition-all" ondrop="drop(event, 2)" ondragover="dragOver(event)" ondragleave="dragLeave(event)" onclick="removeSlot(2)"></div>
+                            </div>
+                            
+                            <div class="flex gap-2">
+                                <button onclick="resetSlots()" class="w-1/3 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-3 rounded-lg transition-colors">Reset</button>
+                                <button onclick="jalankanRumus()" class="w-2/3 bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 rounded-lg shadow-lg transition-colors">Jalankan Rumus 🚀</button>
+                            </div>
+                        </div>
+
+                        <!-- Area Hasil Akhir -->
+                        <div id="hasil-simulasi" class="mt-2"></div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- KUIS INTERAKTIF (5 SOAL) -->
+        <section id="kuis" class="scroll-mt-10 mb-16">
+            <h2 class="text-3xl font-bold text-center text-slate-800 mb-8">Uji Nyali: 5 Pertanyaan Terakhir!</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <!-- Soal 1 -->
+                <div class="bg-white p-6 rounded-2xl shadow-md border-t-4 border-indigo-500">
+                    <h3 class="font-bold mb-4 text-slate-700">1. Perpotongan antara Kolom dan Baris disebut?</h3>
+                    <form id="kuis-1" class="space-y-2 mb-4">
+                        <label class="flex items-center space-x-3 p-2 bg-slate-50 rounded cursor-pointer hover:bg-indigo-50"><input type="radio" name="q1" value="a" class="text-indigo-600"><span>A. Range</span></label>
+                        <label class="flex items-center space-x-3 p-2 bg-slate-50 rounded cursor-pointer hover:bg-indigo-50"><input type="radio" name="q1" value="b" class="text-indigo-600"><span>B. Tabel</span></label>
+                        <label class="flex items-center space-x-3 p-2 bg-slate-50 rounded cursor-pointer hover:bg-indigo-50"><input type="radio" name="q1" value="c" class="text-indigo-600"><span>C. Cell</span></label>
+                    </form>
+                    <button type="button" onclick="cekJawaban('kuis-1', 'c', 'res-1')" class="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 rounded">Cek Jawaban</button>
+                    <div id="res-1" class="mt-3"></div>
+                </div>
+
+                <!-- Soal 2 -->
+                <div class="bg-white p-6 rounded-2xl shadow-md border-t-4 border-indigo-500">
+                    <h3 class="font-bold mb-4 text-slate-700">2. Kalau mau cari nilai terendah, mantra apa yang dipakai?</h3>
+                    <form id="kuis-2" class="space-y-2 mb-4">
+                        <label class="flex items-center space-x-3 p-2 bg-slate-50 rounded cursor-pointer hover:bg-indigo-50"><input type="radio" name="q2" value="a" class="text-indigo-600"><span>A. =AVERAGE()</span></label>
+                        <label class="flex items-center space-x-3 p-2 bg-slate-50 rounded cursor-pointer hover:bg-indigo-50"><input type="radio" name="q2" value="b" class="text-indigo-600"><span>B. =MIN()</span></label>
+                        <label class="flex items-center space-x-3 p-2 bg-slate-50 rounded cursor-pointer hover:bg-indigo-50"><input type="radio" name="q2" value="c" class="text-indigo-600"><span>C. =MAX()</span></label>
+                    </form>
+                    <button type="button" onclick="cekJawaban('kuis-2', 'b', 'res-2')" class="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 rounded">Cek Jawaban</button>
+                    <div id="res-2" class="mt-3"></div>
+                </div>
+
+                <!-- Soal 3 -->
+                <div class="bg-white p-6 rounded-2xl shadow-md border-t-4 border-indigo-500">
+                    <h3 class="font-bold mb-4 text-slate-700">3. Fungsi =SUM() tugasnya ngapain sih?</h3>
+                    <form id="kuis-3" class="space-y-2 mb-4">
+                        <label class="flex items-center space-x-3 p-2 bg-slate-50 rounded cursor-pointer hover:bg-indigo-50"><input type="radio" name="q3" value="a" class="text-indigo-600"><span>A. Menjumlahkan angka</span></label>
+                        <label class="flex items-center space-x-3 p-2 bg-slate-50 rounded cursor-pointer hover:bg-indigo-50"><input type="radio" name="q3" value="b" class="text-indigo-600"><span>B. Mencari rata-rata</span></label>
+                        <label class="flex items-center space-x-3 p-2 bg-slate-50 rounded cursor-pointer hover:bg-indigo-50"><input type="radio" name="q3" value="c" class="text-indigo-600"><span>C. Menghitung jumlah kotak</span></label>
+                    </form>
+                    <button type="button" onclick="cekJawaban('kuis-3', 'a', 'res-3')" class="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 rounded">Cek Jawaban</button>
+                    <div id="res-3" class="mt-3"></div>
+                </div>
+
+                <!-- Soal 4 -->
+                <div class="bg-white p-6 rounded-2xl shadow-md border-t-4 border-indigo-500">
+                    <h3 class="font-bold mb-4 text-slate-700">4. Kumpulan dari beberapa Cell sekaligus (misal A1 sampai C3) disebut apa?</h3>
+                    <form id="kuis-4" class="space-y-2 mb-4">
+                        <label class="flex items-center space-x-3 p-2 bg-slate-50 rounded cursor-pointer hover:bg-indigo-50"><input type="radio" name="q4" value="a" class="text-indigo-600"><span>A. Range</span></label>
+                        <label class="flex items-center space-x-3 p-2 bg-slate-50 rounded cursor-pointer hover:bg-indigo-50"><input type="radio" name="q4" value="b" class="text-indigo-600"><span>B. Baris</span></label>
+                        <label class="flex items-center space-x-3 p-2 bg-slate-50 rounded cursor-pointer hover:bg-indigo-50"><input type="radio" name="q4" value="c" class="text-indigo-600"><span>C. Formula</span></label>
+                    </form>
+                    <button type="button" onclick="cekJawaban('kuis-4', 'a', 'res-4')" class="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 rounded">Cek Jawaban</button>
+                    <div id="res-4" class="mt-3"></div>
+                </div>
+
+                <!-- Soal 5 -->
+                <div class="bg-white p-6 rounded-2xl shadow-md border-t-4 border-indigo-500 lg:col-start-2">
+                    <h3 class="font-bold mb-4 text-slate-700">5. Rumus apa yang dipakai untuk menghitung ADA BERAPA KOTAK yang terisi angka?</h3>
+                    <form id="kuis-5" class="space-y-2 mb-4">
+                        <label class="flex items-center space-x-3 p-2 bg-slate-50 rounded cursor-pointer hover:bg-indigo-50"><input type="radio" name="q5" value="a" class="text-indigo-600"><span>A. =SUM()</span></label>
+                        <label class="flex items-center space-x-3 p-2 bg-slate-50 rounded cursor-pointer hover:bg-indigo-50"><input type="radio" name="q5" value="b" class="text-indigo-600"><span>B. =MAX()</span></label>
+                        <label class="flex items-center space-x-3 p-2 bg-slate-50 rounded cursor-pointer hover:bg-indigo-50"><input type="radio" name="q5" value="c" class="text-indigo-600"><span>C. =COUNT()</span></label>
+                    </form>
+                    <button type="button" onclick="cekJawaban('kuis-5', 'c', 'res-5')" class="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 rounded">Cek Jawaban</button>
+                    <div id="res-5" class="mt-3"></div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-indigo-900 text-indigo-200 py-6 text-center">
+        <p>Modul TIK Interaktif - Belajar Excel Jadi Mudah!</p>
+    </footer>
+
+    <!-- LOGIKA JAVASCRIPT -->
+    <script>
+        // --- 1. LOGIKA INTERAKTIF TABEL (MATERI 1) ---
+        function resetHighlight() {
+            const cells = document.querySelectorAll('#tabel-model th, #tabel-model td');
+            cells.forEach(cell => cell.classList.remove('highlight-cell'));
+        }
+
+        // Fungsi baru untuk interaksi tebak tabel
+        function cekTabel(tipe, target) {
+            resetHighlight();
+            const infoText = document.getElementById('info-tabel');
+            
+            // Ganti warna kotak info agar lebih menarik saat diklik
+            const infoBox = infoText.parentElement;
+            infoBox.classList.remove('bg-indigo-50', 'border-indigo-200');
+            infoBox.classList.add('bg-yellow-100', 'border-yellow-400');
+            
+            setTimeout(() => {
+                infoBox.classList.remove('bg-yellow-100', 'border-yellow-400');
+                infoBox.classList.add('bg-indigo-50', 'border-indigo-200');
+            }, 300);
+
+            if (tipe === 'kolom') {
+                document.querySelectorAll('.col-' + target).forEach(el => el.classList.add('highlight-cell'));
+                infoText.innerHTML = `Ini adalah <strong>Kolom ${target}</strong> <br><span class="text-xs sm:text-sm font-normal text-slate-600">Bagian yang membentang dari ATAS ke BAWAH.</span>`;
+            } else if (tipe === 'baris') {
+                document.querySelectorAll('.row-' + target + ' th, .row-' + target + ' td').forEach(el => el.classList.add('highlight-cell'));
+                infoText.innerHTML = `Ini adalah <strong>Baris ${target}</strong> <br><span class="text-xs sm:text-sm font-normal text-slate-600">Bagian yang membentang dari KIRI ke KANAN.</span>`;
+            } else if (tipe === 'cell') {
+                const element = document.querySelector('.cell-' + target);
+                if(element) element.classList.add('highlight-cell');
+                infoText.innerHTML = `Tepat! Ini adalah <strong>Cell ${target}</strong> <br><span class="text-xs sm:text-sm font-normal text-slate-600">Terletak di pertemuan Kolom ${target[0]} dan Baris ${target.substring(1)}.</span>`;
+            }
+        }
+
+        // --- 2. LOGIKA DRAG & DROP MENYUSUN RUMUS ---
+        let slots = [null, null, null]; // Indeks 0: Tanda, Indeks 1: Fungsi, Indeks 2: Range
+
+        // Event Drag
+        function dragStart(ev) {
+            ev.dataTransfer.setData("text/plain", ev.target.dataset.value);
+        }
+
+        function dragOver(ev) {
+            ev.preventDefault();
+            ev.currentTarget.classList.add('bg-indigo-100', 'border-indigo-400');
+        }
+
+        function dragLeave(ev) {
+            ev.currentTarget.classList.remove('bg-indigo-100', 'border-indigo-400');
+        }
+
+        function drop(ev, slotIndex) {
+            ev.preventDefault();
+            ev.currentTarget.classList.remove('bg-indigo-100', 'border-indigo-400');
+            const val = ev.dataTransfer.getData("text/plain");
+            fillSlot(slotIndex, val);
+        }
+
+        // Fitur Klik untuk pengguna Mobile/HP
+        function bankClick(ev) {
+            const val = ev.currentTarget.dataset.value;
+            const emptyIndex = slots.findIndex(s => s === null);
+            if (emptyIndex !== -1) {
+                fillSlot(emptyIndex, val);
+            } else {
+                alert("Papan Konstruksi sudah penuh! Hapus salah satu kotak dulu.");
+            }
+        }
+
+        // Memasukkan nilai ke dalam Slot
+        function fillSlot(index, val) {
+            slots[index] = val;
+            const slotEl = document.getElementById(`slot-${index}`);
+            slotEl.innerHTML = `${val} <span class="text-xs text-rose-500 ml-1 cursor-pointer" title="Hapus">✖</span>`;
+            slotEl.classList.remove('text-slate-400', 'border-dashed');
+            slotEl.classList.add('text-indigo-900', 'font-bold', 'bg-indigo-100', 'border-solid', 'border-indigo-400');
+        }
+
+        // Menghapus nilai dari Slot
+        function removeSlot(index) {
+            if (slots[index] === null) return;
+            slots[index] = null;
+            const slotEl = document.getElementById(`slot-${index}`);
+            slotEl.innerText = "";
+            slotEl.classList.add('text-slate-400', 'border-dashed');
+            slotEl.classList.remove('text-indigo-900', 'font-bold', 'bg-indigo-100', 'border-solid', 'border-indigo-400');
+        }
+
+        // Reset semua Slot
+        function resetSlots() {
+            removeSlot(0); removeSlot(1); removeSlot(2);
+            document.getElementById('hasil-simulasi').innerHTML = "";
+        }
+
+        // Menjalankan dan Menghitung Rumus
+        const formatNum = (num) => Number.isInteger(num) ? num : parseFloat(num.toFixed(2));
+
+        function jalankanRumus() {
+            const resArea = document.getElementById('hasil-simulasi');
+            
+            // Validasi Susunan Rumus
+            if (slots[0] !== "=") {
+                tampilkanPesan(resArea, "❌ Ups! Rumus Excel selalu diawali dengan tanda sama dengan (=).", "red");
+                return;
+            }
+            if (!['SUM', 'AVERAGE', 'MAX', 'MIN', 'COUNT'].includes(slots[1])) {
+                tampilkanPesan(resArea, "❌ Wah, fungsi di tengah belum tepat. Coba masukkan nama fungsi (contoh: SUM).", "red");
+                return;
+            }
+            if (slots[2] !== "(A1:C3)") {
+                tampilkanPesan(resArea, "❌ Area range data salah. Kita ingin menghitung semua tabel, pilih range (A1:C3)!", "red");
+                return;
+            }
+
+            // Ambil data dari tabel input
+            let values = [];
+            document.querySelectorAll('.excel-input').forEach(input => {
+                let val = parseFloat(input.value);
+                if (!isNaN(val)) values.push(val);
+            });
+
+            if (values.length === 0) {
+                tampilkanPesan(resArea, "⚠️ Tabelnya masih kosong! Ketik beberapa angka dulu di dalam tabel ya.", "yellow");
+                return;
+            }
+
+            // Hitung berdasarkan Fungsi
+            let res = 0;
+            const fungsi = slots[1];
+            if (fungsi === 'SUM') res = values.reduce((a, b) => a + b, 0);
+            if (fungsi === 'AVERAGE') res = values.reduce((a, b) => a + b, 0) / values.length;
+            if (fungsi === 'MAX') res = Math.max(...values);
+            if (fungsi === 'MIN') res = Math.min(...values);
+            if (fungsi === 'COUNT') res = values.length;
+
+            // Update Checklist Misi
+            const checkEl = document.getElementById(`check-${fungsi.toLowerCase()}`);
+            if(checkEl) {
+                checkEl.innerText = "✅";
+                checkEl.parentElement.classList.add("text-emerald-600", "font-bold");
+            }
+
+            // Tampilkan Hasil Sukses
+            resArea.innerHTML = `
+                <div class="bg-emerald-100 text-emerald-800 p-4 rounded-xl border border-emerald-300 text-center animate-bounce-slow">
+                    <p class="mb-1">Kerja bagus! Hasil perhitungan rumus <strong>=${fungsi}(A1:C3)</strong> adalah:</p>
+                    <p class="text-3xl font-black">${formatNum(res)}</p>
+                </div>
+            `;
+        }
+
+        function tampilkanPesan(element, pesan, warna) {
+            element.innerHTML = `<div class="bg-${warna}-100 text-${warna}-700 p-3 rounded-xl border border-${warna}-300 text-sm font-bold text-center">${pesan}</div>`;
+        }
+
+        // --- 3. LOGIKA KUIS INTERAKTIF ---
+        function cekJawaban(formId, jawabanBenar, resultId) {
+            const form = document.getElementById(formId);
+            const resultBox = document.getElementById(resultId);
+            const jawabanDipilih = form.querySelector('input[type="radio"]:checked');
+
+            if (!jawabanDipilih) {
+                resultBox.innerHTML = `<div class="p-2 bg-yellow-100 text-yellow-700 rounded text-sm text-center font-bold">Pilih jawaban dulu ya!</div>`;
+                return;
+            }
+
+            if (jawabanDipilih.value === jawabanBenar) {
+                resultBox.innerHTML = `<div class="p-2 bg-emerald-100 text-emerald-700 rounded text-sm text-center font-bold">🎉 Benar sekali!</div>`;
+            } else {
+                resultBox.innerHTML = `<div class="p-2 bg-red-100 text-red-700 rounded text-sm text-center font-bold">😅 Masih kurang tepat, coba lagi!</div>`;
+            }
+        }
+    </script>
+</body>
+</html>
