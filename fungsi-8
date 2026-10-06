@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Misi: Detektif Fungsi Linear</title>
+    <!-- Menggunakan Tailwind CSS untuk styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Animasi kustom sederhana */
+        .fade-in { animation: fadeIn 0.5s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .hidden-section { display: none; }
+        .flowchart-box { border: 2px solid #3b82f6; padding: 10px; border-radius: 8px; background-color: #eff6ff; text-align: center; margin: 5px auto; width: 200px; font-weight: bold; }
+        .flowchart-arrow { text-align: center; font-size: 24px; color: #3b82f6; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col">
+
+    <!-- Navigasi -->
+    <nav class="bg-blue-600 text-white p-4 shadow-md sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto flex flex-wrap justify-between items-center">
+            <h1 class="text-xl font-bold font-mono">🕵️ DETEKTIF FUNGSI</h1>
+            <div class="flex gap-2 text-sm overflow-x-auto mt-2 sm:mt-0 pb-2 sm:pb-0">
+                <button onclick="navigasi('beranda')" class="px-3 py-1 bg-blue-700 hover:bg-blue-800 rounded">🏠 Beranda</button>
+                <button onclick="navigasi('materi')" class="px-3 py-1 bg-blue-700 hover:bg-blue-800 rounded">📚 Materi</button>
+                <button onclick="navigasi('simulator')" class="px-3 py-1 bg-blue-700 hover:bg-blue-800 rounded">⚙️ Mesin</button>
+                <button onclick="navigasi('latihan')" class="px-3 py-1 bg-blue-700 hover:bg-blue-800 rounded">🎮 Latihan</button>
+                <button onclick="navigasi('kuis')" class="px-3 py-1 bg-blue-700 hover:bg-blue-800 rounded">🏆 Kuis</button>
+                <button onclick="navigasi('hasil')" class="px-3 py-1 bg-blue-700 hover:bg-blue-800 rounded">📊 Hasil</button>
+            </div>
+        </div>
+        <!-- Progress Bar -->
+        <div class="max-w-6xl mx-auto mt-3 bg-blue-900 rounded-full h-2">
+            <div id="progress-bar" class="bg-yellow-400 h-2 rounded-full" style="width: 0%;"></div>
+        </div>
+        <div class="max-w-6xl mx-auto text-xs mt-1 text-blue-200">Progress Pembelajaran: <span id="progress-text">0%</span></div>
+    </nav>
+
+    <!-- KONTEN UTAMA -->
+    <main class="flex-grow p-4 max-w-4xl mx-auto w-full">
+
+        <!-- 1. BERANDA -->
+        <section id="beranda" class="fade-in text-center py-12">
+            <h2 class="text-4xl md:text-6xl font-black text-blue-800 mb-4 uppercase">Misi: Detektif<br>Fungsi Linear</h2>
+            <p class="text-xl text-slate-600 mb-8">Bisakah kamu menemukan aturan tersembunyi dari sebuah tabel?</p>
+            
+            <div class="bg-white p-6 rounded-2xl shadow-lg inline-block mb-8 border-4 border-dashed border-blue-200">
+                <div class="text-2xl font-mono text-slate-700 flex items-center gap-4 justify-center">
+                    <div class="bg-blue-100 p-4 rounded-lg">🔢 2</div>
+                    <div>➡️ ⚙️ ? ➡️</div>
+                    <div class="bg-green-100 p-4 rounded-lg">🎯 8</div>
+                </div>
+            </div>
+
+            <div>
+                <button onclick="navigasi('materi'); updateProgress(15);" class="bg-yellow-400 hover:bg-yellow-500 text-slate-900 font-bold text-2xl py-4 px-8 rounded-full shadow-lg transform transition hover:scale-105">🚀 MULAI MISI</button>
+            </div>
+        </section>
+
+        <!-- 2. MATERI (KENALI, AMATI, POLA, RUMUS) -->
+        <section id="materi" class="hidden-section fade-in">
+            <h2 class="text-3xl font-bold text-blue-700 mb-6 border-b-2 border-blue-200 pb-2">📚 Kenali: Apa itu Fungsi?</h2>
+            
+            <div class="bg-white p-6 rounded-xl shadow-md mb-6">
+                <p class="mb-4 text-lg">Fungsi itu mirip seperti sebuah <strong>mesin</strong>. Kamu memasukkan sesuatu (INPUT), mesin memprosesnya dengan aturan tertentu, dan mengeluarkan hasil (OUTPUT).</p>
+                <div class="flex justify-center items-center gap-4 text-xl font-bold my-6 bg-slate-100 p-6 rounded-xl border border-slate-200">
+                    <span class="text-blue-600">3 (Input)</span> 
+                    <span>➡️</span> 
+                    <span class="bg-slate-800 text-white px-4 py-2 rounded">[ + 5 ]</span> 
+                    <span>➡️</span> 
+                    <span class="text-green-600">8 (Output)</span>
+                </div>
+                
+                <div class="bg-yellow-50 p-4 rounded-lg border-l-4 border-yellow-400">
+                    <h3 class="font-bold mb-2">Coba Sendiri! (Aturan: Tambah 5)</h3>
+                    <div class="flex gap-2">
+                        <input type="number" id="demo-input" placeholder="Masukkan angka..." class="border p-2 rounded w-48">
+                        <button onclick="cobaMesinMateri()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Proses</button>
+                    </div>
+                    <div id="demo-hasil" class="mt-4 font-mono text-lg font-bold text-slate-700"></div>
+                </div>
+            </div>
+
+            <h2 class="text-3xl font-bold text-blue-700 mb-6 border-b-2 border-blue-200 pb-2 mt-12">🔎 Amati: Menemukan Pola (m) dan Nilai Awal (c)</h2>
+            <div class="bg-white p-6 rounded-xl shadow-md mb-6">
+                <p class="mb-4 text-lg">Fungsi Linear selalu memiliki <strong>perubahan yang tetap</strong>. Bentuk rumusnya adalah:</p>
+                <div class="text-center text-3xl font-black text-slate-800 my-6 bg-blue-50 py-4 rounded-lg">
+                    f(x) = <span class="text-red-500">m</span>x + <span class="text-green-600">c</span>
+                </div>
+                <ul class="list-disc pl-6 mb-6 text-lg space-y-2">
+                    <li><strong class="text-red-500">m</strong> = Seberapa besar output berubah (perubahan tetap).</li>
+                    <li><strong class="text-green-600">c</strong> = Nilai awal (saat x = 0) atau pelengkap rumus.</li>
+                </ul>
+
+                <h3 class="font-bold text-xl mb-4 text-blue-800">Contoh Membaca Tabel:</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-center border-collapse">
+                        <thead>
+                            <tr class="bg-blue-600 text-white">
+                                <th class="border p-2">Input (x)</th>
+                                <th class="border p-2">Output f(x)</th>
+                                <th class="border p-2 bg-yellow-500 text-black">Perubahan</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-lg">
+                            <tr><td class="border p-2 font-bold">1</td><td class="border p-2">5</td><td class="border p-2 text-slate-400">-</td></tr>
+                            <tr><td class="border p-2 font-bold">2</td><td class="border p-2">12</td><td class="border p-2 text-red-500 font-bold">+7</td></tr>
+                            <tr><td class="border p-2 font-bold">3</td><td class="border p-2">19</td><td class="border p-2 text-red-500 font-bold">+7</td></tr>
+                            <tr><td class="border p-2 font-bold">4</td><td class="border p-2">26</td><td class="border p-2 text-red-500 font-bold">+7</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="mt-4 text-lg">Karena perubahannya selalu +7, maka nilai <strong class="text-red-500">m = 7</strong>.</p>
+                <p class="mt-2 text-lg">Rumus sementara: <strong>f(x) = 7x + c</strong>. Jika x=1, hasilnya harus 5. <br>7(1) + c = 5 ➡️ 7 + c = 5 ➡️ <strong class="text-green-600">c = -2</strong>.</p>
+                <p class="mt-2 font-bold text-xl text-blue-600">Rumus Akhir: f(x) = 7x - 2</p>
+            </div>
+
+            <!-- Hubungan Informatika -->
+            <div class="bg-blue-50 border border-blue-200 p-6 rounded-xl shadow-md mb-6">
+                <h3 class="text-2xl font-bold text-blue-800 mb-4">💻 Algoritma Menemukan Fungsi</h3>
+                <p class="mb-4">Dalam Informatika, langkah-langkah penemuan rumus ini disebut <strong>Algoritma</strong>. Berikut adalah urutan logisnya:</p>
+                <div class="flex flex-col items-center">
+                    <div class="flowchart-box">MULAI</div>
+                    <div class="flowchart-arrow">↓</div>
+                    <div class="flowchart-box">Baca tabel (Input & Output)</div>
+                    <div class="flowchart-arrow">↓</div>
+                    <div class="flowchart-box">Cari perubahan output (m)</div>
+                    <div class="flowchart-arrow">↓</div>
+                    <div class="flowchart-box">Gunakan f(x) = mx + c</div>
+                    <div class="flowchart-arrow">↓</div>
+                    <div class="flowchart-box">Tentukan nilai c</div>
+                    <div class="flowchart-arrow">↓</div>
+                    <div class="flowchart-box">Susun Rumus & Prediksi</div>
+                    <div class="flowchart-arrow">↓</div>
+                    <div class="flowchart-box">SELESAI</div>
+                </div>
+            </div>
+
+            <div class="text-center mt-8">
+                <button onclick="navigasi('simulator'); updateProgress(30);" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full shadow-lg">Lanjut ke Mesin Fungsi ➡️</button>
+            </div>
+        </section>
+
+        <!-- 3. INTERAKTIF: MESIN FUNGSI (SIMULATOR) -->
+        <section id="simulator" class="hidden-section fade-in text-center">
+            <h2 class="text-3xl font-bold text-blue-700 mb-2">⚙️ Simulator Mesin Fungsi</h2>
+            <p class="text-slate-600 mb-8">Pilih aturan mesin, masukkan nilai input, dan lihat bagaimana mesin memproses datanya!</p>
+
+            <div class="bg-slate-800 p-8 rounded-2xl shadow-2xl max-w-lg mx-auto border-4 border-slate-600">
+                
+                <div class="mb-6 text-left">
+                    <label class="text-slate-300 font-bold block mb-2">Pilih Aturan Mesin:</label>
+                    <select id="sim-rumus" class="w-full p-3 rounded font-mono text-lg bg-slate-700 text-white border-none">
+                        <option value="2,3">f(x) = 2x + 3</option>
+                        <option value="5,-2">f(x) = 5x - 2</option>
+                        <option value="-3,10">f(x) = -3x + 10</option>
+                        <option value="1,0">f(x) = x (Mesin Cermin)</option>
+                    </select>
+                </div>
+
+                <div class="flex justify-center items-center gap-4 mb-8">
+                    <div>
+                        <label class="text-slate-300 font-bold block mb-2 text-sm">INPUT (x)</label>
+                        <input type="number" id="sim-input" class="w-24 p-4 rounded text-center font-bold text-2xl" value="4">
+                    </div>
+                    <div class="text-3xl text-slate-400 mt-6">➡️</div>
+                    <div class="bg-slate-700 p-4 rounded mt-6 border-2 border-dashed border-slate-500 text-white text-3xl">⚙️</div>
+                    <div class="text-3xl text-slate-400 mt-6">➡️</div>
+                    <div>
+                        <label class="text-slate-300 font-bold block mb-2 text-sm text-yellow-400">OUTPUT f(x)</label>
+                        <div id="sim-output" class="w-24 p-4 rounded text-center font-bold text-2xl bg-slate-900 text-yellow-400 border border-slate-600">?</div>
+                    </div>
+                </div>
+
+                <button onclick="jalankanMesin()" class="w-full bg-green-500 hover:bg-green-600 text-white font-black text-xl py-4 rounded-xl shadow-lg transition transform active:scale-95">JALANKAN MESIN PROSES!</button>
+                
+                <div id="sim-langkah" class="mt-6 text-slate-300 font-mono text-lg bg-slate-900 p-4 rounded-lg hidden">
+                    <!-- Animasi langkah muncul di sini -->
+                </div>
+            </div>
+
+            <div class="mt-8">
+                <button onclick="navigasi('latihan'); updateProgress(50);" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full shadow-lg">Mulai Latihan Detektif ➡️</button>
+            </div>
+        </section>
+
+        <!-- 4. LATIHAN INTERAKTIF (DETEKTIF POLA) -->
+        <section id="latihan" class="hidden-section fade-in">
+            <h2 class="text-3xl font-bold text-blue-700 mb-2 text-center">🎮 Game: Detektif Pola</h2>
+            <p class="text-slate-600 mb-8 text-center">Selesaikan misi untuk melengkapi data dan menemukan rumus rahasia!</p>
+
+            <div class="bg-white p-6 rounded-xl shadow-md max-w-2xl mx-auto border-t-4 border-yellow-400">
+                <!-- Tabel Soal -->
+                <div class="overflow-x-auto mb-6">
+                    <table class="w-full text-center border-collapse">
+                        <thead>
+                            <tr class="bg-slate-100">
+                                <th class="border p-3">Input (x)</th>
+                                <td class="border p-3 font-bold">1</td>
+                                <td class="border p-3 font-bold">2</td>
+                                <td class="border p-3 font-bold">3</td>
+                                <td class="border p-3 font-bold">4</td>
+                                <td class="border p-3 font-bold bg-blue-50">10</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th class="border p-3">Output f(x)</th>
+                                <td class="border p-3 text-lg">8</td>
+                                <td class="border p-3 text-lg">13</td>
+                                <td class="border p-3 text-lg">18</td>
+                                <td class="border p-3 text-lg">23</td>
+                                <td class="border p-3 font-bold bg-blue-50 text-blue-600">?</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Pertanyaan Bertingkat -->
+                <div id="latihan-misi-1" class="mb-4 bg-slate-50 p-4 rounded border">
+                    <p class="font-bold mb-2">Misi 1: Berapa nilai perubahan output setiap x bertambah 1?</p>
+                    <div class="flex gap-2">
+                        <input type="number" id="ans-m1" class="border p-2 rounded w-24 text-center">
+                        <button onclick="cekLatihan(1, 5)" class="bg-blue-600 text-white px-4 py-2 rounded">Cek</button>
+                    </div>
+                    <p id="feed-m1" class="mt-2 text-sm font-bold hidden"></p>
+                </div>
+
+                <div id="latihan-misi-2" class="mb-4 bg-slate-50 p-4 rounded border hidden opacity-50 transition-opacity">
+                    <p class="font-bold mb-2">Misi 2: Berarti nilai <strong class="text-red-500">m</strong> adalah?</p>
+                    <div class="flex gap-2">
+                        <input type="number" id="ans-m2" class="border p-2 rounded w-24 text-center">
+                        <button onclick="cekLatihan(2, 5)" class="bg-blue-600 text-white px-4 py-2 rounded">Cek</button>
+                    </div>
+                    <p id="feed-m2" class="mt-2 text-sm font-bold hidden"></p>
+                </div>
+
+                <div id="latihan-misi-3" class="mb-4 bg-slate-50 p-4 rounded border hidden opacity-50 transition-opacity">
+                    <p class="font-bold mb-2">Misi 3: Jika f(x) = 5x + c, agar f(1) = 8, berapa nilai <strong class="text-green-600">c</strong>?</p>
+                    <div class="flex gap-2">
+                        <input type="number" id="ans-m3" class="border p-2 rounded w-24 text-center">
+                        <button onclick="cekLatihan(3, 3)" class="bg-blue-600 text-white px-4 py-2 rounded">Cek</button>
+                    </div>
+                    <p id="feed-m3" class="mt-2 text-sm font-bold hidden"></p>
+                </div>
+
+                <div id="latihan-misi-4" class="mb-4 bg-slate-50 p-4 rounded border hidden opacity-50 transition-opacity">
+                    <p class="font-bold mb-2">Misi 4: Susun rumus utuhnya! f(x) = ...</p>
+                    <div class="flex gap-2 items-center">
+                        <span>f(x) = </span>
+                        <input type="text" id="ans-m4" class="border p-2 rounded w-32 text-center font-mono" placeholder="5x + 3">
+                        <button onclick="cekLatihanText(4, '5x+3')" class="bg-blue-600 text-white px-4 py-2 rounded">Cek</button>
+                    </div>
+                    <p id="feed-m4" class="mt-2 text-sm font-bold hidden"></p>
+                </div>
+
+                <div id="latihan-misi-5" class="mb-4 bg-slate-50 p-4 rounded border hidden opacity-50 transition-opacity">
+                    <p class="font-bold mb-2">Misi 5 (Prediksi): Gunakan rumusmu untuk mencari f(10)!</p>
+                    <div class="flex gap-2">
+                        <input type="number" id="ans-m5" class="border p-2 rounded w-24 text-center">
+                        <button onclick="cekLatihan(5, 53)" class="bg-blue-600 text-white px-4 py-2 rounded">Cek</button>
+                    </div>
+                    <p id="feed-m5" class="mt-2 text-sm font-bold hidden"></p>
+                </div>
+                
+                <!-- Tombol Lanjut ke Kuis -->
+                <div id="btn-lanjut-kuis" class="text-center mt-6 hidden">
+                    <button onclick="navigasi('kuis'); updateProgress(70);" class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-full shadow-lg w-full">Hebat! Lanjut ke Kuis Akhir 🏆</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. KUIS AKHIR -->
+        <section id="kuis" class="hidden-section fade-in max-w-2xl mx-auto">
+            <h2 class="text-3xl font-bold text-blue-700 mb-6 text-center border-b-2 border-blue-200 pb-2">🏆 Kuis Akhir</h2>
+            
+            <div id="kuis-container" class="bg-white p-6 rounded-xl shadow-lg border-t-4 border-blue-600">
+                <div class="flex justify-between text-sm text-slate-500 font-bold mb-4">
+                    <span id="kuis-status">Soal 1 dari 10</span>
+                    <span>Skor: <span id="kuis-skor-live" class="text-blue-600">0</span></span>
+                </div>
+                
+                <div id="kuis-soal" class="text-xl mb-6 font-medium text-slate-800">
+                    <!-- Soal dirender via JS -->
+                </div>
+                
+                <div id="kuis-opsi" class="flex flex-col gap-3">
+                    <!-- Opsi dirender via JS -->
+                </div>
+
+                <div id="kuis-feedback" class="mt-6 p-4 rounded-lg hidden font-bold text-center"></div>
+                
+                <button id="btn-next-soal" onclick="nextSoal()" class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg hidden">Soal Berikutnya</button>
+            </div>
+        </section>
+
+        <!-- 6. HASIL BELAJAR -->
+        <section id="hasil" class="hidden-section fade-in text-center py-12">
+            <h2 class="text-4xl font-black text-blue-800 mb-6 uppercase">📊 Hasil Belajarmu</h2>
+            
+            <div class="bg-white p-8 rounded-2xl shadow-xl max-w-md mx-auto mb-8 border-4 border-blue-100">
+                <div class="text-6xl mb-4" id="ikon-hasil">🏆</div>
+                <h3 class="text-2xl font-bold text-slate-700 mb-2" id="predikat-hasil">Master Fungsi</h3>
+                <div class="text-5xl font-black text-blue-600 mb-6" id="skor-akhir">0</div>
+                
+                <div class="text-left bg-slate-50 p-4 rounded-lg border border-slate-200 mb-4">
+                    <p class="font-bold text-sm text-slate-500 mb-1">Rekomendasi Sistem:</p>
+                    <p class="text-slate-700" id="rekomendasi-hasil">Ayo selesaikan kuis terlebih dahulu untuk melihat hasilmu!</p>
+                </div>
+            </div>
+
+            <div class="flex justify-center gap-4">
+                <button onclick="navigasi('beranda')" class="bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold py-3 px-6 rounded-full shadow transition">🔄 Ulangi dari Awal</button>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-slate-800 text-slate-400 text-center p-4 text-sm mt-8">
+        Modul Pembelajaran Informatika Kelas 8 - Fungsi Linear & Algoritma
+    </footer>
+
+    <!-- KODE JAVASCRIPT -->
+    <script>
+        /* 
+         * ==========================================
+         * BAGIAN 1: MANAJEMEN NAVIGASI & STATE
+         * ==========================================
+         */
+        const sections = ['beranda', 'materi', 'simulator', 'latihan', 'kuis', 'hasil'];
+        
+        function navigasi(targetId) {
+            // Sembunyikan semua section
+            sections.forEach(id => {
+                document.getElementById(id).classList.add('hidden-section');
+            });
+            // Tampilkan target
+            document.getElementById(targetId).classList.remove('hidden-section');
+            window.scrollTo(0, 0);
+
+            // Jika masuk kuis dan belum dimulai, render soal pertama
+            if (targetId === 'kuis' && currentSoalIndex === 0) {
+                renderSoal();
+            }
+            // Jika masuk hasil, update dashboard
+            if (targetId === 'hasil') {
+                updateDashboardHasil();
+                updateProgress(100);
+            }
+        }
+
+        function updateProgress(percent) {
+            document.getElementById('progress-bar').style.width = percent + '%';
+            document.getElementById('progress-text').innerText = percent + '%';
+        }
+
+        /* 
+         * ==========================================
+         * BAGIAN 2: MATERI & SIMULATOR FUNGSI
+         * ==========================================
+         */
+        function cobaMesinMateri() {
+            let input = document.getElementById('demo-input').value;
+            let hasilDiv = document.getElementById('demo-hasil');
+            if(input === "") {
+                hasilDiv.innerText = "Masukkan angka dulu ya!";
+                hasilDiv.className = "mt-4 font-mono text-lg font-bold text-red-500";
+                return;
+            }
+            let angka = parseFloat(input);
+            let hasil = angka + 5;
+            hasilDiv.className = "mt-4 font-mono text-lg font-bold text-green-600 bg-green-50 p-2 rounded";
+            hasilDiv.innerHTML = `${angka} ➡️ <span class="text-slate-500">${angka} + 5</span> ➡️ <span class="text-2xl text-green-700">${hasil}</span>`;
+        }
+
+        function jalankanMesin() {
+            let inputVal = document.getElementById('sim-input').value;
+            let aturan = document.getElementById('sim-rumus').value.split(','); // format: "m,c"
+            let outputBox = document.getElementById('sim-output');
+            let langkahBox = document.getElementById('sim-langkah');
+            let btn = document.querySelector('#simulator button');
+
+            if(inputVal === "") return;
+            
+            let x = parseFloat(inputVal);
+            let m = parseFloat(aturan[0]);
+            let c = parseFloat(aturan[1]);
+            
+            // Animasi Proses
+            outputBox.innerText = "⚙️...";
+            outputBox.classList.add("animate-pulse");
+            langkahBox.classList.remove("hidden");
+            langkahBox.innerHTML = `Menerima input x = ${x}...`;
+            btn.disabled = true;
+
+            setTimeout(() => {
+                let textC = c >= 0 ? `+ ${c}` : `- ${Math.abs(c)}`;
+                langkahBox.innerHTML = `f(${x}) = ${m}(${x}) ${textC}`;
+                
+                setTimeout(() => {
+                    let prosesM = m * x;
+                    langkahBox.innerHTML += `<br>f(${x}) = ${prosesM} ${textC}`;
+                    
+                    setTimeout(() => {
+                        let hasil = (m * x) + c;
+                        langkahBox.innerHTML += `<br><span class="text-yellow-400 font-bold text-xl">Output = ${hasil}</span>`;
+                        outputBox.innerText = hasil;
+                        outputBox.classList.remove("animate-pulse");
+                        btn.disabled = false;
+                    }, 800);
+                }, 800);
+            }, 800);
+        }
+
+        /* 
+         * ==========================================
+         * BAGIAN 3: LATIHAN INTERAKTIF (GAME POLA)
+         * ==========================================
+         */
+        function cekLatihan(misiId, jawabanBenar) {
+            let input = document.getElementById('ans-m' + misiId);
+            let feedback = document.getElementById('feed-m' + misiId);
+            
+            if(parseFloat(input.value) === jawabanBenar) {
+                feedback.innerText = "✅ Benar! Lanjut ke misi berikutnya.";
+                feedback.className = "mt-2 text-sm font-bold text-green-600 block";
+                input.disabled = true;
+                
+                // Buka misi berikutnya
+                if(misiId < 5) {
+                    let nextMisi = document.getElementById('latihan-misi-' + (misiId + 1));
+                    nextMisi.classList.remove('hidden');
+                    // Timeout sedikit untuk efek transisi
+                    setTimeout(() => nextMisi.classList.remove('opacity-50'), 100);
+                } else {
+                    document.getElementById('btn-lanjut-kuis').classList.remove('hidden');
+                }
+            } else {
+                feedback.innerText = "❌ Kurang tepat, coba hitung lagi.";
+                feedback.className = "mt-2 text-sm font-bold text-red-500 block";
+            }
+        }
+
+        function cekLatihanText(misiId, jawabanBenarStr) {
+            let input = document.getElementById('ans-m' + misiId);
+            let feedback = document.getElementById('feed-m' + misiId);
+            // Hapus spasi untuk pencocokan string
+            let cleanInput = input.value.replace(/\s/g, '').toLowerCase();
+            if(cleanInput === jawabanBenarStr) {
+                feedback.innerText = "✅ Tepat Sekali!";
+                feedback.className = "mt-2 text-sm font-bold text-green-600 block";
+                input.disabled = true;
+                
+                let nextMisi = document.getElementById('latihan-misi-' + (misiId + 1));
+                nextMisi.classList.remove('hidden');
+                setTimeout(() => nextMisi.classList.remove('opacity-50'), 100);
+            } else {
+                feedback.innerText = "❌ Cek lagi, formatnya mx + c atau mx - c (contoh: 2x+1)";
+                feedback.className = "mt-2 text-sm font-bold text-red-500 block";
+            }
+        }
+
+        /* 
+         * ==========================================
+         * BAGIAN 4: DATA SOAL & MESIN KUIS
+         * ==========================================
+         */
+        // Data soal: Mengandung pertanyaan, opsi, dan indeks jawaban benar (0-3)
+        const dataSoal = [
+            { 
+                q: "1. Jika sebuah mesin memiliki aturan 'Kalikan 2 lalu tambah 1'. Berapakah output jika inputnya adalah 4?", 
+                opsi: ["7", "8", "9", "10"], 
+                jawaban: 2 // 9
+            },
+            { 
+                q: "2. Diketahui rumus fungsi f(x) = 3x - 2. Nilai dari f(5) adalah...", 
+                opsi: ["10", "13", "15", "17"], 
+                jawaban: 1 // 13
+            },
+            { 
+                q: "3. Perhatikan data: (Input 1, Output 4), (Input 2, Output 7), (Input 3, Output 10). Berapa nilai perubahan (m)?", 
+                opsi: ["+2", "+3", "+4", "+5"], 
+                jawaban: 1 // +3
+            },
+            { 
+                q: "4. Dari soal nomor 3, nilai perubahan (m) adalah 3. Berapakah nilai awal (c)? Ingat f(x) = mx + c.", 
+                opsi: ["-1", "0", "1", "2"], 
+                jawaban: 2 // 1, karena 3(1)+1 = 4
+            },
+            { 
+                q: "5. Manakah yang merupakan bentuk umum rumus fungsi linear?", 
+                opsi: ["f(x) = m + c", "f(x) = x + mc", "f(x) = mx + c", "f(x) = mc + x"], 
+                jawaban: 2
+            },
+            { 
+                q: "6. Jika f(x) = 4x + 5. Berapakah nilai f(10)?", 
+                opsi: ["40", "45", "50", "54"], 
+                jawaban: 1 // 45
+            },
+            { 
+                q: "7. Sebuah tabel fungsi menunjukkan: f(1)=8, f(2)=10, f(3)=12. Rumus fungsi yang tepat adalah...", 
+                opsi: ["f(x) = 2x + 6", "f(x) = x + 7", "f(x) = 3x + 5", "f(x) = 2x + 8"], 
+                jawaban: 0 // 2x + 6
+            },
+            { 
+                q: "8. Dalam algoritma pembuatan fungsi, setelah kita menemukan nilai m (perubahan), langkah selanjutnya adalah...", 
+                opsi: ["Selesai", "Mencari nilai input", "Membuat tabel baru", "Mencari nilai c (konstanta)"], 
+                jawaban: 3
+            },
+            { 
+                q: "9. Pabrik kue memproduksi 20 kue di hari ke-1, 35 kue di hari ke-2, 50 kue di hari ke-3. Berapa produksi pada hari ke-5?", 
+                opsi: ["65", "70", "75", "80"], 
+                jawaban: 3 // m=15, c=5. f(5) = 15(5)+5 = 80
+            },
+            { 
+                q: "10. Di dalam pemrograman visual seperti Scratch atau Blockly, 'Input -> Proses -> Output' ini sangat mirip dengan konsep...", 
+                opsi: ["Warna blok", "Pembuatan Variabel & Fungsi", "Menggambar karakter", "Menyimpan file"], 
+                jawaban: 1
+            }
+        ];
+
+        let currentSoalIndex = 0;
+        let skorKuis = 0;
+        let soalTerjawab = false;
+
+        function renderSoal() {
+            soalTerjawab = false;
+            document.getElementById('kuis-feedback').classList.add('hidden');
+            document.getElementById('btn-next-soal').classList.add('hidden');
+            document.getElementById('kuis-status').innerText = `Soal ${currentSoalIndex + 1} dari ${dataSoal.length}`;
+            
+            let data = dataSoal[currentSoalIndex];
+            document.getElementById('kuis-soal').innerText = data.q;
+            
+            let opsiContainer = document.getElementById('kuis-opsi');
+            opsiContainer.innerHTML = '';
+            
+            data.opsi.forEach((teksOpsi, idx) => {
+                let btn = document.createElement('button');
+                btn.className = "w-full text-left p-4 rounded-lg border-2 border-slate-200 bg-slate-50 hover:bg-blue-50 hover:border-blue-400 transition font-medium";
+                btn.innerText = teksOpsi;
+                btn.onclick = () => jawabSoal(idx, btn);
+                opsiContainer.appendChild(btn);
+            });
+        }
+
+        function jawabSoal(idxDipilih, btnElemen) {
+            if (soalTerjawab) return;
+            soalTerjawab = true;
+            
+            let data = dataSoal[currentSoalIndex];
+            let feedback = document.getElementById('kuis-feedback');
+            
+            // Nonaktifkan semua tombol opsi
+            let semuaBtn = document.getElementById('kuis-opsi').querySelectorAll('button');
+            semuaBtn.forEach((b, i) => {
+                b.disabled = true;
+                if(i === data.jawaban) {
+                    b.classList.remove('bg-slate-50', 'border-slate-200');
+                    b.classList.add('bg-green-100', 'border-green-500', 'text-green-800'); // Tunjukkan yg benar
+                }
+            });
+
+            if (idxDipilih === data.jawaban) {
+                // Benar
+                skorKuis += 10;
+                document.getElementById('kuis-skor-live').innerText = skorKuis;
+                feedback.innerText = "🎉 Jawaban Benar!";
+                feedback.className = "mt-6 p-4 rounded-lg font-bold text-center bg-green-100 text-green-700 block";
+            } else {
+                // Salah
+                btnElemen.classList.remove('bg-slate-50', 'border-slate-200');
+                btnElemen.classList.add('bg-red-100', 'border-red-500', 'text-red-800');
+                feedback.innerText = "💡 Jawaban Kurang Tepat. Perhatikan penanda hijau untuk jawaban benar.";
+                feedback.className = "mt-6 p-4 rounded-lg font-bold text-center bg-red-100 text-red-700 block";
+            }
+
+            // Tampilkan tombol next atau hasil
+            let btnNext = document.getElementById('btn-next-soal');
+            btnNext.classList.remove('hidden');
+            if (currentSoalIndex === dataSoal.length - 1) {
+                btnNext.innerText = "Lihat Hasil Akhir";
+            }
+        }
+
+        function nextSoal() {
+            if (currentSoalIndex < dataSoal.length - 1) {
+                currentSoalIndex++;
+                renderSoal();
+            } else {
+                // Selesai Kuis
+                navigasi('hasil');
+            }
+        }
+
+        /* 
+         * ==========================================
+         * BAGIAN 5: PERHITUNGAN HASIL & KATEGORI
+         * ==========================================
+         */
+        function updateDashboardHasil() {
+            document.getElementById('skor-akhir').innerText = skorKuis;
+            let predikat = "";
+            let ikon = "";
+            let rekomendasi = "";
+
+            if (skorKuis >= 90) {
+                predikat = "Master Fungsi";
+                ikon = "👑";
+                rekomendasi = "Luar biasa! Pemahaman algoritmik dan logikamu sudah sangat matang. Kamu siap mengaplikasikannya di pemograman visual!";
+            } else if (skorKuis >= 80) {
+                predikat = "Ahli Fungsi";
+                ikon = "🌟";
+                rekomendasi = "Sangat bagus! Kamu sudah menguasai konsep fungsi linear dengan baik.";
+            } else if (skorKuis >= 70) {
+                predikat = "Penjelajah Fungsi";
+                ikon = "🚀";
+                rekomendasi = "Kerja bagus. Kamu sudah memahami dasarnya, coba pelajari kembali bagian menentukan nilai 'c'.";
+            } else {
+                predikat = "Yuk Berlatih Lagi";
+                ikon = "💪";
+                rekomendasi = "Tidak apa-apa! Konsep mesin fungsi butuh latihan. Ulangi materi dari bagian membaca tabel dan temukan pola.";
+            }
+
+            document.getElementById('predikat-hasil').innerText = predikat;
+            document.getElementById('ikon-hasil').innerText = ikon;
+            document.getElementById('rekomendasi-hasil').innerText = rekomendasi;
+        }
+
+        // Jalankan saat pertama kali diload
+        window.onload = () => {
+            navigasi('beranda');
+        };
+    </script>
+</body>
+</html>
