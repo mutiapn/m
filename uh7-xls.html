@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Excel Space Shooter</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@400;700&display=swap');
+
+        :root {
+            --bg-color: #0b0c10;
+            --panel-bg: #1f2833;
+            --excel-green: #217346;
+            --excel-light: #45a049;
+            --accent-cyan: #66fcf1;
+            --accent-blue: #45a29e;
+            --text-main: #c5c6c7;
+            --text-bright: #ffffff;
+            --danger: #ff4c4c;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            user-select: none;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        h1, h2, h3, .sci-fi-text {
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        #app-container {
+            width: 100%;
+            max-width: 600px;
+            height: 100vh;
+            max-height: 900px;
+            background-color: var(--panel-bg);
+            position: relative;
+            box-shadow: 0 0 20px rgba(102, 252, 241, 0.2);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .screen {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            background: var(--bg-color);
+            z-index: 10;
+            overflow-y: auto;
+            transition: opacity 0.3s ease;
+        }
+
+        .hidden {
+            display: none !important;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* --- START SCREEN --- */
+        .title-box {
+            text-align: center;
+            margin-bottom: 30px;
+            margin-top: 20px;
+        }
+        .title-box h1 {
+            color: var(--excel-green);
+            font-size: 2.2rem;
+            text-shadow: 0 0 10px rgba(33, 115, 70, 0.6);
+            line-height: 1.2;
+        }
+        .title-box h2 {
+            color: var(--accent-cyan);
+            font-size: 1rem;
+            margin-top: 10px;
+        }
+        .title-box p {
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: var(--text-main);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--accent-blue);
+            font-weight: bold;
+        }
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255,255,255,0.05);
+            border: 2px solid var(--accent-blue);
+            border-radius: 8px;
+            color: var(--text-bright);
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        .form-control:focus {
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 8px rgba(102, 252, 241, 0.3);
+        }
+        select.form-control option {
+            background-color: var(--panel-bg);
+            color: var(--text-bright);
+        }
+
+        .btn {
+            background: var(--excel-green);
+            color: var(--text-bright);
+            border: none;
+            padding: 15px;
+            width: 100%;
+            font-size: 1.2rem;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            text-transform: uppercase;
+            box-shadow: 0 4px 0 #14462b;
+            transition: transform 0.1s, box-shadow 0.1s;
+            margin-top: 10px;
+        }
+        .btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 0 0 #14462b;
+        }
+        .btn-cyan {
+            background: var(--accent-blue);
+            box-shadow: 0 4px 0 #1f6b67;
+        }
+        .btn-cyan:active { box-shadow: 0 0 0 #1f6b67; }
+        
+        .btn-danger {
+            background: transparent;
+            border: 2px solid var(--danger);
+            color: var(--danger);
+            box-shadow: none;
+        }
+        .btn-danger:active { background: rgba(255,76,76,0.1); transform: translateY(2px); }
+
+        /* --- GAME SCREEN --- */
+        #game-screen {
+            padding: 0;
+            background: #000;
+        }
+        #game-ui {
+            position: absolute;
+            top: 0; left: 0; width: 100%;
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-between;
+            color: var(--accent-cyan);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            z-index: 5;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
+            pointer-events: none;
+        }
+        canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        #mobile-controls {
+            position: absolute;
+            bottom: 20px; left: 0; width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+            z-index: 5;
+        }
+        .d-pad, .action-pad { display: flex; gap: 10px; }
+        .control-btn {
+            width: 60px; height: 60px;
+            background: rgba(102, 252, 241, 0.2);
+            border: 2px solid var(--accent-cyan);
+            border-radius: 50%;
+            color: var(--accent-cyan);
+            font-size: 1.5rem;
+            display: flex; justify-content: center; align-items: center;
+            user-select: none;
+        }
+        .control-btn:active { background: rgba(102, 252, 241, 0.5); }
+
+        /* --- QUESTION MODAL & CUSTOM MODALS --- */
+        .modal-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(11, 12, 16, 0.95);
+            z-index: 30;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            justify-content: center;
+            align-items: center;
+        }
+        .q-box {
+            background: var(--panel-bg);
+            border: 2px solid var(--accent-cyan);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 0 15px rgba(102, 252, 241, 0.2);
+            width: 100%;
+            max-width: 500px;
+        }
+        .q-header {
+            display: flex; justify-content: space-between;
+            color: var(--accent-cyan);
+            font-family: 'Orbitron', sans-serif;
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--accent-blue);
+            padding-bottom: 10px;
+        }
+        .q-text {
+            font-size: 1.1rem;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            color: var(--text-bright);
+        }
+        .options-grid {
+            display: flex; flex-direction: column; gap: 10px;
+        }
+        .opt-btn {
+            background: rgba(255,255,255,0.05);
+            border: 2px solid var(--accent-blue);
+            color: var(--text-bright);
+            padding: 12px;
+            border-radius: 8px;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 1rem;
+        }
+        .opt-btn.selected {
+            background: var(--accent-blue);
+            border-color: var(--accent-cyan);
+            font-weight: bold;
+        }
+        
+        /* Feedback Overlay */
+        #feedback-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            z-index: 40;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            text-align: center; padding: 20px;
+        }
+        .fb-title { font-family: 'Orbitron', sans-serif; font-size: 2rem; margin-bottom: 10px; }
+        .fb-correct { color: var(--excel-green); text-shadow: 0 0 10px var(--excel-light); }
+        .fb-wrong { color: var(--danger); text-shadow: 0 0 10px darkred; }
+
+        /* --- END & REVIEW SCREEN --- */
+        .score-display {
+            text-align: center;
+            background: rgba(33, 115, 70, 0.2);
+            border: 2px solid var(--excel-green);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .score-number {
+            font-size: 4rem;
+            font-family: 'Orbitron', sans-serif;
+            color: var(--excel-green);
+            text-shadow: 0 0 10px rgba(33, 115, 70, 0.5);
+            font-weight: bold;
+            line-height: 1;
+        }
+        .stats-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px;
+        }
+        .stat-card {
+            background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px; text-align: center;
+            border: 1px solid var(--accent-blue);
+        }
+        .stat-card span { display: block; font-family: 'Orbitron', sans-serif; color: var(--accent-cyan); font-size: 1.2rem; }
+        
+        .review-item {
+            background: rgba(255,255,255,0.05);
+            border-left: 5px solid var(--accent-blue);
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+        }
+        .review-item.benar { border-color: var(--excel-green); background: rgba(33, 115, 70, 0.1); }
+        .review-item.salah { border-color: var(--danger); background: rgba(255, 76, 76, 0.1); }
+        .review-q { font-weight: bold; color: var(--text-bright); margin-bottom: 8px;}
+        .review-ans { font-size: 0.9rem; margin-bottom: 5px;}
+        .review-exp { margin-top: 10px; font-size: 0.85rem; color: var(--accent-cyan); padding-top: 10px; border-top: 1px dashed rgba(255,255,255,0.2); }
+
+        @media (min-width: 768px) {
+            #mobile-controls { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="app-container">
+    
+    <!-- 1. START SCREEN -->
+    <div id="start-screen" class="screen">
+        <div class="title-box">
+            <h1>EXCEL SPACE<br>SHOOTER</h1>
+            <h2>Ulangan Harian 3 - Informatika Kelas 7</h2>
+            <p>"Siapkan pesawatmu, tembak target data, dan selamatkan galaksi Excel!"</p>
+        </div>
+
+        <div class="form-group">
+            <label>Nama Lengkap</label>
+            <input type="text" id="inp-name" class="form-control" placeholder="Ketik nama lengkapmu..." autocomplete="off">
+        </div>
+        <div class="form-group">
+            <label>Kelas</label>
+            <select id="inp-class" class="form-control">
+                <option value="">-- Pilih Kelas --</option>
+                <option value="7A">7A</option><option value="7B">7B</option>
+                <option value="7C">7C</option><option value="7D">7D</option>
+                <option value="7E">7E</option><option value="7F">7F</option>
+                <option value="7G">7G</option><option value="7H">7H</option>
+                <option value="7I">7I</option><option value="7J">7J</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Nomor Absen</label>
+            <select id="inp-absen" class="form-control">
+                <option value="">-- Pilih No. Absen --</option>
+                <!-- Generated by JS -->
+            </select>
+        </div>
+
+        <button id="btn-start" class="btn">MULAI MISI 🚀</button>
+        <button id="btn-resume" class="btn btn-cyan hidden" style="margin-top: 15px;">LANJUTKAN MISI 🛸</button>
+    </div>
+
+    <!-- 2. GAME SCREEN -->
+    <div id="game-screen" class="screen hidden">
+        <div id="game-ui">
+            <div id="ui-level">Level: 1</div>
+            <div id="ui-score">Skor: 0 | XP: 0</div>
+            <div id="ui-progress">Soal: 0/20</div>
+        </div>
+        
+        <canvas id="gameCanvas"></canvas>
+
+        <div id="mobile-controls">
+            <div class="d-pad">
+                <div class="control-btn" id="btn-left">◄</div>
+                <div class="control-btn" id="btn-right">►</div>
+            </div>
+            <div class="action-pad">
+                <div class="control-btn" id="btn-shoot" style="background: rgba(255, 76, 76, 0.2); border-color: var(--danger); color: var(--danger);">O</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. QUESTION MODAL -->
+    <div id="question-modal" class="modal-overlay hidden">
+        <div class="q-box">
+            <div class="q-header">
+                <span id="q-counter">SOAL 01/20</span>
+                <span id="q-level-title">Space Station</span>
+            </div>
+            <div id="q-text" class="q-text">Pertanyaan akan muncul di sini...</div>
+            
+            <!-- MCQ Options -->
+            <div id="q-options" class="options-grid"></div>
+
+            <!-- Short Answer Input -->
+            <div id="q-short" class="hidden" style="margin-bottom: 15px;">
+                <input type="text" id="inp-short-ans" class="form-control" placeholder="Ketik jawabanmu di sini..." autocomplete="off">
+            </div>
+
+            <button id="btn-submit-ans" class="btn" style="margin-top: 20px;">KIRIM JAWABAN</button>
+        </div>
+    </div>
+
+    <!-- FEEDBACK OVERLAY (Menghilang Otomatis) -->
+    <div id="feedback-overlay" class="hidden">
+        <h2 id="fb-title" class="fb-title">TARGET DIAMANKAN!</h2>
+        <p id="fb-desc" style="font-size: 1.1rem; margin-bottom: 20px; color: var(--text-main);">+10 Skor | +5 XP</p>
+    </div>
+
+    <!-- 4. END SCREEN -->
+    <div id="end-screen" class="screen hidden">
+        <h2 class="sci-fi-text" style="color: var(--accent-cyan); text-align: center;">GALAKSI EXCEL BERHASIL DISELAMATKAN!</h2>
+        
+        <div class="score-display">
+            <p style="margin:0; font-weight:bold; color:var(--text-bright);">NILAI ULANGAN</p>
+            <div class="score-number" id="end-score">100</div>
+            <p id="end-identity" style="margin-top:10px; color:var(--text-bright);">Nama - Kelas - Absen</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">Benar <span><span id="end-correct">20</span>/20</span></div>
+            <div class="stat-card">Salah <span><span id="end-wrong">0</span>/20</span></div>
+            <div class="stat-card">Skor Game <span><span id="end-gamescore">200</span></span></div>
+            <div class="stat-card">Total XP <span><span id="end-xp">100</span></span></div>
+        </div>
+
+        <button id="btn-review" class="btn btn-cyan">LIHAT PEMBAHASAN 📖</button>
+        <button id="btn-show-reset" class="btn btn-danger" style="margin-top: 15px; background: transparent; border: 2px solid var(--danger); box-shadow: none;">RESET ULANGAN</button>
+    </div>
+
+    <!-- 5. REVIEW SCREEN -->
+    <div id="review-screen" class="screen hidden">
+        <h2 class="sci-fi-text" style="text-align: center; color: var(--accent-cyan); margin-bottom: 20px;">PEMBAHASAN SOAL</h2>
+        <div id="review-list"></div>
+        <button id="btn-back-end" class="btn btn-cyan" style="margin-top: 20px; margin-bottom: 30px;">KEMBALI KE HASIL</button>
+    </div>
+
+    <!-- CUSTOM RESET MODAL (Internal Web Verifikasi) -->
+    <div id="reset-modal" class="modal-overlay hidden" style="z-index: 50;">
+        <div class="q-box" style="text-align: center; max-width: 400px;">
+            <h3 class="sci-fi-text" style="color: var(--danger); margin-bottom: 10px;">VERIFIKASI RESET</h3>
+            <p style="color: var(--text-main); font-size: 0.95rem; margin-bottom: 20px;">Masukkan password guru untuk menghapus seluruh data di perangkat ini.</p>
+            
+            <div id="reset-step-1">
+                <input type="password" id="inp-reset-pass" class="form-control" placeholder="Password..." style="text-align: center; margin-bottom: 10px; font-size: 1.2rem; letter-spacing: 5px;">
+                <p id="reset-error" class="hidden" style="color: var(--danger); font-size: 0.9rem; margin-bottom: 15px; font-weight: bold;">Password salah!</p>
+                <div style="display: flex; gap: 10px;">
+                    <button id="btn-cancel-reset" class="btn btn-cyan" style="margin: 0; width: 50%;">BATAL</button>
+                    <button id="btn-verify-reset" class="btn btn-danger" style="margin: 0; width: 50%; background: var(--danger); color: white;">VERIFIKASI</button>
+                </div>
+            </div>
+
+            <div id="reset-step-2" class="hidden">
+                <p style="color: var(--danger); font-weight: bold; margin-bottom: 20px; font-size: 1.1rem;">PERINGATAN!<br>Semua nilai dan progres akan hilang secara permanen. Yakin?</p>
+                <div style="display: flex; gap: 10px;">
+                    <button id="btn-cancel-confirm" class="btn btn-cyan" style="margin: 0; width: 50%;">BATAL</button>
+                    <button id="btn-final-reset" class="btn btn-danger" style="margin: 0; width: 50%; background: var(--danger); color: white;">YA, HAPUS!</button>
+                </div>
+            </div>
+            
+            <div id="reset-step-success" class="hidden">
+                <h3 style="color: var(--excel-green); margin-bottom: 10px;">DATA TERHAPUS!</h3>
+                <p style="color: var(--text-main);">Memuat ulang game...</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    /* =========================================
+       DATA SOAL (20 Soal)
+       Tersebar dalam 5 Level Konseptual
+       ========================================= */
+    const questionData = [
+        // Level 1: Space Station (Baris, Kolom, Cell, Range)
+        { id: 1, type: 'mcq', level: 1, text: "Bagian pada lembar kerja Excel yang membentang secara vertikal (tegak lurus) dan ditandai dengan huruf (A, B, C...) disebut dengan...", options: ["Baris (Row)", "Kolom (Column)", "Sel (Cell)", "Range"], answer: 1, exp: "Kolom (Column) membentang secara vertikal dan diwakili oleh huruf." },
+        { id: 2, type: 'short', level: 1, text: "Pertemuan antara sebuah kolom dan sebuah baris yang membentuk kotak kecil tunggal pada Excel disebut...", answer: ["sel", "cell"], exp: "Sel (Cell) adalah kotak tunggal hasil pertemuan kolom dan baris." },
+        { id: 3, type: 'mcq', level: 1, text: "Jika kita menunjuk kotak yang berada di pertemuan antara Kolom C dan Baris ke-5, maka alamat kotak tersebut ditulis sebagai...", options: ["5C", "Baris C5", "C5", "Kolom 5C"], answer: 2, exp: "Penulisan alamat sel yang benar selalu mendahulukan huruf kolom diikuti angka baris, yaitu C5." },
+        { id: 4, type: 'case', level: 1, text: "Budi ingin memberi warna kuning pada sekumpulan data di tabelnya. Ia memblok kotak mulai dari A1 hingga D10. Kumpulan beberapa sel yang diblok oleh Budi ini disebut...", options: ["Cell", "Worksheet", "Workbook", "Range"], answer: 3, exp: "Kumpulan dari dua sel atau lebih (seperti A1:D10) disebut dengan Range." },
+
+        // Level 2: Laser Lab (SUM, COUNT)
+        { id: 5, type: 'mcq', level: 2, text: "Fungsi yang digunakan untuk menjumlahkan seluruh data angka dalam sekumpulan sel (range) adalah...", options: ["=AVERAGE()", "=SUM()", "=COUNT()", "=MAX()"], answer: 1, exp: "Fungsi SUM digunakan secara spesifik untuk menghitung total penjumlahan data." },
+        { id: 6, type: 'short', level: 2, text: "Fungsi Excel yang digunakan untuk menghitung 'banyaknya sel' yang berisi data angka (bukan menjumlahkan nilainya) adalah...", answer: ["count"], exp: "COUNT berfungsi untuk menghitung frekuensi / banyaknya data angka." },
+        { id: 7, type: 'mcq', level: 2, text: "Rumus =SUM(A1:A5) memiliki arti...", options: ["Menjumlahkan nilai dari sel A1 sampai A5", "Mencari rata-rata dari sel A1 sampai A5", "Menghitung jumlah sel dari A1 sampai A5", "Mencari nilai terbesar antara A1 dan A5"], answer: 0, exp: "SUM digunakan untuk menjumlahkan nilai angka di dalam range tersebut." },
+        { id: 8, type: 'case', level: 2, text: "Petugas kantin mendata penjualan makanan ringan di sel B2 sampai B20. Ia ingin mengetahui 'berapa banyak transaksi' yang terjadi (bukan total pendapatannya). Fungsi yang tepat digunakan adalah...", options: ["=SUM(B2:B20)", "=COUNT(B2:B20)", "=AVERAGE(B2:B20)", "=MAX(B2:B20)"], answer: 1, exp: "Karena yang dicari adalah banyaknya transaksi (frekuensi), maka gunakan COUNT." },
+
+        // Level 3: Number Nebula (AVERAGE, MAX, MIN)
+        { id: 9, type: 'mcq', level: 3, text: "Untuk mencari rata-rata nilai dari sekumpulan data ulangan siswa, fungsi yang digunakan adalah...", options: ["=AVERAGE()", "=SUM()", "=MIN()", "=MAX()"], answer: 0, exp: "AVERAGE adalah fungsi untuk mencari nilai rata-rata." },
+        { id: 10, type: 'short', level: 3, text: "Jika guru ingin mencari nilai paling rendah (terkecil) dari hasil ujian, guru tersebut harus menggunakan fungsi...", answer: ["min"], exp: "MIN digunakan untuk mencari nilai paling kecil/minimum." },
+        { id: 11, type: 'mcq', level: 3, text: "Fungsi MAX digunakan untuk...", options: ["Mencari nilai rata-rata", "Menghitung jumlah data", "Mencari nilai tertinggi atau terbesar", "Mencari nilai terendah atau terkecil"], answer: 2, exp: "MAX (Maximum) mencari nilai paling tinggi dari sekumpulan angka." },
+        { id: 12, type: 'case', level: 3, text: "Dalam daftar nilai, data nilai akhir Informatika berada di sel C2 sampai C30. Rumus yang tepat untuk menghitung rata-rata nilai seluruh siswa tersebut adalah...", options: ["=SUM(C2:C30)/2", "=AVERAGE(C2:C30)", "=AVERAGE(C2;C30)", "=COUNT(C2:C30)"], answer: 1, exp: "Penulisan range yang benar menggunakan titik dua (:), sehingga menjadi =AVERAGE(C2:C30)." },
+
+        // Level 4: Data Galaxy (SUMIF, COUNTIF)
+        { id: 13, type: 'mcq', level: 4, text: "Fungsi SUMIF digunakan untuk...", options: ["Menjumlahkan data tanpa syarat", "Menghitung banyaknya sel dengan satu syarat", "Menjumlahkan nilai sel yang memenuhi satu kriteria/syarat tertentu", "Mencari nilai tertinggi dengan syarat"], answer: 2, exp: "SUMIF = SUM (menjumlahkan) + IF (syarat/kriteria)." },
+        { id: 14, type: 'short', level: 4, text: "Fungsi yang digunakan untuk menghitung BANYAKNYA sel yang memenuhi kriteria tertentu (misal: menghitung jumlah siswa yang mendapat nilai 'A') adalah...", answer: ["countif"], exp: "COUNTIF digunakan untuk menghitung jumlah data berdasarkan satu syarat/kriteria." },
+        { id: 15, type: 'mcq', level: 4, text: "Struktur sintaks penulisan dasar untuk fungsi COUNTIF adalah...", options: ["=COUNTIF(kriteria, range)", "=COUNTIF(range, kriteria)", "=COUNTIF(range1, range2)", "=COUNTIF(kriteria1, kriteria2)"], answer: 1, exp: "Aturannya adalah =COUNTIF(Range tempat mencari, Kriteria yang dicari)." },
+        { id: 16, type: 'case', level: 4, text: "Wali kelas memiliki data jenis kelamin siswa (L atau P) di range B2:B32. Untuk menghitung berapa jumlah siswa Laki-laki (L) saja, rumus yang benar adalah...", options: ["=COUNTIF(B2:B32, \"L\")", "=SUMIF(B2:B32, \"L\")", "=COUNT(B2:B32)", "=AVERAGE(B2:B32, \"L\")"], answer: 0, exp: "Menghitung frekuensi berdasarkan syarat (\"L\") menggunakan COUNTIF." },
+
+        // Level 5: Final Boss (Campuran)
+        { id: 17, type: 'mcq', level: 5, text: "Simbol yang wajib diketik pertama kali setiap kali kita akan menuliskan rumus atau fungsi di Microsoft Excel adalah...", options: ["Tanda tambah (+)", "Tanda bintang (*)", "Tanda sama dengan (=)", "Tanda titik dua (:)"], answer: 2, exp: "Semua operasi matematika dan fungsi di Excel harus diawali tanda sama dengan (=)." },
+        { id: 18, type: 'short', level: 5, text: "Penulisan sekumpulan sel (range) dari sel A1 sampai dengan sel C5 yang benar di dalam rumus Excel adalah...", answer: ["a1:c5"], exp: "Range dipisahkan oleh titik dua, ditulis A1:C5." },
+        { id: 19, type: 'case', level: 5, text: "Dalam mendata jumlah buku pelajaran yang dibagikan khusus untuk siswa kelas 7 SMP Negeri 1 Grogol, fungsi yang paling efisien digunakan untuk menjumlahkan data jumlah buku yang memiliki keterangan kriteria 'Kelas 7' adalah...", options: ["=SUM()", "=SUMIF()", "=COUNT()", "=COUNTIF()"], answer: 1, exp: "Karena kita ingin MENJUMLAHKAN (total buku) dengan SYARAT ('Kelas 7'), maka fungsi yang tepat adalah SUMIF." },
+        { id: 20, type: 'case', level: 5, text: "Guru ingin mengetahui rata-rata nilai, nilai tertinggi, dan nilai terendah dari ulangan siswa secara berurutan. Tiga fungsi yang digunakan adalah...", options: ["AVERAGE, MAX, dan MIN", "SUM, MAX, dan MIN", "AVERAGE, COUNT, dan SUM", "MAX, MIN, dan COUNTIF"], answer: 0, exp: "Rata-rata = AVERAGE, Tertinggi = MAX, Terendah = MIN." }
+    ];
+
+    const levelNames = ["Space Station", "Laser Lab", "Number Nebula", "Data Galaxy", "Final Boss"];
+
+    /* =========================================
+       STATE MANAGEMENT & RANDOMIZATION
+       ========================================= */
+    const STORAGE_KEY = "ExcelSpaceShooterData";
+    let state = {
+        name: "", studentClass: "", absen: "",
+        currentQIndex: 0,
+        gameScore: 0, xp: 0, academicScore: 0,
+        questionOrder: [], // Menyimpan urutan soal hasil acakan
+        answers: {}, // { id: { isCorrect, userAns } }
+        isFinished: false
+    };
+
+    // Fungsi untuk mengacak array
+    function shuffleArray(array) {
+        let currentIndex = array.length, randomIndex;
+        while (currentIndex !== 0) {
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex--;
+            [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+        }
+        return array;
+    }
+
+    function loadState() {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) {
+            state = JSON.parse(saved);
+            // Backward compatibility untuk sesi lama yang belum ada questionOrder
+            if (!state.questionOrder) {
+                state.questionOrder = Array.from({length: 20}, (_, i) => i + 1); 
+            }
+            if (state.currentQIndex > 0 || state.isFinished) {
+                document.getElementById("btn-resume").classList.remove("hidden");
+                document.getElementById("btn-start").innerText = "RESTART ULANG";
+                document.getElementById("btn-start").classList.replace("btn", "btn-danger");
+                document.getElementById("btn-start").style.boxShadow = "none";
+                document.getElementById("btn-start").style.background = "transparent";
+                document.getElementById("btn-start").style.border = "2px solid var(--danger)";
+                document.getElementById("btn-start").style.color = "var(--danger)";
+            }
+        }
+    }
+
+    function saveState() {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+
+    /* =========================================
+       DOM ELEMENTS & NAVIGATION
+       ========================================= */
+    const screens = {
+        start: document.getElementById('start-screen'),
+        game: document.getElementById('game-screen'),
+        end: document.getElementById('end-screen'),
+        review: document.getElementById('review-screen')
+    };
+
+    function showScreen(name) {
+        Object.values(screens).forEach(s => s.classList.add('hidden'));
+        screens[name].classList.remove('hidden');
+    }
+
+    // Populate Absen
+    const absenSelect = document.getElementById("inp-absen");
+    for(let i=1; i<=32; i++) {
+        let opt = document.createElement('option');
+        opt.value = i; opt.text = i;
+        absenSelect.appendChild(opt);
+    }
+
+    document.getElementById("btn-start").addEventListener("click", () => {
+        const name = document.getElementById("inp-name").value.trim();
+        const cls = document.getElementById("inp-class").value;
+        const abs = document.getElementById("inp-absen").value;
+
+        if(!name || !cls || !abs) {
+            alert("Harap isi Nama, Kelas, dan Nomor Absen!");
+            return;
+        }
+
+        // Generate urutan soal acak DI DALAM levelnya
+        let order = [];
+        order = order.concat(shuffleArray([1, 2, 3, 4]));       // Level 1
+        order = order.concat(shuffleArray([5, 6, 7, 8]));       // Level 2
+        order = order.concat(shuffleArray([9, 10, 11, 12]));    // Level 3
+        order = order.concat(shuffleArray([13, 14, 15, 16]));   // Level 4
+        order = order.concat(shuffleArray([17, 18, 19, 20]));   // Level 5
+
+        // Reset state
+        state = {
+            name, studentClass: cls, absen: abs,
+            currentQIndex: 0, gameScore: 0, xp: 0, academicScore: 0,
+            questionOrder: order,
+            answers: {}, isFinished: false
+        };
+        saveState();
+        startGameEngine();
+    });
+
+    document.getElementById("btn-resume").addEventListener("click", () => {
+        if(state.isFinished) {
+            showEndScreen();
+        } else {
+            startGameEngine();
+        }
+    });
+
+    /* =========================================
+       GAME ENGINE (CANVAS 2D)
+       ========================================= */
+    const canvas = document.getElementById("gameCanvas");
+    const ctx = canvas.getContext("2d");
+    
+    let animationId;
+    let gameState = "PLAYING"; 
+    let keys = {};
+    
+    let player, bullets, enemies, particles, stars;
+    let lastTime = 0;
+
+    function resizeCanvas() {
+        const container = document.getElementById("app-container");
+        canvas.width = container.clientWidth;
+        canvas.height = container.clientHeight;
+        if(player) {
+            player.y = canvas.height - 80;
+            if(player.x > canvas.width) player.x = canvas.width/2;
+        }
+    }
+    window.addEventListener('resize', resizeCanvas);
+
+    // Controls
+    window.addEventListener('keydown', e => keys[e.code] = true);
+    window.addEventListener('keyup', e => keys[e.code] = false);
+
+    // Mobile controls setup
+    const btnL = document.getElementById("btn-left");
+    const btnR = document.getElementById("btn-right");
+    const btnS = document.getElementById("btn-shoot");
+    
+    btnL.addEventListener("touchstart", (e) => { e.preventDefault(); keys["ArrowLeft"] = true; });
+    btnL.addEventListener("touchend", (e) => { e.preventDefault(); keys["ArrowLeft"] = false; });
+    btnL.addEventListener("mousedown", () => keys["ArrowLeft"] = true);
+    btnL.addEventListener("mouseup", () => keys["ArrowLeft"] = false);
+    btnL.addEventListener("mouseleave", () => keys["ArrowLeft"] = false);
+
+    btnR.addEventListener("touchstart", (e) => { e.preventDefault(); keys["ArrowRight"] = true; });
+    btnR.addEventListener("touchend", (e) => { e.preventDefault(); keys["ArrowRight"] = false; });
+    btnR.addEventListener("mousedown", () => keys["ArrowRight"] = true);
+    btnR.addEventListener("mouseup", () => keys["ArrowRight"] = false);
+    btnR.addEventListener("mouseleave", () => keys["ArrowRight"] = false);
+
+    const shootAction = (e) => { if(e) e.preventDefault(); keys["Space"] = true; setTimeout(()=>keys["Space"]=false, 100); };
+    btnS.addEventListener("touchstart", shootAction);
+    btnS.addEventListener("mousedown", shootAction);
+
+    function startGameEngine() {
+        showScreen('game');
+        resizeCanvas();
+        
+        player = { x: canvas.width/2, y: canvas.height - 80, w: 40, h: 40, speed: 300, cooldown: 0 };
+        bullets = [];
+        enemies = [];
+        particles = [];
+        stars = Array.from({length: 50}, () => ({
+            x: Math.random() * canvas.width, 
+            y: Math.random() * canvas.height, 
+            s: Math.random() * 2 + 1,
+            speed: Math.random() * 50 + 20
+        }));
+
+        gameState = "PLAYING";
+        updateGameUI();
+        spawnEnemy();
+        
+        lastTime = performance.now();
+        cancelAnimationFrame(animationId);
+        animationId = requestAnimationFrame(gameLoop);
+    }
+
+    function spawnEnemy() {
+        if(state.currentQIndex >= 20) return;
+        
+        const qId = state.questionOrder[state.currentQIndex];
+        const qData = questionData.find(q => q.id === qId);
+        const lvl = qData.level; 
+        
+        let type = 'asteroid';
+        let color = '#888';
+        let w = 40, h = 40;
+        let hp = 1;
+        
+        let speed = 180 + (lvl * 35); 
+
+        if(lvl === 2) { type = 'bot'; color = '#ff4c4c'; }
+        if(lvl === 3) { type = 'sheet'; color = '#217346'; w = 50; h = 30; }
+        if(lvl === 4) { type = 'fastbot'; color = '#f1c40f'; speed += 60; }
+        
+        if(state.currentQIndex === 19) {
+            type = 'boss';
+            color = '#ff0055';
+            w = 100; h = 100;
+            hp = 5; 
+            speed = 120; 
+        }
+
+        enemies.push({
+            x: Math.random() * (canvas.width - w - 20) + 10,
+            y: -100,
+            w, h, type, color, speed, hp
+        });
+    }
+
+    function createExplosion(x, y, color) {
+        for(let i=0; i<15; i++) {
+            particles.push({
+                x, y,
+                vx: (Math.random() - 0.5) * 200,
+                vy: (Math.random() - 0.5) * 200,
+                life: 1,
+                color
+            });
+        }
+    }
+
+    function gameLoop(timestamp) {
+        const dt = (timestamp - lastTime) / 1000;
+        lastTime = timestamp;
+
+        if (gameState === "PLAYING") {
+            update(dt);
+            draw();
+        }
+
+        if(gameState !== "STOPPED") {
+            animationId = requestAnimationFrame(gameLoop);
+        }
+    }
+
+    function update(dt) {
+        // Player movement
+        if((keys["ArrowLeft"] || keys["KeyA"]) && player.x > player.w/2) player.x -= player.speed * dt;
+        if((keys["ArrowRight"] || keys["KeyD"]) && player.x < canvas.width - player.w/2) player.x += player.speed * dt;
+
+        // Player shooting
+        if(player.cooldown > 0) player.cooldown -= dt;
+        if(keys["Space"] && player.cooldown <= 0) {
+            bullets.push({ x: player.x, y: player.y - player.h/2, w: 4, h: 15, speed: 500 });
+            player.cooldown = 0.3; 
+            keys["Space"] = false; 
+        }
+
+        // Stars
+        stars.forEach(s => {
+            s.y += s.speed * dt;
+            if(s.y > canvas.height) { s.y = 0; s.x = Math.random() * canvas.width; }
+        });
+
+        // Bullets
+        for(let i = bullets.length-1; i>=0; i--) {
+            bullets[i].y -= bullets[i].speed * dt;
+            if(bullets[i].y < -20) bullets.splice(i, 1);
+        }
+
+        // Particles
+        for(let i = particles.length-1; i>=0; i--) {
+            particles[i].x += particles[i].vx * dt;
+            particles[i].y += particles[i].vy * dt;
+            particles[i].life -= dt * 2;
+            if(particles[i].life <= 0) particles.splice(i, 1);
+        }
+
+        // Enemies
+        for(let i = enemies.length-1; i>=0; i--) {
+            let e = enemies[i];
+            e.y += e.speed * dt;
+
+            // Collision with bullets
+            for(let j = bullets.length-1; j>=0; j--) {
+                let b = bullets[j];
+                if(b.x > e.x && b.x < e.x + e.w && b.y > e.y && b.y < e.y + e.h) {
+                    bullets.splice(j, 1);
+                    e.hp--;
+                    createExplosion(b.x, b.y, '#fff');
+                    
+                    if(e.hp <= 0) {
+                        createExplosion(e.x + e.w/2, e.y + e.h/2, e.color);
+                        enemies.splice(i, 1);
+                        state.gameScore += 10;
+                        updateGameUI();
+                        triggerQuestion();
+                    }
+                    break;
+                }
+            }
+
+            // Jika enemy lolos
+            if(e && e.y > canvas.height + 50) {
+                enemies.splice(i, 1);
+                spawnEnemy();
+            }
+        }
+    }
+
+    function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Draw stars
+        ctx.fillStyle = "#ffffff";
+        stars.forEach(s => {
+            ctx.globalAlpha = s.s / 3;
+            ctx.beginPath();
+            ctx.arc(s.x, s.y, s.s, 0, Math.PI*2);
+            ctx.fill();
+        });
+        ctx.globalAlpha = 1.0;
+
+        // Draw player
+        ctx.fillStyle = "var(--accent-cyan)";
+        ctx.beginPath();
+        ctx.moveTo(player.x, player.y - player.h/2);
+        ctx.lineTo(player.x + player.w/2, player.y + player.h/2);
+        ctx.lineTo(player.x, player.y + player.h/4);
+        ctx.lineTo(player.x - player.w/2, player.y + player.h/2);
+        ctx.closePath();
+        ctx.fill();
+        // Thruster flame
+        ctx.fillStyle = "orange";
+        ctx.beginPath();
+        ctx.moveTo(player.x - 10, player.y + player.h/2);
+        ctx.lineTo(player.x + 10, player.y + player.h/2);
+        ctx.lineTo(player.x, player.y + player.h/2 + Math.random()*15 + 10);
+        ctx.closePath();
+        ctx.fill();
+
+        // Draw bullets
+        ctx.fillStyle = "var(--accent-cyan)";
+        bullets.forEach(b => {
+            ctx.shadowBlur = 10;
+            ctx.shadowColor = "var(--accent-cyan)";
+            ctx.fillRect(b.x - b.w/2, b.y, b.w, b.h);
+            ctx.shadowBlur = 0;
+        });
+
+        // Draw enemies
+        enemies.forEach(e => {
+            ctx.fillStyle = e.color;
+            if(e.type === 'asteroid') {
+                ctx.beginPath();
+                ctx.arc(e.x + e.w/2, e.y + e.h/2, e.w/2, 0, Math.PI*2);
+                ctx.fill();
+            } else if (e.type === 'bot' || e.type === 'fastbot' || e.type === 'boss') {
+                ctx.fillRect(e.x, e.y, e.w, e.h);
+                ctx.fillStyle = "#fff";
+                ctx.fillRect(e.x + e.w*0.2, e.y + e.h*0.2, e.w*0.2, e.h*0.2);
+                ctx.fillRect(e.x + e.w*0.6, e.y + e.h*0.2, e.w*0.2, e.h*0.2);
+            } else if (e.type === 'sheet') {
+                ctx.fillRect(e.x, e.y, e.w, e.h);
+                ctx.strokeStyle = "#fff";
+                ctx.lineWidth = 2;
+                ctx.strokeRect(e.x, e.y, e.w, e.h);
+                ctx.beginPath(); ctx.moveTo(e.x, e.y + e.h/2); ctx.lineTo(e.x + e.w, e.y + e.h/2); ctx.stroke();
+                ctx.beginPath(); ctx.moveTo(e.x + e.w/2, e.y); ctx.lineTo(e.x + e.w/2, e.y + e.h); ctx.stroke();
+            }
+        });
+
+        // Draw particles
+        particles.forEach(p => {
+            ctx.fillStyle = p.color;
+            ctx.globalAlpha = p.life;
+            ctx.fillRect(p.x, p.y, 4, 4);
+        });
+        ctx.globalAlpha = 1.0;
+    }
+
+    function updateGameUI() {
+        let lvl = 5;
+        if(state.currentQIndex < 20) {
+            const qId = state.questionOrder[state.currentQIndex];
+            lvl = questionData.find(q => q.id === qId).level;
+        }
+        document.getElementById("ui-level").innerText = `Level: ${lvl}`;
+        document.getElementById("ui-score").innerText = `Skor: ${state.gameScore} | XP: ${state.xp}`;
+        document.getElementById("ui-progress").innerText = `Soal: ${state.currentQIndex}/20`;
+    }
+
+    /* =========================================
+       QUESTION LOGIC
+       ========================================= */
+    const modal = document.getElementById("question-modal");
+    const qText = document.getElementById("q-text");
+    const qOptions = document.getElementById("q-options");
+    const qShort = document.getElementById("q-short");
+    const inpShort = document.getElementById("inp-short-ans");
+    const btnSubmitAns = document.getElementById("btn-submit-ans");
+    
+    let selectedOption = null;
+
+    function triggerQuestion() {
+        gameState = "PAUSED";
+        keys = {}; 
+        
+        const qId = state.questionOrder[state.currentQIndex];
+        const qData = questionData.find(q => q.id === qId);
+        
+        document.getElementById("q-counter").innerText = `SOAL ${(state.currentQIndex + 1).toString().padStart(2, '0')}/20`;
+        document.getElementById("q-level-title").innerText = levelNames[qData.level - 1];
+        qText.innerText = qData.text;
+        
+        selectedOption = null;
+        btnSubmitAns.disabled = true;
+        btnSubmitAns.style.opacity = "0.5";
+
+        if(qData.type === 'mcq' || qData.type === 'case') {
+            qOptions.classList.remove('hidden');
+            qShort.classList.add('hidden');
+            qOptions.innerHTML = '';
+            
+            const labels = ["A", "B", "C", "D"];
+            qData.options.forEach((opt, idx) => {
+                const btn = document.createElement('div');
+                btn.className = 'opt-btn';
+                btn.innerHTML = `<strong style="color:var(--accent-cyan); margin-right:10px;">${labels[idx]}</strong> ${opt}`;
+                btn.onclick = () => {
+                    document.querySelectorAll('.opt-btn').forEach(el => el.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    selectedOption = idx;
+                    btnSubmitAns.disabled = false;
+                    btnSubmitAns.style.opacity = "1";
+                };
+                qOptions.appendChild(btn);
+            });
+        } else {
+            qOptions.classList.add('hidden');
+            qShort.classList.remove('hidden');
+            inpShort.value = '';
+            inpShort.oninput = () => {
+                if(inpShort.value.trim().length > 0) {
+                    btnSubmitAns.disabled = false;
+                    btnSubmitAns.style.opacity = "1";
+                } else {
+                    btnSubmitAns.disabled = true;
+                    btnSubmitAns.style.opacity = "0.5";
+                }
+            };
+        }
+
+        modal.classList.remove('hidden');
+    }
+
+    btnSubmitAns.addEventListener('click', () => {
+        if(btnSubmitAns.disabled) return;
+
+        const qId = state.questionOrder[state.currentQIndex];
+        const qData = questionData.find(q => q.id === qId);
+        let isCorrect = false;
+        let userAnsStr = "";
+
+        if(qData.type === 'mcq' || qData.type === 'case') {
+            isCorrect = (selectedOption === qData.answer);
+            const labels = ["A", "B", "C", "D"];
+            userAnsStr = `${labels[selectedOption]}`;
+        } else {
+            const rawVal = inpShort.value.trim();
+            userAnsStr = rawVal;
+            const cleanVal = rawVal.toLowerCase().replace(/\s+/g, '');
+            isCorrect = qData.answer.some(ans => {
+                const cleanAns = ans.toLowerCase().replace(/\s+/g, '');
+                return cleanVal === cleanAns || cleanVal.includes(cleanAns);
+            });
+        }
+
+        // Apply Scores (Save by Question ID so review maps correctly)
+        state.answers[qData.id] = { isCorrect, userAns: userAnsStr };
+        if(isCorrect) {
+            state.xp += 5;
+            state.academicScore += 5;
+        }
+
+        state.currentQIndex++;
+        saveState();
+        updateGameUI();
+
+        modal.classList.add('hidden');
+        showFeedbackOverlay(isCorrect);
+    });
+
+    function showFeedbackOverlay(isCorrect) {
+        const overlay = document.getElementById("feedback-overlay");
+        const title = document.getElementById("fb-title");
+        const desc = document.getElementById("fb-desc");
+
+        if(isCorrect) {
+            title.innerText = "TARGET DIAMANKAN!";
+            title.className = "fb-title fb-correct";
+            desc.innerText = "+10 Skor Game | +5 XP";
+        } else {
+            title.innerText = "TARGET TERLEWAT!";
+            title.className = "fb-title fb-wrong";
+            desc.innerText = "Tidak apa-apa, tetap semangat!";
+        }
+
+        overlay.classList.remove('hidden');
+
+        setTimeout(() => {
+            overlay.classList.add('hidden');
+            if(state.currentQIndex >= 20) {
+                finishGame();
+            } else {
+                spawnEnemy();
+                gameState = "PLAYING";
+            }
+        }, 1500);
+    }
+
+    /* =========================================
+       END SCREEN & REVIEW
+       ========================================= */
+    function finishGame() {
+        gameState = "STOPPED";
+        state.isFinished = true;
+        saveState();
+        showEndScreen();
+    }
+
+    function showEndScreen() {
+        showScreen('end');
+        
+        document.getElementById("end-score").innerText = state.academicScore;
+        document.getElementById("end-identity").innerText = `${state.name} - Kelas ${state.studentClass} - No.${state.absen}`;
+        
+        const correctCount = state.academicScore / 5;
+        document.getElementById("end-correct").innerText = correctCount;
+        document.getElementById("end-wrong").innerText = 20 - correctCount;
+        document.getElementById("end-gamescore").innerText = state.gameScore;
+        document.getElementById("end-xp").innerText = state.xp;
+    }
+
+    document.getElementById("btn-review").addEventListener("click", () => {
+        showScreen('review');
+        const list = document.getElementById("review-list");
+        list.innerHTML = "";
+
+        // Tampilkan pembahasan berdasarkan urutan siswa mengerjakan soal
+        state.questionOrder.forEach((qId, idx) => {
+            const q = questionData.find(item => item.id === qId);
+            const ans = state.answers[q.id] || { isCorrect: false, userAns: "-" };
+            
+            const div = document.createElement("div");
+            div.className = `review-item ${ans.isCorrect ? 'benar' : 'salah'}`;
+            
+            let keyStr = "";
+            if(q.type === 'mcq' || q.type === 'case') {
+                const labels = ["A", "B", "C", "D"];
+                keyStr = `${labels[q.answer]}. ${q.options[q.answer]}`;
+            } else {
+                keyStr = q.answer[0].toUpperCase();
+            }
+
+            div.innerHTML = `
+                <div class="review-q">${idx + 1}. ${q.text}</div>
+                <div class="review-ans">Jawabanmu: <strong style="color:${ans.isCorrect ? 'var(--excel-green)' : 'var(--danger)'}">${ans.userAns}</strong></div>
+                <div class="review-ans">Kunci: <strong>${keyStr}</strong></div>
+                <div class="review-exp">Pembahasan: ${q.exp}</div>
+            `;
+            list.appendChild(div);
+        });
+    });
+
+    document.getElementById("btn-back-end").addEventListener("click", () => showEndScreen());
+
+    /* =========================================
+       RESET LOGIC (CUSTOM MODAL)
+       ========================================= */
+    const resetModal = document.getElementById("reset-modal");
+    const resetStep1 = document.getElementById("reset-step-1");
+    const resetStep2 = document.getElementById("reset-step-2");
+    const resetStepSuccess = document.getElementById("reset-step-success");
+    const inpResetPass = document.getElementById("inp-reset-pass");
+    const resetError = document.getElementById("reset-error");
+
+    document.getElementById("btn-show-reset").addEventListener("click", () => {
+        resetModal.classList.remove("hidden");
+        resetStep1.classList.remove("hidden");
+        resetStep2.classList.add("hidden");
+        resetStepSuccess.classList.add("hidden");
+        resetError.classList.add("hidden");
+        inpResetPass.value = "";
+    });
+
+    document.getElementById("btn-cancel-reset").addEventListener("click", () => resetModal.classList.add("hidden"));
+    document.getElementById("btn-cancel-confirm").addEventListener("click", () => resetModal.classList.add("hidden"));
+
+    document.getElementById("btn-verify-reset").addEventListener("click", () => {
+        if(inpResetPass.value === "0000") {
+            resetStep1.classList.add("hidden");
+            resetStep2.classList.remove("hidden");
+        } else {
+            resetError.classList.remove("hidden");
+        }
+    });
+
+    document.getElementById("btn-final-reset").addEventListener("click", () => {
+        localStorage.removeItem(STORAGE_KEY);
+        resetStep2.classList.add("hidden");
+        resetStepSuccess.classList.remove("hidden");
+        
+        setTimeout(() => {
+            window.location.reload();
+        }, 1500);
+    });
+
+    /* =========================================
+       INITIALIZE
+       ========================================= */
+    window.onload = loadState;
+
+</script>
+</body>
+</html>
