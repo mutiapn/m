@@ -111,14 +111,15 @@
                         <div className="fade-in">
                             <h2 className="text-2xl font-bold text-indigo-700 mb-4">2. Bilangan Desimal (Basis 10)</h2>
                             <p className="mb-4">Sistem yang kita gunakan sehari-hari. Disebut basis 10 karena menggunakan 10 angka (0-9). Nilai tempatnya menggunakan kelipatan pangkat 10.</p>
-                            <div className="bg-blue-50 p-4 rounded-lg border border-blue-200 mt-4">
-                                <h3 className="font-bold text-blue-800">Contoh Nilai Tempat: Angka 345</h3>
-                                <ul className="mt-2 space-y-1 text-blue-900">
-                                    <li><strong>3</strong> berada di tempat <strong>ratusan</strong> (10²) → 3 × 100 = 300</li>
-                                    <li><strong>4</strong> berada di tempat <strong>puluhan</strong> (10¹) → 4 × 10 = 40</li>
-                                    <li><strong>5</strong> berada di tempat <strong>satuan</strong> (10⁰) → 5 × 1 = 5</li>
+                            
+                            <div className="bg-blue-50 p-5 rounded-lg border border-blue-200 mt-4 max-w-lg mx-auto">
+                                <h3 className="font-bold text-blue-800 border-b border-blue-200 pb-2 mb-3">Contoh Nilai Tempat: Angka 345</h3>
+                                <ul className="space-y-2 text-blue-900 font-mono text-lg">
+                                    <li>3 × 10² (ratusan) = 300</li>
+                                    <li>4 × 10¹ (puluhan) = &nbsp;40</li>
+                                    <li>5 × 10⁰ (satuan) &nbsp;= &nbsp;&nbsp;5</li>
+                                    <li className="border-t border-blue-300 pt-2 mt-2 font-bold">Total &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= 345</li>
                                 </ul>
-                                <p className="mt-2 font-bold">Total: 300 + 40 + 5 = 345</p>
                             </div>
                         </div>
                     )}
@@ -126,15 +127,36 @@
                     {page === 3 && (
                         <div className="fade-in">
                             <h2 className="text-2xl font-bold text-indigo-700 mb-4">3. Bilangan Biner (Basis 2)</h2>
-                            <p className="mb-4">Sistem bilangan komputer. Hanya menggunakan angka <strong>0 (Mati/Off)</strong> dan <strong>1 (Nyala/On)</strong>. Nilai tempatnya menggunakan pangkat 2.</p>
-                            <div className="grid grid-cols-2 gap-4">
-                                <div className="bg-purple-50 p-4 rounded-lg border border-purple-200">
-                                    <h3 className="font-bold text-purple-800">Nilai Tempat Biner</h3>
-                                    <p>2⁰ = 1, 2¹ = 2, 2² = 4, 2³ = 8, 2⁴ = 16</p>
+                            <p className="mb-4">Sistem bilangan komputer. Hanya menggunakan angka <strong>0 (Mati/Off)</strong> dan <strong>1 (Nyala/On)</strong>. Nilai tempatnya menggunakan pangkat 2 (1, 2, 4, 8, 16, dst).</p>
+                            
+                            <div className="grid md:grid-cols-2 gap-6 mt-6">
+                                {/* Biner ke Desimal */}
+                                <div className="bg-purple-50 p-5 rounded-lg border border-purple-200">
+                                    <h3 className="font-bold text-purple-800 border-b border-purple-200 pb-2 mb-3">A. Biner ke Desimal (1011₂)</h3>
+                                    <p className="text-sm text-purple-700 mb-3">Kalikan tiap digit dengan nilai tempat pangkat 2:</p>
+                                    <ul className="space-y-2 text-purple-900 font-mono text-lg">
+                                        <li>1 × 2³ (8) = 8</li>
+                                        <li>0 × 2² (4) = 0</li>
+                                        <li>1 × 2¹ (2) = 2</li>
+                                        <li>1 × 2⁰ (1) = 1</li>
+                                        <li className="border-t border-purple-300 pt-2 mt-2 font-bold">Total &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= 11₁₀</li>
+                                    </ul>
                                 </div>
-                                <div className="bg-purple-50 p-4 rounded-lg border border-purple-200">
-                                    <h3 className="font-bold text-purple-800">Contoh: 1011₂ ke Desimal</h3>
-                                    <p>(1 × 8) + (0 × 4) + (1 × 2) + (1 × 1) = <strong>11</strong></p>
+                                
+                                {/* Desimal ke Biner */}
+                                <div className="bg-purple-50 p-5 rounded-lg border border-purple-200">
+                                    <h3 className="font-bold text-purple-800 border-b border-purple-200 pb-2 mb-3">B. Desimal ke Biner (13₁₀)</h3>
+                                    <p className="text-sm text-purple-700 mb-3">Dibagi 2 sampai habis, lalu catat sisa pembagiannya:</p>
+                                    <ul className="space-y-2 text-purple-900 font-mono text-lg">
+                                        <li>13 ÷ 2 = 6, sisa <strong className="text-red-600 bg-red-100 px-1 rounded">1</strong></li>
+                                        <li>&nbsp;6 ÷ 2 = 3, sisa <strong className="text-red-600 bg-red-100 px-1 rounded">0</strong></li>
+                                        <li>&nbsp;3 ÷ 2 = 1, sisa <strong className="text-red-600 bg-red-100 px-1 rounded">1</strong></li>
+                                        <li>&nbsp;1 ÷ 2 = 0, sisa <strong className="text-red-600 bg-red-100 px-1 rounded">1</strong></li>
+                                    </ul>
+                                    <div className="mt-4 p-2 bg-purple-200 rounded text-sm font-bold text-purple-900 text-center">
+                                        Membaca Hasil:<br/>
+                                        Baca sisa dari BAWAH ke ATAS &rarr; <span className="text-lg">1101₂</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -143,20 +165,40 @@
                     {page === 4 && (
                         <div className="fade-in">
                             <h2 className="text-2xl font-bold text-indigo-700 mb-4">4. Bilangan Oktal (Basis 8)</h2>
-                            <p className="mb-4">Sistem ini memadatkan representasi biner. Menggunakan angka 0 sampai 7. Angka 8 dan 9 <strong>tidak ada</strong> dalam oktal.</p>
-                            <div className="bg-green-50 p-4 rounded-lg border border-green-200 mt-4">
-                                <h3 className="font-bold text-green-800">Contoh: 157₈ ke Desimal</h3>
-                                <p className="mt-2 text-green-900">Nilai tempat oktal: 8² (64), 8¹ (8), 8⁰ (1)</p>
-                                <ul className="mt-2 text-green-900">
-                                    <li>1 × 64 = 64</li>
-                                    <li>5 × 8 = 40</li>
-                                    <li>7 × 1 = 7</li>
-                                </ul>
-                                <p className="mt-2 font-bold text-green-800">Total: 64 + 40 + 7 = 111₁₀</p>
+                            <p className="mb-4">Menggunakan angka 0 sampai 7. Angka 8 dan 9 <strong>tidak ada</strong> dalam sistem ini. Nilai tempatnya menggunakan pangkat 8 (1, 8, 64, 512, dst).</p>
+                            
+                            <div className="grid md:grid-cols-2 gap-6 mt-6">
+                                {/* Oktal ke Desimal */}
+                                <div className="bg-green-50 p-5 rounded-lg border border-green-200">
+                                    <h3 className="font-bold text-green-800 border-b border-green-200 pb-2 mb-3">A. Oktal ke Desimal (157₈)</h3>
+                                    <p className="text-sm text-green-700 mb-3">Kalikan tiap digit dengan nilai tempat pangkat 8:</p>
+                                    <ul className="space-y-2 text-green-900 font-mono text-lg">
+                                        <li>1 × 8² (64) = 64</li>
+                                        <li>5 × 8¹ (8) &nbsp;= 40</li>
+                                        <li>7 × 8⁰ (1) &nbsp;= &nbsp;7</li>
+                                        <li className="border-t border-green-300 pt-2 mt-2 font-bold">Total &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= 111₁₀</li>
+                                    </ul>
+                                </div>
+                                
+                                {/* Desimal ke Oktal */}
+                                <div className="bg-green-50 p-5 rounded-lg border border-green-200">
+                                    <h3 className="font-bold text-green-800 border-b border-green-200 pb-2 mb-3">B. Desimal ke Oktal (75₁₀)</h3>
+                                    <p className="text-sm text-green-700 mb-3">Dibagi 8 sampai habis, lalu catat sisa pembagiannya:</p>
+                                    <ul className="space-y-2 text-green-900 font-mono text-lg">
+                                        <li>75 ÷ 8 = 9, sisa <strong className="text-red-600 bg-red-100 px-1 rounded">3</strong></li>
+                                        <li>&nbsp;9 ÷ 8 = 1, sisa <strong className="text-red-600 bg-red-100 px-1 rounded">1</strong></li>
+                                        <li>&nbsp;1 ÷ 8 = 0, sisa <strong className="text-red-600 bg-red-100 px-1 rounded">1</strong></li>
+                                    </ul>
+                                    <div className="mt-4 p-2 bg-green-200 rounded text-sm font-bold text-green-900 text-center">
+                                        Membaca Hasil:<br/>
+                                        Baca sisa dari BAWAH ke ATAS &rarr; <span className="text-lg">113₈</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     )}
 
+                    {/* Navigasi Halaman Materi */}
                     <div className="flex justify-between mt-8 pt-4 border-t border-gray-200">
                         <button onClick={() => setPage(Math.max(1, page - 1))} disabled={page === 1} className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50 hover:bg-gray-300 font-medium">Sebelumnya</button>
                         <span className="font-bold text-gray-500">Halaman {page} dari 4</span>
@@ -309,7 +351,7 @@
                 { q: "Ubah biner 1010 ke desimal:", ans: "10", explain: "(1x8) + (0x4) + (1x2) + (0x1) = 10" },
                 { q: "Ubah desimal 15 ke biner:", ans: "1111", explain: "15 dibagi 2 terus menerus sisanya dibaca dari bawah adalah 1111" },
                 { q: "Ubah biner 110 ke desimal:", ans: "6", explain: "(1x4) + (1x2) + (0x1) = 6" },
-                { q: "Ubah desimal 9 ke biner:", ans: "1001", explain: "9 = 8 + 1, posisinya 1001" },
+                { q: "Ubah desimal 9 ke biner:", ans: "1001", explain: "9 dibagi 2 terus menerus sisanya 1001" },
                 { q: "Ubah biner 10000 ke desimal:", ans: "16", explain: "Hanya posisi 2 pangkat 4 yang bernilai 1, yaitu 16" }
             ];
 
@@ -396,7 +438,7 @@
             const handleAnswer = (opt) => {
                 setSelected(opt);
                 if (opt === soalKuis[currentSoal].ans) {
-                    setScore(score + 20); // 5 soal x 20 poin = 100
+                    setScore(score + 20);
                 }
                 setTimeout(() => {
                     if (currentSoal < soalKuis.length - 1) {
