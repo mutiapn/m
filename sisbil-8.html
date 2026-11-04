@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Petualangan Sistem Bilangan</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- React & ReactDOM -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+    
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f8fafc; }
+        .fade-in { animation: fadeIn 0.5s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        const App = () => {
+            const [activeTab, setActiveTab] = useState('beranda');
+            
+            return (
+                <div className="min-h-screen pb-12">
+                    {/* Header & Navigasi */}
+                    <nav className="bg-indigo-700 text-white shadow-lg sticky top-0 z-50">
+                        <div className="max-w-6xl mx-auto px-4">
+                            <div className="flex justify-between items-center py-4">
+                                <div>
+                                    <h1 className="text-xl font-bold">Petualangan Sistem Bilangan</h1>
+                                    <p className="text-sm text-indigo-200">Informatika Kelas 8</p>
+                                </div>
+                                <div className="flex space-x-1 overflow-x-auto">
+                                    <button onClick={() => setActiveTab('beranda')} className={`px-3 py-2 rounded-md text-sm font-medium ${activeTab === 'beranda' ? 'bg-indigo-900' : 'hover:bg-indigo-600'}`}>Beranda</button>
+                                    <button onClick={() => setActiveTab('materi')} className={`px-3 py-2 rounded-md text-sm font-medium ${activeTab === 'materi' ? 'bg-indigo-900' : 'hover:bg-indigo-600'}`}>Materi</button>
+                                    <button onClick={() => setActiveTab('kalkulator')} className={`px-3 py-2 rounded-md text-sm font-medium ${activeTab === 'kalkulator' ? 'bg-indigo-900' : 'hover:bg-indigo-600'}`}>Kalkulator</button>
+                                    <button onClick={() => setActiveTab('latihan')} className={`px-3 py-2 rounded-md text-sm font-medium ${activeTab === 'latihan' ? 'bg-indigo-900' : 'hover:bg-indigo-600'}`}>Latihan</button>
+                                    <button onClick={() => setActiveTab('kuis')} className={`px-3 py-2 rounded-md text-sm font-medium ${activeTab === 'kuis' ? 'bg-indigo-900' : 'hover:bg-indigo-600'}`}>Kuis Akhir</button>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+
+                    {/* Konten Utama */}
+                    <main className="max-w-4xl mx-auto px-4 mt-8 fade-in">
+                        {activeTab === 'beranda' && <Beranda setTab={setActiveTab} />}
+                        {activeTab === 'materi' && <Materi />}
+                        {activeTab === 'kalkulator' && <Kalkulator />}
+                        {activeTab === 'latihan' && <Latihan />}
+                        {activeTab === 'kuis' && <Kuis />}
+                    </main>
+                </div>
+            );
+        };
+
+        const Beranda = ({ setTab }) => (
+            <div className="bg-white rounded-xl shadow-md p-8 text-center border-t-4 border-indigo-500">
+                <div className="text-6xl mb-4">🚀</div>
+                <h2 className="text-3xl font-bold text-gray-800 mb-2">Mengenal Desimal, Biner, dan Oktal</h2>
+                <p className="text-gray-600 mb-6 max-w-2xl mx-auto">Selamat datang di modul interaktif sistem bilangan. Mari pelajari bagaimana komputer memahami angka menggunakan bahasa khusus mereka!</p>
+                
+                <div className="bg-indigo-50 rounded-lg p-6 text-left mb-8 max-w-2xl mx-auto">
+                    <h3 className="font-bold text-indigo-800 mb-3">🎯 Tujuan Pembelajaran:</h3>
+                    <ul className="list-disc pl-5 text-gray-700 space-y-1">
+                        <li>Memahami pengertian dan basis sistem bilangan.</li>
+                        <li>Mengenali karakteristik bilangan desimal, biner, dan oktal.</li>
+                        <li>Memahami nilai tempat dalam setiap sistem bilangan.</li>
+                        <li>Mampu mengonversi bilangan dari desimal ke biner dan oktal.</li>
+                    </ul>
+                </div>
+                
+                <button onClick={() => setTab('materi')} className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transform transition hover:scale-105">
+                    MULAI BELAJAR
+                </button>
+            </div>
+        );
+
+        const Materi = () => {
+            const [page, setPage] = useState(1);
+            return (
+                <div className="bg-white rounded-xl shadow-md p-6 lg:p-8">
+                    {page === 1 && (
+                        <div className="fade-in">
+                            <h2 className="text-2xl font-bold text-indigo-700 mb-4">1. Sistem Bilangan & Basis</h2>
+                            <p className="mb-4"><strong>Sistem bilangan</strong> adalah cara kita menuliskan dan mewakili angka. Komputer menggunakan sistem bilangan yang berbeda dengan manusia karena komputer tersusun dari sirkuit elektronik yang hanya mengenali dua keadaan: menyala atau mati.</p>
+                            <p className="mb-4"><strong>Basis (Radix)</strong> menunjukkan jumlah simbol atau angka dasar yang digunakan dalam sistem tersebut.</p>
+                            <table className="min-w-full bg-white border border-gray-300 mt-4">
+                                <thead>
+                                    <tr className="bg-indigo-100"><th className="py-2 px-4 border">Sistem Bilangan</th><th className="py-2 px-4 border">Basis</th><th className="py-2 px-4 border">Simbol yang Digunakan</th></tr>
+                                </thead>
+                                <tbody className="text-center">
+                                    <tr><td className="py-2 px-4 border font-bold">Desimal</td><td className="py-2 px-4 border">10</td><td className="py-2 px-4 border">0, 1, 2, 3, 4, 5, 6, 7, 8, 9</td></tr>
+                                    <tr className="bg-gray-50"><td className="py-2 px-4 border font-bold">Biner</td><td className="py-2 px-4 border">2</td><td className="py-2 px-4 border">0, 1</td></tr>
+                                    <tr><td className="py-2 px-4 border font-bold">Oktal</td><td className="py-2 px-4 border">8</td><td className="py-2 px-4 border">0, 1, 2, 3, 4, 5, 6, 7</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    )}
+                    
+                    {page === 2 && (
+                        <div className="fade-in">
+                            <h2 className="text-2xl font-bold text-indigo-700 mb-4">2. Bilangan Desimal (Basis 10)</h2>
+                            <p className="mb-4">Sistem yang kita gunakan sehari-hari. Disebut basis 10 karena menggunakan 10 angka (0-9). Nilai tempatnya menggunakan kelipatan pangkat 10.</p>
+                            <div className="bg-blue-50 p-4 rounded-lg border border-blue-200 mt-4">
+                                <h3 className="font-bold text-blue-800">Contoh Nilai Tempat: Angka 345</h3>
+                                <ul className="mt-2 space-y-1 text-blue-900">
+                                    <li><strong>3</strong> berada di tempat <strong>ratusan</strong> (10²) → 3 × 100 = 300</li>
+                                    <li><strong>4</strong> berada di tempat <strong>puluhan</strong> (10¹) → 4 × 10 = 40</li>
+                                    <li><strong>5</strong> berada di tempat <strong>satuan</strong> (10⁰) → 5 × 1 = 5</li>
+                                </ul>
+                                <p className="mt-2 font-bold">Total: 300 + 40 + 5 = 345</p>
+                            </div>
+                        </div>
+                    )}
+
+                    {page === 3 && (
+                        <div className="fade-in">
+                            <h2 className="text-2xl font-bold text-indigo-700 mb-4">3. Bilangan Biner (Basis 2)</h2>
+                            <p className="mb-4">Sistem bilangan komputer. Hanya menggunakan angka <strong>0 (Mati/Off)</strong> dan <strong>1 (Nyala/On)</strong>. Nilai tempatnya menggunakan pangkat 2.</p>
+                            <div className="grid grid-cols-2 gap-4">
+                                <div className="bg-purple-50 p-4 rounded-lg border border-purple-200">
+                                    <h3 className="font-bold text-purple-800">Nilai Tempat Biner</h3>
+                                    <p>2⁰ = 1, 2¹ = 2, 2² = 4, 2³ = 8, 2⁴ = 16</p>
+                                </div>
+                                <div className="bg-purple-50 p-4 rounded-lg border border-purple-200">
+                                    <h3 className="font-bold text-purple-800">Contoh: 1011₂ ke Desimal</h3>
+                                    <p>(1 × 8) + (0 × 4) + (1 × 2) + (1 × 1) = <strong>11</strong></p>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {page === 4 && (
+                        <div className="fade-in">
+                            <h2 className="text-2xl font-bold text-indigo-700 mb-4">4. Bilangan Oktal (Basis 8)</h2>
+                            <p className="mb-4">Sistem ini memadatkan representasi biner. Menggunakan angka 0 sampai 7. Angka 8 dan 9 <strong>tidak ada</strong> dalam oktal.</p>
+                            <div className="bg-green-50 p-4 rounded-lg border border-green-200 mt-4">
+                                <h3 className="font-bold text-green-800">Contoh: 157₈ ke Desimal</h3>
+                                <p className="mt-2 text-green-900">Nilai tempat oktal: 8² (64), 8¹ (8), 8⁰ (1)</p>
+                                <ul className="mt-2 text-green-900">
+                                    <li>1 × 64 = 64</li>
+                                    <li>5 × 8 = 40</li>
+                                    <li>7 × 1 = 7</li>
+                                </ul>
+                                <p className="mt-2 font-bold text-green-800">Total: 64 + 40 + 7 = 111₁₀</p>
+                            </div>
+                        </div>
+                    )}
+
+                    <div className="flex justify-between mt-8 pt-4 border-t border-gray-200">
+                        <button onClick={() => setPage(Math.max(1, page - 1))} disabled={page === 1} className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50 hover:bg-gray-300 font-medium">Sebelumnya</button>
+                        <span className="font-bold text-gray-500">Halaman {page} dari 4</span>
+                        <button onClick={() => setPage(Math.min(4, page + 1))} disabled={page === 4} className="px-4 py-2 bg-indigo-600 text-white rounded disabled:opacity-50 hover:bg-indigo-700 font-medium">Selanjutnya</button>
+                    </div>
+                </div>
+            );
+        };
+
+        const Kalkulator = () => {
+            const [inputNum, setInputNum] = useState('');
+            const [decimalNum, setDecimalNum] = useState(null);
+            const [showBinerSteps, setShowBinerSteps] = useState(false);
+            const [showOktalSteps, setShowOktalSteps] = useState(false);
+            const [stepIndexBiner, setStepIndexBiner] = useState(0);
+            const [stepIndexOktal, setStepIndexOktal] = useState(0);
+
+            const handleConvert = () => {
+                const num = parseInt(inputNum, 10);
+                if (isNaN(num) || num < 0) {
+                    alert("Masukkan bilangan bulat non-negatif yang valid.");
+                    return;
+                }
+                setDecimalNum(num);
+                setShowBinerSteps(false);
+                setShowOktalSteps(false);
+                setStepIndexBiner(0);
+                setStepIndexOktal(0);
+            };
+
+            const generateSteps = (num, base) => {
+                if (num === 0) return [{ current: 0, div: base, result: 0, remainder: 0 }];
+                let steps = [];
+                let current = num;
+                while (current > 0) {
+                    let remainder = current % base;
+                    let result = Math.floor(current / base);
+                    steps.push({ current, div: base, result, remainder });
+                    current = result;
+                }
+                return steps;
+            };
+
+            const binerSteps = decimalNum !== null ? generateSteps(decimalNum, 2) : [];
+            const oktalSteps = decimalNum !== null ? generateSteps(decimalNum, 8) : [];
+            
+            const binerResult = decimalNum !== null ? decimalNum.toString(2) : "";
+            const oktalResult = decimalNum !== null ? decimalNum.toString(8) : "";
+
+            return (
+                <div className="bg-white rounded-xl shadow-md p-6 fade-in">
+                    <h2 className="text-2xl font-bold text-indigo-700 mb-6 text-center">Kalkulator Konversi Sistem Bilangan</h2>
+                    
+                    <div className="flex flex-col md:flex-row gap-4 mb-8 justify-center items-center">
+                        <input type="number" min="0" value={inputNum} onChange={(e) => setInputNum(e.target.value)} placeholder="Masukkan bilangan desimal..." className="border-2 border-indigo-300 rounded-lg px-4 py-2 w-full md:w-64 focus:outline-none focus:border-indigo-600 text-lg" />
+                        <button onClick={handleConvert} className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-lg w-full md:w-auto">KONVERSI</button>
+                    </div>
+
+                    {decimalNum !== null && (
+                        <div className="space-y-6 fade-in">
+                            <div className="text-center font-bold text-lg p-4 bg-gray-100 rounded-lg">Desimal Awal: <span className="text-indigo-600 text-2xl">{decimalNum}</span></div>
+                            
+                            <div className="grid md:grid-cols-2 gap-6">
+                                {/* Kartu Biner */}
+                                <div className="border border-purple-200 bg-purple-50 rounded-lg p-6 shadow-sm flex flex-col items-center">
+                                    <h3 className="text-lg font-bold text-purple-800 mb-2">Hasil Biner (Basis 2)</h3>
+                                    <div className="text-4xl font-mono text-purple-600 font-bold mb-4 tracking-widest">{binerResult}</div>
+                                    {!showBinerSteps ? (
+                                        <button onClick={() => setShowBinerSteps(true)} className="mt-auto bg-purple-200 text-purple-800 hover:bg-purple-300 font-bold py-2 px-4 rounded">Lihat Langkah Biner</button>
+                                    ) : (
+                                        <div className="w-full mt-4 bg-white p-4 rounded border border-purple-100 fade-in">
+                                            <h4 className="font-bold text-center mb-3">Cara Konversi: Dibagi 2</h4>
+                                            <table className="w-full text-center text-sm border-collapse">
+                                                <thead><tr className="bg-purple-100">
+                                                    <th className="border p-1">Bilangan</th><th className="border p-1">÷ 2</th><th className="border p-1">Sisa</th>
+                                                </tr></thead>
+                                                <tbody>
+                                                    {binerSteps.slice(0, stepIndexBiner + 1).map((step, i) => (
+                                                        <tr key={i} className="fade-in">
+                                                            <td className="border p-1 text-purple-700 font-bold">{step.current}</td>
+                                                            <td className="border p-1">hasil {step.result}</td>
+                                                            <td className="border p-1 bg-purple-200 font-bold text-purple-900">{step.remainder}</td>
+                                                        </tr>
+                                                    ))}
+                                                </tbody>
+                                            </table>
+                                            
+                                            <div className="mt-4 flex justify-between gap-2">
+                                                <button onClick={() => setStepIndexBiner(Math.max(0, stepIndexBiner - 1))} disabled={stepIndexBiner === 0} className="px-2 py-1 bg-gray-200 text-xs rounded disabled:opacity-50">Sebelumnnya</button>
+                                                <button onClick={() => setStepIndexBiner(0)} className="px-2 py-1 bg-red-100 text-red-700 text-xs rounded">Ulangi</button>
+                                                <button onClick={() => setStepIndexBiner(Math.min(binerSteps.length - 1, stepIndexBiner + 1))} disabled={stepIndexBiner === binerSteps.length - 1} className="px-2 py-1 bg-purple-600 text-white text-xs rounded disabled:opacity-50">Selanjutnya</button>
+                                            </div>
+                                            {stepIndexBiner === binerSteps.length - 1 && (
+                                                <div className="mt-3 text-sm text-center bg-yellow-100 p-2 rounded text-yellow-800 font-bold fade-in">
+                                                    Baca sisa pembagian dari BAWAH ke ATAS: {binerResult}
+                                                </div>
+                                            )}
+                                        </div>
+                                    )}
+                                </div>
+
+                                {/* Kartu Oktal */}
+                                <div className="border border-green-200 bg-green-50 rounded-lg p-6 shadow-sm flex flex-col items-center">
+                                    <h3 className="text-lg font-bold text-green-800 mb-2">Hasil Oktal (Basis 8)</h3>
+                                    <div className="text-4xl font-mono text-green-600 font-bold mb-4 tracking-widest">{oktalResult}</div>
+                                    {!showOktalSteps ? (
+                                        <button onClick={() => setShowOktalSteps(true)} className="mt-auto bg-green-200 text-green-800 hover:bg-green-300 font-bold py-2 px-4 rounded">Lihat Langkah Oktal</button>
+                                    ) : (
+                                        <div className="w-full mt-4 bg-white p-4 rounded border border-green-100 fade-in">
+                                            <h4 className="font-bold text-center mb-3">Cara Konversi: Dibagi 8</h4>
+                                            <table className="w-full text-center text-sm border-collapse">
+                                                <thead><tr className="bg-green-100">
+                                                    <th className="border p-1">Bilangan</th><th className="border p-1">÷ 8</th><th className="border p-1">Sisa</th>
+                                                </tr></thead>
+                                                <tbody>
+                                                    {oktalSteps.slice(0, stepIndexOktal + 1).map((step, i) => (
+                                                        <tr key={i} className="fade-in">
+                                                            <td className="border p-1 text-green-700 font-bold">{step.current}</td>
+                                                            <td className="border p-1">hasil {step.result}</td>
+                                                            <td className="border p-1 bg-green-200 font-bold text-green-900">{step.remainder}</td>
+                                                        </tr>
+                                                    ))}
+                                                </tbody>
+                                            </table>
+                                            
+                                            <div className="mt-4 flex justify-between gap-2">
+                                                <button onClick={() => setStepIndexOktal(Math.max(0, stepIndexOktal - 1))} disabled={stepIndexOktal === 0} className="px-2 py-1 bg-gray-200 text-xs rounded disabled:opacity-50">Sebelumnnya</button>
+                                                <button onClick={() => setStepIndexOktal(0)} className="px-2 py-1 bg-red-100 text-red-700 text-xs rounded">Ulangi</button>
+                                                <button onClick={() => setStepIndexOktal(Math.min(oktalSteps.length - 1, stepIndexOktal + 1))} disabled={stepIndexOktal === oktalSteps.length - 1} className="px-2 py-1 bg-green-600 text-white text-xs rounded disabled:opacity-50">Selanjutnya</button>
+                                            </div>
+                                            {stepIndexOktal === oktalSteps.length - 1 && (
+                                                <div className="mt-3 text-sm text-center bg-yellow-100 p-2 rounded text-yellow-800 font-bold fade-in">
+                                                    Baca sisa pembagian dari BAWAH ke ATAS: {oktalResult}
+                                                </div>
+                                            )}
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
+        const Latihan = () => {
+            const [activeSubTab, setActiveSubTab] = useState('biner');
+            
+            const binerQuestions = [
+                { q: "Ubah biner 1010 ke desimal:", ans: "10", explain: "(1x8) + (0x4) + (1x2) + (0x1) = 10" },
+                { q: "Ubah desimal 15 ke biner:", ans: "1111", explain: "15 dibagi 2 terus menerus sisanya dibaca dari bawah adalah 1111" },
+                { q: "Ubah biner 110 ke desimal:", ans: "6", explain: "(1x4) + (1x2) + (0x1) = 6" },
+                { q: "Ubah desimal 9 ke biner:", ans: "1001", explain: "9 = 8 + 1, posisinya 1001" },
+                { q: "Ubah biner 10000 ke desimal:", ans: "16", explain: "Hanya posisi 2 pangkat 4 yang bernilai 1, yaitu 16" }
+            ];
+
+            const oktalQuestions = [
+                { q: "Ubah oktal 12 ke desimal:", ans: "10", explain: "(1x8) + (2x1) = 10" },
+                { q: "Ubah desimal 20 ke oktal:", ans: "24", explain: "20 dibagi 8 = 2 sisa 4, maka 24" },
+                { q: "Ubah oktal 30 ke desimal:", ans: "24", explain: "(3x8) + (0x1) = 24" },
+                { q: "Ubah desimal 65 ke oktal:", ans: "101", explain: "65 / 8 = 8 sisa 1, 8 / 8 = 1 sisa 0, maka 101" },
+                { q: "Ubah oktal 100 ke desimal:", ans: "64", explain: "1 × 8² = 64" }
+            ];
+
+            const [userAnswers, setUserAnswers] = useState({});
+            const [results, setResults] = useState({});
+
+            const checkAnswers = (questions, type) => {
+                let newResults = {};
+                questions.forEach((item, index) => {
+                    const key = `${type}-${index}`;
+                    const uAns = (userAnswers[key] || "").trim();
+                    newResults[key] = {
+                        correct: uAns === item.ans,
+                        checked: true
+                    };
+                });
+                setResults(prev => ({ ...prev, ...newResults }));
+            };
+
+            const currentQuestions = activeSubTab === 'biner' ? binerQuestions : oktalQuestions;
+
+            return (
+                <div className="bg-white rounded-xl shadow-md p-6 fade-in">
+                    <h2 className="text-2xl font-bold text-indigo-700 mb-6 text-center">Latihan Soal Isian</h2>
+                    
+                    <div className="flex justify-center space-x-4 mb-6">
+                        <button onClick={() => setActiveSubTab('biner')} className={`px-4 py-2 rounded font-bold ${activeSubTab === 'biner' ? 'bg-purple-600 text-white' : 'bg-gray-200 text-gray-700'}`}>Latihan 1: Biner</button>
+                        <button onClick={() => setActiveSubTab('oktal')} className={`px-4 py-2 rounded font-bold ${activeSubTab === 'oktal' ? 'bg-green-600 text-white' : 'bg-gray-200 text-gray-700'}`}>Latihan 2: Oktal</button>
+                    </div>
+
+                    <div className="space-y-6">
+                        {currentQuestions.map((item, index) => {
+                            const key = `${activeSubTab}-${index}`;
+                            const res = results[key];
+                            return (
+                                <div key={index} className={`p-4 rounded-lg border-2 ${res?.checked ? (res.correct ? 'border-green-400 bg-green-50' : 'border-red-400 bg-red-50') : 'border-gray-200'}`}>
+                                    <div className="font-bold text-gray-800 mb-2">{index + 1}. {item.q}</div>
+                                    <input type="text" value={userAnswers[key] || ''} onChange={(e) => setUserAnswers({...userAnswers, [key]: e.target.value})} placeholder="Ketik angka jawaban..." className="border border-gray-400 rounded px-3 py-1 mr-4 focus:outline-indigo-500" disabled={res?.correct}/>
+                                    
+                                    {res?.checked && (
+                                        <span className={`font-bold ${res.correct ? 'text-green-600' : 'text-red-600'}`}>
+                                            {res.correct ? '✓ Benar!' : '✗ Salah, coba lagi.'}
+                                        </span>
+                                    )}
+                                    {res?.checked && !res.correct && (
+                                        <div className="mt-2 text-sm bg-yellow-100 text-yellow-800 p-2 rounded">
+                                            <strong>Pembahasan:</strong> {item.explain}
+                                        </div>
+                                    )}
+                                </div>
+                            );
+                        })}
+                    </div>
+                    
+                    <div className="mt-6 text-center">
+                        <button onClick={() => checkAnswers(currentQuestions, activeSubTab)} className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-8 rounded-lg shadow">Periksa Semua Jawaban</button>
+                    </div>
+                </div>
+            );
+        };
+
+        const Kuis = () => {
+            const soalKuis = [
+                { q: "Sistem bilangan desimal menggunakan basis?", opts: ["2", "8", "10", "16"], ans: "10" },
+                { q: "Sistem bilangan komputer yang hanya mengenali 0 dan 1 disebut?", opts: ["Desimal", "Biner", "Oktal", "Heksadesimal"], ans: "Biner" },
+                { q: "Angka mana yang TIDAK valid dalam bilangan oktal?", opts: ["5", "6", "7", "8"], ans: "8" },
+                { q: "Nilai tempat untuk posisi kedua (dari kanan) pada bilangan biner adalah?", opts: ["1", "2", "4", "8"], ans: "2" },
+                { q: "Berapa hasil konversi desimal 10 ke biner?", opts: ["1010", "1100", "1001", "1011"], ans: "1010" }
+            ];
+
+            const [currentSoal, setCurrentSoal] = useState(0);
+            const [score, setScore] = useState(0);
+            const [finished, setFinished] = useState(false);
+            const [selected, setSelected] = useState("");
+
+            const handleAnswer = (opt) => {
+                setSelected(opt);
+                if (opt === soalKuis[currentSoal].ans) {
+                    setScore(score + 20); // 5 soal x 20 poin = 100
+                }
+                setTimeout(() => {
+                    if (currentSoal < soalKuis.length - 1) {
+                        setCurrentSoal(currentSoal + 1);
+                        setSelected("");
+                    } else {
+                        setFinished(true);
+                    }
+                }, 1000);
+            };
+
+            if (finished) {
+                return (
+                    <div className="bg-white rounded-xl shadow-md p-8 text-center border-t-4 border-indigo-500 fade-in">
+                        <h2 className="text-3xl font-bold text-indigo-700 mb-4">Kuis Selesai!</h2>
+                        <div className="text-6xl font-bold text-gray-800 mb-4">{score} / 100</div>
+                        <p className="text-gray-600 mb-6">{score >= 80 ? 'Luar biasa! Kamu sudah sangat menguasai sistem bilangan.' : 'Tetap semangat! Coba pelajari materinya lagi ya.'}</p>
+                        <button onClick={() => { setFinished(false); setCurrentSoal(0); setScore(0); setSelected(""); }} className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-lg">Coba Kuis Lagi</button>
+                    </div>
+                );
+            }
+
+            return (
+                <div className="bg-white rounded-xl shadow-md p-8 fade-in">
+                    <div className="flex justify-between items-center mb-6">
+                        <h2 className="text-xl font-bold text-indigo-700">Kuis Sistem Bilangan</h2>
+                        <div className="text-sm font-bold bg-indigo-100 text-indigo-800 py-1 px-3 rounded-full">Soal {currentSoal + 1} dari {soalKuis.length}</div>
+                    </div>
+                    
+                    <div className="w-full bg-gray-200 rounded-full h-2 mb-6">
+                        <div className="bg-indigo-600 h-2 rounded-full transition-all duration-300" style={{ width: `${((currentSoal) / soalKuis.length) * 100}%` }}></div>
+                    </div>
+
+                    <h3 className="text-lg font-bold text-gray-800 mb-4">{soalKuis[currentSoal].q}</h3>
+                    
+                    <div className="space-y-3">
+                        {soalKuis[currentSoal].opts.map((opt, i) => (
+                            <button 
+                                key={i} 
+                                onClick={() => !selected && handleAnswer(opt)}
+                                disabled={selected !== ""}
+                                className={`w-full text-left p-4 rounded-lg border-2 font-medium transition ${
+                                    selected === opt 
+                                        ? (opt === soalKuis[currentSoal].ans ? 'border-green-500 bg-green-50' : 'border-red-500 bg-red-50')
+                                        : 'border-gray-200 hover:border-indigo-400 hover:bg-indigo-50'
+                                }`}
+                            >
+                                {opt}
+                            </button>
+                        ))}
+                    </div>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
