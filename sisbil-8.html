@@ -17,8 +17,11 @@
 
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f8fafc; }
-        .fade-in { animation: fadeIn 0.5s ease-in-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .fade-in { animation: fadeIn 0.4s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        /* Hide scrollbar for mobile navigation but keep functionality */
+        .hide-scroll::-webkit-scrollbar { display: none; }
+        .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
 <body>
@@ -32,27 +35,28 @@
             
             return (
                 <div className="min-h-screen pb-12">
-                    {/* Header & Navigasi */}
+                    {/* Header & Navigasi - Mobile First */}
                     <nav className="bg-indigo-700 text-white shadow-lg sticky top-0 z-50">
                         <div className="max-w-6xl mx-auto px-4">
-                            <div className="flex justify-between items-center py-4">
-                                <div>
-                                    <h1 className="text-xl font-bold">Petualangan Sistem Bilangan</h1>
-                                    <p className="text-sm text-indigo-200">Informatika Kelas 8</p>
+                            <div className="flex flex-col md:flex-row md:justify-between md:items-center py-3 md:py-4 gap-3">
+                                <div className="text-center md:text-left">
+                                    <h1 className="text-lg md:text-xl font-bold leading-tight">Petualangan Sistem Bilangan</h1>
+                                    <p className="text-xs md:text-sm text-indigo-200">Informatika Kelas 8</p>
                                 </div>
-                                <div className="flex space-x-1 overflow-x-auto">
-                                    <button onClick={() => setActiveTab('beranda')} className={`px-3 py-2 rounded-md text-sm font-medium ${activeTab === 'beranda' ? 'bg-indigo-900' : 'hover:bg-indigo-600'}`}>Beranda</button>
-                                    <button onClick={() => setActiveTab('materi')} className={`px-3 py-2 rounded-md text-sm font-medium ${activeTab === 'materi' ? 'bg-indigo-900' : 'hover:bg-indigo-600'}`}>Materi</button>
-                                    <button onClick={() => setActiveTab('kalkulator')} className={`px-3 py-2 rounded-md text-sm font-medium ${activeTab === 'kalkulator' ? 'bg-indigo-900' : 'hover:bg-indigo-600'}`}>Kalkulator</button>
-                                    <button onClick={() => setActiveTab('latihan')} className={`px-3 py-2 rounded-md text-sm font-medium ${activeTab === 'latihan' ? 'bg-indigo-900' : 'hover:bg-indigo-600'}`}>Latihan</button>
-                                    <button onClick={() => setActiveTab('kuis')} className={`px-3 py-2 rounded-md text-sm font-medium ${activeTab === 'kuis' ? 'bg-indigo-900' : 'hover:bg-indigo-600'}`}>Kuis Akhir</button>
+                                {/* Menu navigasi bisa discroll menyamping di HP */}
+                                <div className="flex space-x-2 overflow-x-auto hide-scroll pb-1 md:pb-0 justify-start md:justify-end">
+                                    <button onClick={() => setActiveTab('beranda')} className={`whitespace-nowrap px-3 py-2 rounded-md text-sm font-medium transition-colors ${activeTab === 'beranda' ? 'bg-indigo-900' : 'hover:bg-indigo-600'}`}>Beranda</button>
+                                    <button onClick={() => setActiveTab('materi')} className={`whitespace-nowrap px-3 py-2 rounded-md text-sm font-medium transition-colors ${activeTab === 'materi' ? 'bg-indigo-900' : 'hover:bg-indigo-600'}`}>Materi</button>
+                                    <button onClick={() => setActiveTab('kalkulator')} className={`whitespace-nowrap px-3 py-2 rounded-md text-sm font-medium transition-colors ${activeTab === 'kalkulator' ? 'bg-indigo-900' : 'hover:bg-indigo-600'}`}>Kalkulator</button>
+                                    <button onClick={() => setActiveTab('latihan')} className={`whitespace-nowrap px-3 py-2 rounded-md text-sm font-medium transition-colors ${activeTab === 'latihan' ? 'bg-indigo-900' : 'hover:bg-indigo-600'}`}>Latihan</button>
+                                    <button onClick={() => setActiveTab('kuis')} className={`whitespace-nowrap px-3 py-2 rounded-md text-sm font-medium transition-colors ${activeTab === 'kuis' ? 'bg-indigo-900' : 'hover:bg-indigo-600'}`}>Kuis Akhir</button>
                                 </div>
                             </div>
                         </div>
                     </nav>
 
                     {/* Konten Utama */}
-                    <main className="max-w-4xl mx-auto px-4 mt-8 fade-in">
+                    <main className="max-w-4xl mx-auto px-4 mt-6 md:mt-8 fade-in">
                         {activeTab === 'beranda' && <Beranda setTab={setActiveTab} />}
                         {activeTab === 'materi' && <Materi />}
                         {activeTab === 'kalkulator' && <Kalkulator />}
@@ -64,14 +68,14 @@
         };
 
         const Beranda = ({ setTab }) => (
-            <div className="bg-white rounded-xl shadow-md p-8 text-center border-t-4 border-indigo-500">
-                <div className="text-6xl mb-4">🚀</div>
-                <h2 className="text-3xl font-bold text-gray-800 mb-2">Mengenal Desimal, Biner, dan Oktal</h2>
-                <p className="text-gray-600 mb-6 max-w-2xl mx-auto">Selamat datang di modul interaktif sistem bilangan. Mari pelajari bagaimana komputer memahami angka menggunakan bahasa khusus mereka!</p>
+            <div className="bg-white rounded-xl shadow-md p-6 md:p-8 text-center border-t-4 border-indigo-500">
+                <div className="text-5xl md:text-6xl mb-4">🚀</div>
+                <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-3">Mengenal Desimal, Biner, dan Oktal</h2>
+                <p className="text-sm md:text-base text-gray-600 mb-6 max-w-2xl mx-auto">Selamat datang di modul interaktif sistem bilangan. Mari pelajari bagaimana komputer memahami angka menggunakan bahasa khusus mereka!</p>
                 
-                <div className="bg-indigo-50 rounded-lg p-6 text-left mb-8 max-w-2xl mx-auto">
-                    <h3 className="font-bold text-indigo-800 mb-3">🎯 Tujuan Pembelajaran:</h3>
-                    <ul className="list-disc pl-5 text-gray-700 space-y-1">
+                <div className="bg-indigo-50 rounded-lg p-5 md:p-6 text-left mb-8 max-w-2xl mx-auto">
+                    <h3 className="font-bold text-indigo-800 mb-3 text-sm md:text-base">🎯 Tujuan Pembelajaran:</h3>
+                    <ul className="list-disc pl-5 text-sm md:text-base text-gray-700 space-y-2">
                         <li>Memahami pengertian dan basis sistem bilangan.</li>
                         <li>Mengenali karakteristik bilangan desimal, biner, dan oktal.</li>
                         <li>Memahami nilai tempat dalam setiap sistem bilangan.</li>
@@ -79,7 +83,7 @@
                     </ul>
                 </div>
                 
-                <button onClick={() => setTab('materi')} className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transform transition hover:scale-105">
+                <button onClick={() => setTab('materi')} className="w-full md:w-auto bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transform transition hover:scale-105 active:scale-95">
                     MULAI BELAJAR
                 </button>
             </div>
@@ -88,33 +92,38 @@
         const Materi = () => {
             const [page, setPage] = useState(1);
             return (
-                <div className="bg-white rounded-xl shadow-md p-6 lg:p-8">
+                <div className="bg-white rounded-xl shadow-md p-5 md:p-8">
                     {page === 1 && (
                         <div className="fade-in">
-                            <h2 className="text-2xl font-bold text-indigo-700 mb-4">1. Sistem Bilangan & Basis</h2>
-                            <p className="mb-4"><strong>Sistem bilangan</strong> adalah cara kita menuliskan dan mewakili angka. Komputer menggunakan sistem bilangan yang berbeda dengan manusia karena komputer tersusun dari sirkuit elektronik yang hanya mengenali dua keadaan: menyala atau mati.</p>
-                            <p className="mb-4"><strong>Basis (Radix)</strong> menunjukkan jumlah simbol atau angka dasar yang digunakan dalam sistem tersebut.</p>
-                            <table className="min-w-full bg-white border border-gray-300 mt-4">
-                                <thead>
-                                    <tr className="bg-indigo-100"><th className="py-2 px-4 border">Sistem Bilangan</th><th className="py-2 px-4 border">Basis</th><th className="py-2 px-4 border">Simbol yang Digunakan</th></tr>
-                                </thead>
-                                <tbody className="text-center">
-                                    <tr><td className="py-2 px-4 border font-bold">Desimal</td><td className="py-2 px-4 border">10</td><td className="py-2 px-4 border">0, 1, 2, 3, 4, 5, 6, 7, 8, 9</td></tr>
-                                    <tr className="bg-gray-50"><td className="py-2 px-4 border font-bold">Biner</td><td className="py-2 px-4 border">2</td><td className="py-2 px-4 border">0, 1</td></tr>
-                                    <tr><td className="py-2 px-4 border font-bold">Oktal</td><td className="py-2 px-4 border">8</td><td className="py-2 px-4 border">0, 1, 2, 3, 4, 5, 6, 7</td></tr>
-                                </tbody>
-                            </table>
+                            <h2 className="text-xl md:text-2xl font-bold text-indigo-700 mb-4">1. Sistem Bilangan & Basis</h2>
+                            <div className="text-sm md:text-base space-y-3 text-gray-700">
+                                <p><strong>Sistem bilangan</strong> adalah cara kita menuliskan dan mewakili angka. Komputer menggunakan sistem bilangan yang berbeda dengan manusia karena komputer tersusun dari sirkuit elektronik yang hanya mengenali dua keadaan: menyala atau mati.</p>
+                                <p><strong>Basis (Radix)</strong> menunjukkan jumlah simbol atau angka dasar yang digunakan dalam sistem tersebut.</p>
+                            </div>
+                            {/* Wrapper untuk tabel agar bisa discroll di HP */}
+                            <div className="overflow-x-auto mt-5 rounded-lg border border-gray-200">
+                                <table className="min-w-full bg-white text-sm md:text-base">
+                                    <thead>
+                                        <tr className="bg-indigo-100 text-indigo-900"><th className="py-2 px-3 border-b text-left">Sistem</th><th className="py-2 px-3 border-b text-center">Basis</th><th className="py-2 px-3 border-b text-left">Simbol</th></tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td className="py-2 px-3 border-b font-bold text-left">Desimal</td><td className="py-2 px-3 border-b text-center">10</td><td className="py-2 px-3 border-b text-left">0, 1, 2, 3, 4, 5, 6, 7, 8, 9</td></tr>
+                                        <tr className="bg-gray-50"><td className="py-2 px-3 border-b font-bold text-left">Biner</td><td className="py-2 px-3 border-b text-center">2</td><td className="py-2 px-3 border-b text-left">0, 1</td></tr>
+                                        <tr><td className="py-2 px-3 border-b font-bold text-left">Oktal</td><td className="py-2 px-3 border-b text-center">8</td><td className="py-2 px-3 border-b text-left">0, 1, 2, 3, 4, 5, 6, 7</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     )}
                     
                     {page === 2 && (
                         <div className="fade-in">
-                            <h2 className="text-2xl font-bold text-indigo-700 mb-4">2. Bilangan Desimal (Basis 10)</h2>
-                            <p className="mb-4">Sistem yang kita gunakan sehari-hari. Disebut basis 10 karena menggunakan 10 angka (0-9). Nilai tempatnya menggunakan kelipatan pangkat 10.</p>
+                            <h2 className="text-xl md:text-2xl font-bold text-indigo-700 mb-4">2. Bilangan Desimal (Basis 10)</h2>
+                            <p className="mb-4 text-sm md:text-base text-gray-700">Sistem yang kita gunakan sehari-hari. Disebut basis 10 karena menggunakan 10 angka (0-9). Nilai tempatnya menggunakan kelipatan pangkat 10.</p>
                             
-                            <div className="bg-blue-50 p-5 rounded-lg border border-blue-200 mt-4 max-w-lg mx-auto">
-                                <h3 className="font-bold text-blue-800 border-b border-blue-200 pb-2 mb-3">Contoh Nilai Tempat: Angka 345</h3>
-                                <ul className="space-y-2 text-blue-900 font-mono text-lg">
+                            <div className="bg-blue-50 p-4 md:p-5 rounded-lg border border-blue-200 mt-4 max-w-lg mx-auto">
+                                <h3 className="font-bold text-blue-800 border-b border-blue-200 pb-2 mb-3 text-sm md:text-base">Contoh Nilai Tempat: Angka 345</h3>
+                                <ul className="space-y-2 text-blue-900 font-mono text-sm md:text-lg">
                                     <li>3 × 10² (ratusan) = 300</li>
                                     <li>4 × 10¹ (puluhan) = &nbsp;40</li>
                                     <li>5 × 10⁰ (satuan) &nbsp;= &nbsp;&nbsp;5</li>
@@ -126,15 +135,14 @@
 
                     {page === 3 && (
                         <div className="fade-in">
-                            <h2 className="text-2xl font-bold text-indigo-700 mb-4">3. Bilangan Biner (Basis 2)</h2>
-                            <p className="mb-4">Sistem bilangan komputer. Hanya menggunakan angka <strong>0 (Mati/Off)</strong> dan <strong>1 (Nyala/On)</strong>. Nilai tempatnya menggunakan pangkat 2 (1, 2, 4, 8, 16, dst).</p>
+                            <h2 className="text-xl md:text-2xl font-bold text-indigo-700 mb-4">3. Bilangan Biner (Basis 2)</h2>
+                            <p className="mb-4 text-sm md:text-base text-gray-700">Sistem bilangan komputer. Hanya menggunakan angka <strong>0 (Mati/Off)</strong> dan <strong>1 (Nyala/On)</strong>. Nilai tempatnya menggunakan pangkat 2 (1, 2, 4, 8, 16, dst).</p>
                             
-                            <div className="grid md:grid-cols-2 gap-6 mt-6">
-                                {/* Biner ke Desimal */}
-                                <div className="bg-purple-50 p-5 rounded-lg border border-purple-200">
-                                    <h3 className="font-bold text-purple-800 border-b border-purple-200 pb-2 mb-3">A. Biner ke Desimal (1011₂)</h3>
-                                    <p className="text-sm text-purple-700 mb-3">Kalikan tiap digit dengan nilai tempat pangkat 2:</p>
-                                    <ul className="space-y-2 text-purple-900 font-mono text-lg">
+                            <div className="grid md:grid-cols-2 gap-4 md:gap-6 mt-6">
+                                <div className="bg-purple-50 p-4 md:p-5 rounded-lg border border-purple-200">
+                                    <h3 className="font-bold text-purple-800 border-b border-purple-200 pb-2 mb-3 text-sm md:text-base">A. Biner ke Desimal (1011₂)</h3>
+                                    <p className="text-xs md:text-sm text-purple-700 mb-3">Kalikan tiap digit dengan nilai tempat pangkat 2:</p>
+                                    <ul className="space-y-1 md:space-y-2 text-purple-900 font-mono text-sm md:text-lg">
                                         <li>1 × 2³ (8) = 8</li>
                                         <li>0 × 2² (4) = 0</li>
                                         <li>1 × 2¹ (2) = 2</li>
@@ -143,19 +151,18 @@
                                     </ul>
                                 </div>
                                 
-                                {/* Desimal ke Biner */}
-                                <div className="bg-purple-50 p-5 rounded-lg border border-purple-200">
-                                    <h3 className="font-bold text-purple-800 border-b border-purple-200 pb-2 mb-3">B. Desimal ke Biner (13₁₀)</h3>
-                                    <p className="text-sm text-purple-700 mb-3">Dibagi 2 sampai habis, lalu catat sisa pembagiannya:</p>
-                                    <ul className="space-y-2 text-purple-900 font-mono text-lg">
+                                <div className="bg-purple-50 p-4 md:p-5 rounded-lg border border-purple-200">
+                                    <h3 className="font-bold text-purple-800 border-b border-purple-200 pb-2 mb-3 text-sm md:text-base">B. Desimal ke Biner (13₁₀)</h3>
+                                    <p className="text-xs md:text-sm text-purple-700 mb-3">Dibagi 2 sampai habis, catat sisa:</p>
+                                    <ul className="space-y-1 md:space-y-2 text-purple-900 font-mono text-sm md:text-lg">
                                         <li>13 ÷ 2 = 6, sisa <strong className="text-red-600 bg-red-100 px-1 rounded">1</strong></li>
                                         <li>&nbsp;6 ÷ 2 = 3, sisa <strong className="text-red-600 bg-red-100 px-1 rounded">0</strong></li>
                                         <li>&nbsp;3 ÷ 2 = 1, sisa <strong className="text-red-600 bg-red-100 px-1 rounded">1</strong></li>
                                         <li>&nbsp;1 ÷ 2 = 0, sisa <strong className="text-red-600 bg-red-100 px-1 rounded">1</strong></li>
                                     </ul>
-                                    <div className="mt-4 p-2 bg-purple-200 rounded text-sm font-bold text-purple-900 text-center">
+                                    <div className="mt-4 p-2 bg-purple-200 rounded text-xs md:text-sm font-bold text-purple-900 text-center">
                                         Membaca Hasil:<br/>
-                                        Baca sisa dari BAWAH ke ATAS &rarr; <span className="text-lg">1101₂</span>
+                                        Dari BAWAH ke ATAS &rarr; <span className="text-base md:text-lg">1101₂</span>
                                     </div>
                                 </div>
                             </div>
@@ -164,15 +171,14 @@
 
                     {page === 4 && (
                         <div className="fade-in">
-                            <h2 className="text-2xl font-bold text-indigo-700 mb-4">4. Bilangan Oktal (Basis 8)</h2>
-                            <p className="mb-4">Menggunakan angka 0 sampai 7. Angka 8 dan 9 <strong>tidak ada</strong> dalam sistem ini. Nilai tempatnya menggunakan pangkat 8 (1, 8, 64, 512, dst).</p>
+                            <h2 className="text-xl md:text-2xl font-bold text-indigo-700 mb-4">4. Bilangan Oktal (Basis 8)</h2>
+                            <p className="mb-4 text-sm md:text-base text-gray-700">Menggunakan angka 0 sampai 7. Angka 8 dan 9 <strong>tidak ada</strong> dalam sistem ini. Nilai tempatnya menggunakan pangkat 8 (1, 8, 64, 512, dst).</p>
                             
-                            <div className="grid md:grid-cols-2 gap-6 mt-6">
-                                {/* Oktal ke Desimal */}
-                                <div className="bg-green-50 p-5 rounded-lg border border-green-200">
-                                    <h3 className="font-bold text-green-800 border-b border-green-200 pb-2 mb-3">A. Oktal ke Desimal (157₈)</h3>
-                                    <p className="text-sm text-green-700 mb-3">Kalikan tiap digit dengan nilai tempat pangkat 8:</p>
-                                    <ul className="space-y-2 text-green-900 font-mono text-lg">
+                            <div className="grid md:grid-cols-2 gap-4 md:gap-6 mt-6">
+                                <div className="bg-green-50 p-4 md:p-5 rounded-lg border border-green-200">
+                                    <h3 className="font-bold text-green-800 border-b border-green-200 pb-2 mb-3 text-sm md:text-base">A. Oktal ke Desimal (157₈)</h3>
+                                    <p className="text-xs md:text-sm text-green-700 mb-3">Kalikan tiap digit dengan nilai tempat pangkat 8:</p>
+                                    <ul className="space-y-1 md:space-y-2 text-green-900 font-mono text-sm md:text-lg">
                                         <li>1 × 8² (64) = 64</li>
                                         <li>5 × 8¹ (8) &nbsp;= 40</li>
                                         <li>7 × 8⁰ (1) &nbsp;= &nbsp;7</li>
@@ -180,29 +186,27 @@
                                     </ul>
                                 </div>
                                 
-                                {/* Desimal ke Oktal */}
-                                <div className="bg-green-50 p-5 rounded-lg border border-green-200">
-                                    <h3 className="font-bold text-green-800 border-b border-green-200 pb-2 mb-3">B. Desimal ke Oktal (75₁₀)</h3>
-                                    <p className="text-sm text-green-700 mb-3">Dibagi 8 sampai habis, lalu catat sisa pembagiannya:</p>
-                                    <ul className="space-y-2 text-green-900 font-mono text-lg">
+                                <div className="bg-green-50 p-4 md:p-5 rounded-lg border border-green-200">
+                                    <h3 className="font-bold text-green-800 border-b border-green-200 pb-2 mb-3 text-sm md:text-base">B. Desimal ke Oktal (75₁₀)</h3>
+                                    <p className="text-xs md:text-sm text-green-700 mb-3">Dibagi 8 sampai habis, catat sisa:</p>
+                                    <ul className="space-y-1 md:space-y-2 text-green-900 font-mono text-sm md:text-lg">
                                         <li>75 ÷ 8 = 9, sisa <strong className="text-red-600 bg-red-100 px-1 rounded">3</strong></li>
                                         <li>&nbsp;9 ÷ 8 = 1, sisa <strong className="text-red-600 bg-red-100 px-1 rounded">1</strong></li>
                                         <li>&nbsp;1 ÷ 8 = 0, sisa <strong className="text-red-600 bg-red-100 px-1 rounded">1</strong></li>
                                     </ul>
-                                    <div className="mt-4 p-2 bg-green-200 rounded text-sm font-bold text-green-900 text-center">
+                                    <div className="mt-4 p-2 bg-green-200 rounded text-xs md:text-sm font-bold text-green-900 text-center">
                                         Membaca Hasil:<br/>
-                                        Baca sisa dari BAWAH ke ATAS &rarr; <span className="text-lg">113₈</span>
+                                        Dari BAWAH ke ATAS &rarr; <span className="text-base md:text-lg">113₈</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     )}
 
-                    {/* Navigasi Halaman Materi */}
-                    <div className="flex justify-between mt-8 pt-4 border-t border-gray-200">
-                        <button onClick={() => setPage(Math.max(1, page - 1))} disabled={page === 1} className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50 hover:bg-gray-300 font-medium">Sebelumnya</button>
-                        <span className="font-bold text-gray-500">Halaman {page} dari 4</span>
-                        <button onClick={() => setPage(Math.min(4, page + 1))} disabled={page === 4} className="px-4 py-2 bg-indigo-600 text-white rounded disabled:opacity-50 hover:bg-indigo-700 font-medium">Selanjutnya</button>
+                    <div className="flex flex-col sm:flex-row justify-between items-center mt-8 pt-4 border-t border-gray-200 gap-3">
+                        <button onClick={() => setPage(Math.max(1, page - 1))} disabled={page === 1} className="w-full sm:w-auto px-4 py-2 bg-gray-200 rounded disabled:opacity-50 hover:bg-gray-300 font-medium text-sm">Sebelumnya</button>
+                        <span className="font-bold text-gray-500 text-sm">Halaman {page} / 4</span>
+                        <button onClick={() => setPage(Math.min(4, page + 1))} disabled={page === 4} className="w-full sm:w-auto px-4 py-2 bg-indigo-600 text-white rounded disabled:opacity-50 hover:bg-indigo-700 font-medium text-sm">Selanjutnya</button>
                     </div>
                 </div>
             );
@@ -249,51 +253,53 @@
             const oktalResult = decimalNum !== null ? decimalNum.toString(8) : "";
 
             return (
-                <div className="bg-white rounded-xl shadow-md p-6 fade-in">
-                    <h2 className="text-2xl font-bold text-indigo-700 mb-6 text-center">Kalkulator Konversi Sistem Bilangan</h2>
+                <div className="bg-white rounded-xl shadow-md p-5 md:p-6 fade-in">
+                    <h2 className="text-xl md:text-2xl font-bold text-indigo-700 mb-6 text-center">Kalkulator Konversi</h2>
                     
-                    <div className="flex flex-col md:flex-row gap-4 mb-8 justify-center items-center">
-                        <input type="number" min="0" value={inputNum} onChange={(e) => setInputNum(e.target.value)} placeholder="Masukkan bilangan desimal..." className="border-2 border-indigo-300 rounded-lg px-4 py-2 w-full md:w-64 focus:outline-none focus:border-indigo-600 text-lg" />
-                        <button onClick={handleConvert} className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-lg w-full md:w-auto">KONVERSI</button>
+                    <div className="flex flex-col sm:flex-row gap-3 mb-6 md:mb-8 justify-center items-center">
+                        <input type="number" min="0" value={inputNum} onChange={(e) => setInputNum(e.target.value)} placeholder="Masukkan angka desimal..." className="border-2 border-indigo-300 rounded-lg px-4 py-3 w-full sm:w-64 focus:outline-none focus:border-indigo-600 text-base md:text-lg" />
+                        <button onClick={handleConvert} className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg w-full sm:w-auto active:scale-95 transition-transform">KONVERSI</button>
                     </div>
 
                     {decimalNum !== null && (
                         <div className="space-y-6 fade-in">
-                            <div className="text-center font-bold text-lg p-4 bg-gray-100 rounded-lg">Desimal Awal: <span className="text-indigo-600 text-2xl">{decimalNum}</span></div>
+                            <div className="text-center font-bold text-base md:text-lg p-3 md:p-4 bg-gray-100 rounded-lg">Desimal Awal: <span className="text-indigo-600 text-xl md:text-2xl">{decimalNum}</span></div>
                             
-                            <div className="grid md:grid-cols-2 gap-6">
+                            <div className="grid md:grid-cols-2 gap-4 md:gap-6">
                                 {/* Kartu Biner */}
-                                <div className="border border-purple-200 bg-purple-50 rounded-lg p-6 shadow-sm flex flex-col items-center">
-                                    <h3 className="text-lg font-bold text-purple-800 mb-2">Hasil Biner (Basis 2)</h3>
-                                    <div className="text-4xl font-mono text-purple-600 font-bold mb-4 tracking-widest">{binerResult}</div>
+                                <div className="border border-purple-200 bg-purple-50 rounded-lg p-4 md:p-6 shadow-sm flex flex-col items-center">
+                                    <h3 className="text-base md:text-lg font-bold text-purple-800 mb-2">Biner (Basis 2)</h3>
+                                    <div className="text-3xl md:text-4xl font-mono text-purple-600 font-bold mb-4 tracking-widest break-all text-center">{binerResult}</div>
                                     {!showBinerSteps ? (
-                                        <button onClick={() => setShowBinerSteps(true)} className="mt-auto bg-purple-200 text-purple-800 hover:bg-purple-300 font-bold py-2 px-4 rounded">Lihat Langkah Biner</button>
+                                        <button onClick={() => setShowBinerSteps(true)} className="mt-auto bg-purple-200 text-purple-800 hover:bg-purple-300 font-bold py-2 px-4 rounded w-full sm:w-auto text-sm md:text-base">Lihat Langkah</button>
                                     ) : (
-                                        <div className="w-full mt-4 bg-white p-4 rounded border border-purple-100 fade-in">
-                                            <h4 className="font-bold text-center mb-3">Cara Konversi: Dibagi 2</h4>
-                                            <table className="w-full text-center text-sm border-collapse">
-                                                <thead><tr className="bg-purple-100">
-                                                    <th className="border p-1">Bilangan</th><th className="border p-1">÷ 2</th><th className="border p-1">Sisa</th>
-                                                </tr></thead>
-                                                <tbody>
-                                                    {binerSteps.slice(0, stepIndexBiner + 1).map((step, i) => (
-                                                        <tr key={i} className="fade-in">
-                                                            <td className="border p-1 text-purple-700 font-bold">{step.current}</td>
-                                                            <td className="border p-1">hasil {step.result}</td>
-                                                            <td className="border p-1 bg-purple-200 font-bold text-purple-900">{step.remainder}</td>
-                                                        </tr>
-                                                    ))}
-                                                </tbody>
-                                            </table>
+                                        <div className="w-full mt-4 bg-white p-3 md:p-4 rounded border border-purple-100 fade-in">
+                                            <h4 className="font-bold text-center mb-3 text-sm md:text-base">Dibagi 2</h4>
+                                            <div className="overflow-x-auto w-full">
+                                                <table className="w-full min-w-[200px] text-center text-xs md:text-sm border-collapse">
+                                                    <thead><tr className="bg-purple-100">
+                                                        <th className="border p-1">Bilangan</th><th className="border p-1">÷ 2</th><th className="border p-1">Sisa</th>
+                                                    </tr></thead>
+                                                    <tbody>
+                                                        {binerSteps.slice(0, stepIndexBiner + 1).map((step, i) => (
+                                                            <tr key={i} className="fade-in">
+                                                                <td className="border p-1 text-purple-700 font-bold">{step.current}</td>
+                                                                <td className="border p-1 whitespace-nowrap">hasil {step.result}</td>
+                                                                <td className="border p-1 bg-purple-200 font-bold text-purple-900">{step.remainder}</td>
+                                                            </tr>
+                                                        ))}
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                             
-                                            <div className="mt-4 flex justify-between gap-2">
-                                                <button onClick={() => setStepIndexBiner(Math.max(0, stepIndexBiner - 1))} disabled={stepIndexBiner === 0} className="px-2 py-1 bg-gray-200 text-xs rounded disabled:opacity-50">Sebelumnnya</button>
-                                                <button onClick={() => setStepIndexBiner(0)} className="px-2 py-1 bg-red-100 text-red-700 text-xs rounded">Ulangi</button>
-                                                <button onClick={() => setStepIndexBiner(Math.min(binerSteps.length - 1, stepIndexBiner + 1))} disabled={stepIndexBiner === binerSteps.length - 1} className="px-2 py-1 bg-purple-600 text-white text-xs rounded disabled:opacity-50">Selanjutnya</button>
+                                            <div className="mt-4 flex flex-wrap justify-between gap-2">
+                                                <button onClick={() => setStepIndexBiner(Math.max(0, stepIndexBiner - 1))} disabled={stepIndexBiner === 0} className="px-2 py-1.5 bg-gray-200 text-xs rounded disabled:opacity-50 flex-1">Mundur</button>
+                                                <button onClick={() => setStepIndexBiner(0)} className="px-2 py-1.5 bg-red-100 text-red-700 text-xs rounded flex-1">Ulangi</button>
+                                                <button onClick={() => setStepIndexBiner(Math.min(binerSteps.length - 1, stepIndexBiner + 1))} disabled={stepIndexBiner === binerSteps.length - 1} className="px-2 py-1.5 bg-purple-600 text-white text-xs rounded disabled:opacity-50 flex-1">Lanjut</button>
                                             </div>
                                             {stepIndexBiner === binerSteps.length - 1 && (
-                                                <div className="mt-3 text-sm text-center bg-yellow-100 p-2 rounded text-yellow-800 font-bold fade-in">
-                                                    Baca sisa pembagian dari BAWAH ke ATAS: {binerResult}
+                                                <div className="mt-3 text-xs md:text-sm text-center bg-yellow-100 p-2 rounded text-yellow-800 font-bold fade-in">
+                                                    Baca sisa dari BAWAH ke ATAS: {binerResult}
                                                 </div>
                                             )}
                                         </div>
@@ -301,37 +307,39 @@
                                 </div>
 
                                 {/* Kartu Oktal */}
-                                <div className="border border-green-200 bg-green-50 rounded-lg p-6 shadow-sm flex flex-col items-center">
-                                    <h3 className="text-lg font-bold text-green-800 mb-2">Hasil Oktal (Basis 8)</h3>
-                                    <div className="text-4xl font-mono text-green-600 font-bold mb-4 tracking-widest">{oktalResult}</div>
+                                <div className="border border-green-200 bg-green-50 rounded-lg p-4 md:p-6 shadow-sm flex flex-col items-center">
+                                    <h3 className="text-base md:text-lg font-bold text-green-800 mb-2">Oktal (Basis 8)</h3>
+                                    <div className="text-3xl md:text-4xl font-mono text-green-600 font-bold mb-4 tracking-widest break-all text-center">{oktalResult}</div>
                                     {!showOktalSteps ? (
-                                        <button onClick={() => setShowOktalSteps(true)} className="mt-auto bg-green-200 text-green-800 hover:bg-green-300 font-bold py-2 px-4 rounded">Lihat Langkah Oktal</button>
+                                        <button onClick={() => setShowOktalSteps(true)} className="mt-auto bg-green-200 text-green-800 hover:bg-green-300 font-bold py-2 px-4 rounded w-full sm:w-auto text-sm md:text-base">Lihat Langkah</button>
                                     ) : (
-                                        <div className="w-full mt-4 bg-white p-4 rounded border border-green-100 fade-in">
-                                            <h4 className="font-bold text-center mb-3">Cara Konversi: Dibagi 8</h4>
-                                            <table className="w-full text-center text-sm border-collapse">
-                                                <thead><tr className="bg-green-100">
-                                                    <th className="border p-1">Bilangan</th><th className="border p-1">÷ 8</th><th className="border p-1">Sisa</th>
-                                                </tr></thead>
-                                                <tbody>
-                                                    {oktalSteps.slice(0, stepIndexOktal + 1).map((step, i) => (
-                                                        <tr key={i} className="fade-in">
-                                                            <td className="border p-1 text-green-700 font-bold">{step.current}</td>
-                                                            <td className="border p-1">hasil {step.result}</td>
-                                                            <td className="border p-1 bg-green-200 font-bold text-green-900">{step.remainder}</td>
-                                                        </tr>
-                                                    ))}
-                                                </tbody>
-                                            </table>
+                                        <div className="w-full mt-4 bg-white p-3 md:p-4 rounded border border-green-100 fade-in">
+                                            <h4 className="font-bold text-center mb-3 text-sm md:text-base">Dibagi 8</h4>
+                                            <div className="overflow-x-auto w-full">
+                                                <table className="w-full min-w-[200px] text-center text-xs md:text-sm border-collapse">
+                                                    <thead><tr className="bg-green-100">
+                                                        <th className="border p-1">Bilangan</th><th className="border p-1">÷ 8</th><th className="border p-1">Sisa</th>
+                                                    </tr></thead>
+                                                    <tbody>
+                                                        {oktalSteps.slice(0, stepIndexOktal + 1).map((step, i) => (
+                                                            <tr key={i} className="fade-in">
+                                                                <td className="border p-1 text-green-700 font-bold">{step.current}</td>
+                                                                <td className="border p-1 whitespace-nowrap">hasil {step.result}</td>
+                                                                <td className="border p-1 bg-green-200 font-bold text-green-900">{step.remainder}</td>
+                                                            </tr>
+                                                        ))}
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                             
-                                            <div className="mt-4 flex justify-between gap-2">
-                                                <button onClick={() => setStepIndexOktal(Math.max(0, stepIndexOktal - 1))} disabled={stepIndexOktal === 0} className="px-2 py-1 bg-gray-200 text-xs rounded disabled:opacity-50">Sebelumnnya</button>
-                                                <button onClick={() => setStepIndexOktal(0)} className="px-2 py-1 bg-red-100 text-red-700 text-xs rounded">Ulangi</button>
-                                                <button onClick={() => setStepIndexOktal(Math.min(oktalSteps.length - 1, stepIndexOktal + 1))} disabled={stepIndexOktal === oktalSteps.length - 1} className="px-2 py-1 bg-green-600 text-white text-xs rounded disabled:opacity-50">Selanjutnya</button>
+                                            <div className="mt-4 flex flex-wrap justify-between gap-2">
+                                                <button onClick={() => setStepIndexOktal(Math.max(0, stepIndexOktal - 1))} disabled={stepIndexOktal === 0} className="px-2 py-1.5 bg-gray-200 text-xs rounded disabled:opacity-50 flex-1">Mundur</button>
+                                                <button onClick={() => setStepIndexOktal(0)} className="px-2 py-1.5 bg-red-100 text-red-700 text-xs rounded flex-1">Ulangi</button>
+                                                <button onClick={() => setStepIndexOktal(Math.min(oktalSteps.length - 1, stepIndexOktal + 1))} disabled={stepIndexOktal === oktalSteps.length - 1} className="px-2 py-1.5 bg-green-600 text-white text-xs rounded disabled:opacity-50 flex-1">Lanjut</button>
                                             </div>
                                             {stepIndexOktal === oktalSteps.length - 1 && (
-                                                <div className="mt-3 text-sm text-center bg-yellow-100 p-2 rounded text-yellow-800 font-bold fade-in">
-                                                    Baca sisa pembagian dari BAWAH ke ATAS: {oktalResult}
+                                                <div className="mt-3 text-xs md:text-sm text-center bg-yellow-100 p-2 rounded text-yellow-800 font-bold fade-in">
+                                                    Baca sisa dari BAWAH ke ATAS: {oktalResult}
                                                 </div>
                                             )}
                                         </div>
@@ -349,9 +357,9 @@
             
             const binerQuestions = [
                 { q: "Ubah biner 1010 ke desimal:", ans: "10", explain: "(1x8) + (0x4) + (1x2) + (0x1) = 10" },
-                { q: "Ubah desimal 15 ke biner:", ans: "1111", explain: "15 dibagi 2 terus menerus sisanya dibaca dari bawah adalah 1111" },
+                { q: "Ubah desimal 15 ke biner:", ans: "1111", explain: "15 dibagi 2 berulang kali sisanya dibaca dari bawah adalah 1111" },
                 { q: "Ubah biner 110 ke desimal:", ans: "6", explain: "(1x4) + (1x2) + (0x1) = 6" },
-                { q: "Ubah desimal 9 ke biner:", ans: "1001", explain: "9 dibagi 2 terus menerus sisanya 1001" },
+                { q: "Ubah desimal 9 ke biner:", ans: "1001", explain: "9 dibagi 2 berulang kali sisanya 1001" },
                 { q: "Ubah biner 10000 ke desimal:", ans: "16", explain: "Hanya posisi 2 pangkat 4 yang bernilai 1, yaitu 16" }
             ];
 
@@ -382,30 +390,34 @@
             const currentQuestions = activeSubTab === 'biner' ? binerQuestions : oktalQuestions;
 
             return (
-                <div className="bg-white rounded-xl shadow-md p-6 fade-in">
-                    <h2 className="text-2xl font-bold text-indigo-700 mb-6 text-center">Latihan Soal Isian</h2>
+                <div className="bg-white rounded-xl shadow-md p-5 md:p-6 fade-in">
+                    <h2 className="text-xl md:text-2xl font-bold text-indigo-700 mb-6 text-center">Latihan Soal Isian</h2>
                     
-                    <div className="flex justify-center space-x-4 mb-6">
-                        <button onClick={() => setActiveSubTab('biner')} className={`px-4 py-2 rounded font-bold ${activeSubTab === 'biner' ? 'bg-purple-600 text-white' : 'bg-gray-200 text-gray-700'}`}>Latihan 1: Biner</button>
-                        <button onClick={() => setActiveSubTab('oktal')} className={`px-4 py-2 rounded font-bold ${activeSubTab === 'oktal' ? 'bg-green-600 text-white' : 'bg-gray-200 text-gray-700'}`}>Latihan 2: Oktal</button>
+                    <div className="flex flex-row justify-center space-x-2 md:space-x-4 mb-6">
+                        <button onClick={() => setActiveSubTab('biner')} className={`px-4 py-2 rounded-lg font-bold flex-1 max-w-[150px] text-sm md:text-base ${activeSubTab === 'biner' ? 'bg-purple-600 text-white' : 'bg-gray-200 text-gray-700'}`}>1: Biner</button>
+                        <button onClick={() => setActiveSubTab('oktal')} className={`px-4 py-2 rounded-lg font-bold flex-1 max-w-[150px] text-sm md:text-base ${activeSubTab === 'oktal' ? 'bg-green-600 text-white' : 'bg-gray-200 text-gray-700'}`}>2: Oktal</button>
                     </div>
 
-                    <div className="space-y-6">
+                    <div className="space-y-4 md:space-y-6">
                         {currentQuestions.map((item, index) => {
                             const key = `${activeSubTab}-${index}`;
                             const res = results[key];
                             return (
                                 <div key={index} className={`p-4 rounded-lg border-2 ${res?.checked ? (res.correct ? 'border-green-400 bg-green-50' : 'border-red-400 bg-red-50') : 'border-gray-200'}`}>
-                                    <div className="font-bold text-gray-800 mb-2">{index + 1}. {item.q}</div>
-                                    <input type="text" value={userAnswers[key] || ''} onChange={(e) => setUserAnswers({...userAnswers, [key]: e.target.value})} placeholder="Ketik angka jawaban..." className="border border-gray-400 rounded px-3 py-1 mr-4 focus:outline-indigo-500" disabled={res?.correct}/>
+                                    <div className="font-bold text-sm md:text-base text-gray-800 mb-3">{index + 1}. {item.q}</div>
                                     
-                                    {res?.checked && (
-                                        <span className={`font-bold ${res.correct ? 'text-green-600' : 'text-red-600'}`}>
-                                            {res.correct ? '✓ Benar!' : '✗ Salah, coba lagi.'}
-                                        </span>
-                                    )}
+                                    <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                                        <input type="number" value={userAnswers[key] || ''} onChange={(e) => setUserAnswers({...userAnswers, [key]: e.target.value})} placeholder="Ketik angka..." className="w-full sm:w-auto border border-gray-400 rounded-lg px-3 py-2 focus:outline-indigo-500" disabled={res?.correct}/>
+                                        
+                                        {res?.checked && (
+                                            <span className={`font-bold text-sm md:text-base ${res.correct ? 'text-green-600' : 'text-red-600'}`}>
+                                                {res.correct ? '✓ Benar!' : '✗ Salah, coba lagi.'}
+                                            </span>
+                                        )}
+                                    </div>
+
                                     {res?.checked && !res.correct && (
-                                        <div className="mt-2 text-sm bg-yellow-100 text-yellow-800 p-2 rounded">
+                                        <div className="mt-3 text-xs md:text-sm bg-yellow-100 text-yellow-800 p-3 rounded-lg border border-yellow-200">
                                             <strong>Pembahasan:</strong> {item.explain}
                                         </div>
                                     )}
@@ -414,8 +426,8 @@
                         })}
                     </div>
                     
-                    <div className="mt-6 text-center">
-                        <button onClick={() => checkAnswers(currentQuestions, activeSubTab)} className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-8 rounded-lg shadow">Periksa Semua Jawaban</button>
+                    <div className="mt-8 text-center">
+                        <button onClick={() => checkAnswers(currentQuestions, activeSubTab)} className="w-full sm:w-auto bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-lg shadow-md active:scale-95 transition-transform">Periksa Semua Jawaban</button>
                     </div>
                 </div>
             );
@@ -452,27 +464,27 @@
 
             if (finished) {
                 return (
-                    <div className="bg-white rounded-xl shadow-md p-8 text-center border-t-4 border-indigo-500 fade-in">
-                        <h2 className="text-3xl font-bold text-indigo-700 mb-4">Kuis Selesai!</h2>
-                        <div className="text-6xl font-bold text-gray-800 mb-4">{score} / 100</div>
-                        <p className="text-gray-600 mb-6">{score >= 80 ? 'Luar biasa! Kamu sudah sangat menguasai sistem bilangan.' : 'Tetap semangat! Coba pelajari materinya lagi ya.'}</p>
-                        <button onClick={() => { setFinished(false); setCurrentSoal(0); setScore(0); setSelected(""); }} className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-lg">Coba Kuis Lagi</button>
+                    <div className="bg-white rounded-xl shadow-md p-6 md:p-8 text-center border-t-4 border-indigo-500 fade-in">
+                        <h2 className="text-2xl md:text-3xl font-bold text-indigo-700 mb-4">Kuis Selesai!</h2>
+                        <div className="text-5xl md:text-6xl font-bold text-gray-800 mb-4">{score} / 100</div>
+                        <p className="text-sm md:text-base text-gray-600 mb-6">{score >= 80 ? 'Luar biasa! Kamu sudah sangat menguasai sistem bilangan.' : 'Tetap semangat! Coba pelajari materinya lagi ya.'}</p>
+                        <button onClick={() => { setFinished(false); setCurrentSoal(0); setScore(0); setSelected(""); }} className="w-full sm:w-auto bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-lg active:scale-95 transition-transform">Coba Kuis Lagi</button>
                     </div>
                 );
             }
 
             return (
-                <div className="bg-white rounded-xl shadow-md p-8 fade-in">
+                <div className="bg-white rounded-xl shadow-md p-5 md:p-8 fade-in">
                     <div className="flex justify-between items-center mb-6">
-                        <h2 className="text-xl font-bold text-indigo-700">Kuis Sistem Bilangan</h2>
-                        <div className="text-sm font-bold bg-indigo-100 text-indigo-800 py-1 px-3 rounded-full">Soal {currentSoal + 1} dari {soalKuis.length}</div>
+                        <h2 className="text-lg md:text-xl font-bold text-indigo-700">Kuis Evaluasi</h2>
+                        <div className="text-xs md:text-sm font-bold bg-indigo-100 text-indigo-800 py-1 px-3 rounded-full">Soal {currentSoal + 1} / {soalKuis.length}</div>
                     </div>
                     
                     <div className="w-full bg-gray-200 rounded-full h-2 mb-6">
                         <div className="bg-indigo-600 h-2 rounded-full transition-all duration-300" style={{ width: `${((currentSoal) / soalKuis.length) * 100}%` }}></div>
                     </div>
 
-                    <h3 className="text-lg font-bold text-gray-800 mb-4">{soalKuis[currentSoal].q}</h3>
+                    <h3 className="text-base md:text-lg font-bold text-gray-800 mb-4">{soalKuis[currentSoal].q}</h3>
                     
                     <div className="space-y-3">
                         {soalKuis[currentSoal].opts.map((opt, i) => (
@@ -480,10 +492,10 @@
                                 key={i} 
                                 onClick={() => !selected && handleAnswer(opt)}
                                 disabled={selected !== ""}
-                                className={`w-full text-left p-4 rounded-lg border-2 font-medium transition ${
+                                className={`w-full text-left p-4 rounded-lg border-2 font-medium transition text-sm md:text-base ${
                                     selected === opt 
-                                        ? (opt === soalKuis[currentSoal].ans ? 'border-green-500 bg-green-50' : 'border-red-500 bg-red-50')
-                                        : 'border-gray-200 hover:border-indigo-400 hover:bg-indigo-50'
+                                        ? (opt === soalKuis[currentSoal].ans ? 'border-green-500 bg-green-50 text-green-900' : 'border-red-500 bg-red-50 text-red-900')
+                                        : 'border-gray-200 hover:border-indigo-400 hover:bg-indigo-50 text-gray-700'
                                 }`}
                             >
                                 {opt}
