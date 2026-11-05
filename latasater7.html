@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Materi Informatika Kelas VII - Fase D (Lengkap)</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            500: '#6366f1', // Indigo
+                            600: '#4f46e5',
+                            900: '#312e81',
+                        },
+                        data: {
+                            50: '#ecfdf5',
+                            100: '#d1fae5',
+                            500: '#10b981', // Emerald
+                            600: '#059669',
+                            900: '#064e3b',
+                        },
+                        quiz: {
+                            50: '#fff1f2',
+                            100: '#ffe4e6',
+                            500: '#f43f5e', // Rose
+                            600: '#e11d48',
+                            900: '#881337',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        /* Animasi Detail/Summary Interaktif */
+        details > summary { list-style: none; }
+        details > summary::-webkit-details-marker { display: none; }
+        details[open] summary ~ * {
+            animation: sweep .3s ease-in-out;
+        }
+        @keyframes sweep {
+            0%    {opacity: 0; transform: translateY(-10px)}
+            100%  {opacity: 1; transform: translateY(0)}
+        }
+        .bg-pattern {
+            background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 bg-pattern text-slate-800 antialiased selection:bg-brand-200 selection:text-brand-900">
+
+    <!-- Header Section (Hero) -->
+    <header class="bg-gradient-to-br from-brand-600 via-purple-600 to-brand-800 sticky top-0 z-50 shadow-lg">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 py-5 flex flex-col gap-4">
+            <div class="flex items-center gap-3">
+                <div class="bg-white/20 p-3 rounded-2xl backdrop-blur-sm text-white">
+                    <i class="fa-solid fa-laptop-code text-2xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-2xl sm:text-3xl font-black text-white tracking-tight drop-shadow-sm">Materi Informatika</h1>
+                    <p class="text-brand-100 text-sm font-medium mt-0.5">Kelas 7 (Fase D) • Persiapan Ujian</p>
+                </div>
+            </div>
+            <!-- Navigation (Sekarang menggunakan tombol pindah halaman) -->
+            <nav class="flex gap-2 overflow-x-auto hide-scrollbar text-sm font-bold pb-1 pt-2">
+                <button id="nav-bk" onclick="switchPage('bk')" class="px-5 py-2.5 bg-white/30 text-white rounded-full whitespace-nowrap backdrop-blur-md transition-all border border-white/50 shadow-md flex items-center gap-2">
+                    <i class="fa-solid fa-brain"></i> Berpikir Komputasional
+                </button>
+                <button id="nav-ad" onclick="switchPage('ad')" class="px-5 py-2.5 bg-white/10 text-white hover:bg-white/20 rounded-full whitespace-nowrap backdrop-blur-md transition-all border border-white/20 shadow-sm flex items-center gap-2">
+                    <i class="fa-solid fa-file-excel"></i> Analisis Data
+                </button>
+                <button id="nav-latihan" onclick="switchPage('latihan')" class="px-5 py-2.5 bg-white/10 text-white hover:bg-white/20 rounded-full whitespace-nowrap backdrop-blur-md transition-all border border-white/20 shadow-sm flex items-center gap-2">
+                    <i class="fa-solid fa-gamepad"></i> Simulasi Latihan
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 py-10 space-y-16">
+
+        <!-- ==========================================
+             BAGIAN 1: BERPIKIR KOMPUTASIONAL 
+             ========================================== -->
+        <section id="bk" class="page-section space-y-6 relative block">
+            <div class="absolute -left-4 top-0 w-2 h-full bg-brand-500 rounded-r-lg opacity-20"></div>
+            
+            <div class="flex items-center gap-4 mb-8">
+                <div class="bg-gradient-to-br from-brand-400 to-brand-600 p-4 rounded-2xl text-white shadow-lg shadow-brand-200">
+                    <i class="fa-solid fa-brain text-2xl"></i>
+                </div>
+                <h2 class="text-3xl font-black text-slate-800 tracking-tight">1. Berpikir Komputasional</h2>
+            </div>
+
+            <!-- Konsep Dasar & 4 Pilar -->
+            <div class="bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-200 hover:shadow-md transition-shadow">
+                <h3 class="text-xl font-extrabold text-brand-900 mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-lightbulb text-brand-500"></i> Konsep Dasar & 4 Pilar Utama
+                </h3>
+                <p class="text-slate-600 mb-6 text-sm leading-relaxed bg-brand-50 p-4 rounded-2xl border border-brand-100">
+                    <strong>Berpikir Komputasional (BK)</strong> adalah memecahkan masalah agar solusinya bisa dijalankan dengan <strong>terstruktur (sistematis)</strong>, <strong>efektif</strong>, dan <strong>efisien</strong>. Ini membedakan solusi komputer (pasti/teratur) dengan solusi manusia yang kadang spontan/acak.
+                </p>
+                
+                <div class="grid gap-4 sm:grid-cols-2">
+                    <div class="bg-white p-5 rounded-2xl border-2 border-slate-100 hover:border-brand-300 transition-colors group">
+                        <h4 class="font-bold text-base text-slate-800 flex items-center gap-3 mb-2">
+                            <span class="bg-red-100 text-red-500 p-2 rounded-xl group-hover:scale-110 transition-transform"><i class="fa-solid fa-puzzle-piece"></i></span> 
+                            1. Dekomposisi
+                        </h4>
+                        <p class="text-sm text-slate-500 mb-3">Memecah masalah besar/kompleks menjadi sub-tugas kecil yang mudah dikelola.</p>
+                        <div class="bg-slate-50 p-3 rounded-xl text-xs border border-slate-200 text-slate-700 font-medium">
+                            🎯 <strong>Contoh:</strong> Persiapan pesta ultah dibagi jadi 3 tim (Dekorasi, Konsumsi, Undangan).
+                        </div>
+                    </div>
+                    <div class="bg-white p-5 rounded-2xl border-2 border-slate-100 hover:border-brand-300 transition-colors group">
+                        <h4 class="font-bold text-base text-slate-800 flex items-center gap-3 mb-2">
+                            <span class="bg-amber-100 text-amber-500 p-2 rounded-xl group-hover:scale-110 transition-transform"><i class="fa-solid fa-shapes"></i></span> 
+                            2. Pengenalan Pola
+                        </h4>
+                        <p class="text-sm text-slate-500 mb-3">Mencari kesamaan, keteraturan, atau repetisi (pengulangan) dalam suatu masalah.</p>
+                        <div class="bg-slate-50 p-3 rounded-xl text-xs border border-slate-200 text-slate-700 font-medium">
+                            🎯 <strong>Contoh:</strong> Memahami urutan lipatan origami bunga, memprediksi pola cuaca.
+                        </div>
+                    </div>
+                    <div class="bg-white p-5 rounded-2xl border-2 border-slate-100 hover:border-brand-300 transition-colors group">
+                        <h4 class="font-bold text-base text-slate-800 flex items-center gap-3 mb-2">
+                            <span class="bg-blue-100 text-blue-500 p-2 rounded-xl group-hover:scale-110 transition-transform"><i class="fa-solid fa-filter"></i></span> 
+                            3. Abstraksi
+                        </h4>
+                        <p class="text-sm text-slate-500 mb-3">Fokus pada informasi utama yang relevan, abaikan detail sepele yang tidak penting.</p>
+                        <div class="bg-slate-50 p-3 rounded-xl text-xs border border-slate-200 text-slate-700 font-medium">
+                            🎯 <strong>Contoh:</strong> Melihat rute tercepat di Maps, kita fokus pada garis jalan dan kemacetan, abaikan warna gedung.
+                        </div>
+                    </div>
+                    <div class="bg-white p-5 rounded-2xl border-2 border-slate-100 hover:border-brand-300 transition-colors group">
+                        <h4 class="font-bold text-base text-slate-800 flex items-center gap-3 mb-2">
+                            <span class="bg-green-100 text-green-500 p-2 rounded-xl group-hover:scale-110 transition-transform"><i class="fa-solid fa-list-ol"></i></span> 
+                            4. Algoritma
+                        </h4>
+                        <p class="text-sm text-slate-500 mb-3">Menyusun langkah-langkah sistematis & logis untuk mencapai solusi akhir.</p>
+                        <div class="bg-slate-50 p-3 rounded-xl text-xs border border-slate-200 text-slate-700 font-medium">
+                            🎯 <strong>Contoh:</strong> Alur cuci tangan standar WHO (Basahi &rarr; Sabun &rarr; Gosok &rarr; Bilas).
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Logika Perulangan & Percabangan (BARU) -->
+            <div class="bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-200 hover:shadow-md transition-shadow">
+                <h3 class="text-xl font-extrabold text-brand-900 mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-code-branch text-brand-500"></i> Logika Pola, Perulangan & Percabangan
+                </h3>
+                
+                <div class="space-y-4">
+                    <div class="bg-brand-50 p-4 rounded-2xl border border-brand-100">
+                        <h4 class="font-bold text-brand-800 mb-2">A. Kondisi Berhenti (Termination Condition) & Percabangan</h4>
+                        <p class="text-sm text-slate-600 mb-2">Percabangan <strong>(IF-THEN)</strong> menentukan keputusan berdasarkan kondisi. Perulangan <strong>(Looping)</strong> akan terus berjalan sampai kondisi berhenti tercapai.</p>
+                        <ul class="text-xs text-slate-700 list-disc pl-5 space-y-1">
+                            <li><strong>Percabangan:</strong> JIKA cuaca mendung, MAKA bawa payung.</li>
+                            <li><strong>Kondisi Berhenti:</strong> Login email maksimal gagal 3 kali. Jika percobaan = 3, maka akun terkunci (looping berhenti).</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-pink-50 p-4 rounded-2xl border border-pink-100">
+                        <h4 class="font-bold text-pink-800 mb-2">B. Deret & Pola (Modulo)</h4>
+                        <p class="text-sm text-slate-600 mb-2">Menentukan elemen pada urutan ke-n pada pola yang berulang tetap.</p>
+                        <div class="bg-white p-3 rounded-xl text-xs text-slate-700 border border-pink-200 shadow-sm">
+                            <strong>Skenario:</strong> Siswa membuat gelang dengan pola berulang: <span class="text-red-500 font-bold">Merah</span> - <span class="text-red-500 font-bold">Merah</span> - <span class="text-green-500 font-bold">Hijau</span> (3 pola). <br>
+                            Manik urutan ke-10 warnanya apa?<br>
+                            <em>Cara:</em> 10 dibagi 3 = Sisa 1. Urutan ke-1 pada pola adalah <span class="text-red-500 font-bold">Merah</span>!
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Efisiensi & Manajemen Waktu -->
+            <div class="bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-200 hover:shadow-md transition-shadow">
+                <h3 class="text-xl font-extrabold text-brand-900 mb-5 flex items-center gap-2">
+                    <i class="fa-solid fa-stopwatch text-brand-500"></i> Manajemen Waktu, Rute & Eksekusi
+                </h3>
+                <div class="grid sm:grid-cols-2 gap-5">
+                    
+                    <div class="bg-gradient-to-br from-indigo-50 to-blue-50 border border-indigo-100 p-5 rounded-2xl">
+                        <div class="flex items-center gap-2 mb-2">
+                            <i class="fa-solid fa-layer-group text-indigo-600 text-lg"></i>
+                            <h4 class="font-bold text-indigo-900 text-base">Eksekusi Paralel</h4>
+                        </div>
+                        <p class="text-xs text-slate-600 mb-3 font-medium">Mengerjakan beberapa tugas yang tidak saling bergantung secara <strong>bersamaan</strong> agar hemat waktu.</p>
+                        <div class="bg-white/80 p-3 rounded-xl text-xs text-slate-700 shadow-sm border border-indigo-200">
+                            <strong>Skenario Dapur:</strong> Daripada menunggu air mendidih (15 menit) lalu baru memotong bumbu (10 menit) yang butuh 25 menit total, lebih baik: Memanaskan air <em>Sambil</em> memotong bumbu. Total waktu hanya 15 menit!
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gradient-to-br from-teal-50 to-green-50 border border-teal-100 p-5 rounded-2xl">
+                        <div class="flex items-center gap-2 mb-2">
+                            <i class="fa-solid fa-clock text-teal-600 text-lg"></i>
+                            <h4 class="font-bold text-teal-900 text-base">Irisan Waktu (Common Free Time)</h4>
+                        </div>
+                        <p class="text-xs text-slate-600 mb-3 font-medium">Mencari celah jadwal yang sama-sama luang (tanpa overlapping) untuk kegiatan bersama.</p>
+                        <div class="bg-white/80 p-3 rounded-xl text-xs text-slate-700 shadow-sm border border-teal-200">
+                            <strong>Skenario Rapat:</strong><br>
+                            Siswa A free: 14.00 - 16.00<br>
+                            Siswa B free: 15.00 - 17.00<br>
+                            Irisan waktu yang cocok untuk rapat berdua: <strong>15.00 - 16.00</strong>.
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Struktur & Klasifikasi Data -->
+            <div class="bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-200 hover:shadow-md transition-shadow">
+                <h3 class="text-xl font-extrabold text-brand-900 mb-5 flex items-center gap-2">
+                    <i class="fa-solid fa-boxes-stacked text-brand-500"></i> Struktur, Pencarian & Representasi Data
+                </h3>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
+                    <!-- QUEUE -->
+                    <div class="relative bg-white p-6 rounded-2xl border-2 border-emerald-100 shadow-sm overflow-hidden group hover:border-emerald-400 transition-colors">
+                        <div class="absolute top-0 right-0 bg-emerald-500 text-white text-[10px] font-bold px-3 py-1.5 rounded-bl-xl shadow-sm tracking-wider">ANTREAN</div>
+                        <h4 class="font-black text-2xl text-emerald-600 mb-1">QUEUE</h4>
+                        <p class="font-bold text-xs text-emerald-800 mb-3 bg-emerald-100 inline-block px-2 py-1 rounded">FIFO (First In, First Out)</p>
+                        <p class="text-sm text-slate-600 mb-3 border-l-2 border-emerald-300 pl-3 leading-snug">Data yang masuk PERTAMA, akan diproses/dilayani PERTAMA.</p>
+                        <ul class="text-xs text-slate-500 space-y-1.5 font-medium">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-arrow-right text-emerald-400"></i> Antrean UKS / Kasir Kantin.</li>
+                        </ul>
+                    </div>
+                    <!-- STACK -->
+                    <div class="relative bg-white p-6 rounded-2xl border-2 border-orange-100 shadow-sm overflow-hidden group hover:border-orange-400 transition-colors">
+                        <div class="absolute top-0 right-0 bg-orange-500 text-white text-[10px] font-bold px-3 py-1.5 rounded-bl-xl shadow-sm tracking-wider">TUMPUKAN</div>
+                        <h4 class="font-black text-2xl text-orange-600 mb-1">STACK</h4>
+                        <p class="font-bold text-xs text-orange-800 mb-3 bg-orange-100 inline-block px-2 py-1 rounded">LIFO (Last In, First Out)</p>
+                        <p class="text-sm text-slate-600 mb-3 border-l-2 border-orange-300 pl-3 leading-snug">Data yang ditumpuk TERAKHIR, harus diambil DULUAN.</p>
+                        <ul class="text-xs text-slate-500 space-y-1.5 font-medium">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-arrow-right text-orange-400"></i> Tumpukan kardus barang.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Sorting & Searching -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-slate-800 p-5 rounded-2xl text-white shadow-inner">
+                        <h4 class="font-bold text-brand-300 mb-2 flex items-center gap-2"><i class="fa-solid fa-sort"></i> Pengurutan (Sorting)</h4>
+                        <div class="space-y-2 text-xs font-mono">
+                            <div class="bg-slate-700 p-2.5 rounded-lg border border-slate-600">
+                                <span class="text-green-400 font-bold block">ASCENDING &#8593; (Naik)</span>
+                                Kecil ke Besar (A-Z, 1-100)
+                            </div>
+                            <div class="bg-slate-700 p-2.5 rounded-lg border border-slate-600">
+                                <span class="text-red-400 font-bold block">DESCENDING &#8595; (Turun)</span>
+                                Besar ke Kecil (Z-A, 100-0)
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-center">
+                        <h4 class="font-bold text-slate-800 mb-2 flex items-center gap-2"><i class="fa-solid fa-magnifying-glass"></i> Pencarian (Searching)</h4>
+                        <p class="text-xs text-slate-600 mb-3">Mencari data pada tabel yang sudah <strong>terurut (sorted)</strong> jauh lebih cepat & efisien dibanding mencari di tumpukan data acak.</p>
+                        <div class="text-[11px] bg-white border border-slate-200 p-2 rounded-lg text-slate-700">
+                            <strong>Sequential Search:</strong> Mencari buku 'Bintang Kejora' dari tumpukan atas ke bawah satu per satu.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Representasi Data -->
+                <div class="bg-blue-50 border border-blue-200 p-4 rounded-2xl">
+                    <h4 class="font-bold text-blue-900 mb-2 text-sm"><i class="fa-solid fa-table-list"></i> Representasi & Pemodelan Data</h4>
+                    <p class="text-xs text-slate-700 mb-2">Mengubah data deskriptif/verbal menjadi tabel terstruktur agar mudah dibaca.</p>
+                    <table class="w-full text-[10px] sm:text-xs text-left bg-white rounded border border-blue-100 overflow-hidden">
+                        <thead class="bg-blue-100 text-blue-900">
+                            <tr><th class="px-2 py-1.5">Kategori</th><th class="px-2 py-1.5">Hewan</th><th class="px-2 py-1.5">Habitat</th></tr>
+                        </thead>
+                        <tbody class="divide-y divide-blue-50">
+                            <tr><td class="px-2 py-1.5 font-semibold">Mamalia</td><td class="px-2 py-1.5">Sapi, Kambing</td><td class="px-2 py-1.5">Darat</td></tr>
+                            <tr><td class="px-2 py-1.5 font-semibold">Unggas</td><td class="px-2 py-1.5">Ayam, Bebek</td><td class="px-2 py-1.5">Darat</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================
+             BAGIAN 2: ANALISIS DATA
+             ========================================== -->
+        <section id="ad" class="page-section space-y-6 relative hidden">
+            <div class="absolute -left-4 top-0 w-2 h-full bg-data-500 rounded-r-lg opacity-20"></div>
+
+            <div class="flex items-center gap-4 mb-8">
+                <div class="bg-gradient-to-br from-data-400 to-data-600 p-4 rounded-2xl text-white shadow-lg shadow-data-200">
+                    <i class="fa-solid fa-file-excel text-2xl"></i>
+                </div>
+                <h2 class="text-3xl font-black text-slate-800 tracking-tight">2. Analisis Data (Spreadsheet)</h2>
+            </div>
+
+            <!-- Konsep & Karakteristik Data -->
+            <div class="bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-200 hover:shadow-md transition-shadow">
+                <h3 class="text-xl font-extrabold text-data-900 mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-server text-data-500"></i> Konsep, Jenis & Kapasitas Data
+                </h3>
+                <div class="grid sm:grid-cols-2 gap-4">
+                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                        <h4 class="font-bold text-slate-800 text-sm mb-2 border-b pb-2">Jenis Data</h4>
+                        <ul class="text-xs text-slate-600 space-y-2">
+                            <li><strong class="text-brand-600">Kuantitatif:</strong> Berupa angka terukur. (Contoh: Tinggi badan 160 cm, Berat 50 kg).</li>
+                            <li><strong class="text-orange-600">Kualitatif:</strong> Deskriptif/non-angka. (Contoh: Survei kebersihan "Sangat Bersih", Rasa makanan "Enak").</li>
+                        </ul>
+                    </div>
+                    <div class="bg-data-50 p-4 rounded-2xl border border-data-100">
+                        <h4 class="font-bold text-data-900 text-sm mb-2 border-b border-data-200 pb-2">Kapasitas Data Digital</h4>
+                        <ul class="text-xs text-slate-700 space-y-2">
+                            <li>Satuan: <strong>1 MB = 1024 KB</strong></li>
+                            <li><strong>Hitungan:</strong> Jika file log lab 250 KB setiap hari, maka 1 tahun (365 hari) = 250 x 365 = 91.250 KB (&plusmn; 91 MB).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Format Antarmuka & Validasi -->
+            <div class="bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-200 hover:shadow-md transition-shadow">
+                <h3 class="text-xl font-extrabold text-data-900 mb-5 flex items-center gap-2">
+                    <i class="fa-solid fa-table text-data-500"></i> Format Cell, Filter & Data Validation
+                </h3>
+                <div class="space-y-4">
+                    <div class="overflow-x-auto rounded-2xl border border-slate-200 shadow-sm">
+                        <table class="w-full text-sm text-left bg-white whitespace-nowrap min-w-max">
+                            <thead class="bg-slate-50 text-slate-700 border-b border-slate-200">
+                                <tr>
+                                    <th class="px-4 py-3 font-bold">Fitur Excel</th>
+                                    <th class="px-4 py-3 font-bold">Kegunaan & Contoh</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100 text-slate-600">
+                                <tr>
+                                    <td class="px-4 py-3 font-mono text-xs text-brand-600 font-bold">Center & Middle</td>
+                                    <td class="px-4 py-3 text-xs whitespace-normal">Teks berada pas di tengah kotak (horizontal & vertikal). Cocok untuk Judul.</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 font-mono text-xs text-brand-600 font-bold">Accounting / Currency</td>
+                                    <td class="px-4 py-3 text-xs whitespace-normal">Simbol mata uang. Ketik <code>2500000</code> &rarr; Tampil <code>Rp 2.500.000</code>.</td>
+                                </tr>
+                                <tr class="bg-yellow-50">
+                                    <td class="px-4 py-3 font-mono text-xs text-yellow-800 font-bold">Format: TEXT</td>
+                                    <td class="px-4 py-3 text-xs whitespace-normal text-yellow-900">Agar ketik kode <code>00125</code> angka nol di depannya <strong>tidak hilang</strong>.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="grid sm:grid-cols-2 gap-4">
+                        <div class="border border-slate-200 p-4 rounded-xl bg-slate-50">
+                            <h4 class="font-bold text-slate-800 text-sm mb-1"><i class="fa-solid fa-filter text-slate-400"></i> Filter & Custom Sort</h4>
+                            <p class="text-xs text-slate-600 leading-snug"><strong>Filter:</strong> Menyembunyikan baris yang tidak memenuhi kriteria tanpa menghapus data asli.<br><strong>Custom Sort:</strong> Urut bertingkat (Misal: Urutkan kelas dulu, baru urutkan nilai).</p>
+                        </div>
+                        <div class="border border-slate-200 p-4 rounded-xl bg-slate-50">
+                            <h4 class="font-bold text-slate-800 text-sm mb-1"><i class="fa-solid fa-shield-halved text-slate-400"></i> Data Validation</h4>
+                            <p class="text-xs text-slate-600 leading-snug">Membatasi input pengguna agar tidak salah. <br>Contoh: <em>Text length = 10</em> untuk input NISN. Atau validasi rentang angka 75-100 untuk kolom nilai.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rumus & Fungsi -->
+            <div class="bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-200 hover:shadow-md transition-shadow">
+                <h3 class="text-xl font-extrabold text-data-900 mb-5 flex items-center gap-2">
+                    <i class="fa-solid fa-square-root-variable text-data-500"></i> Formula & Logika Esensial
+                </h3>
+                
+                <div class="space-y-6">
+                    <!-- Absolut -->
+                    <div class="bg-slate-800 p-5 rounded-2xl text-white shadow-inner flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+                        <div class="bg-slate-700 p-3 rounded-xl border border-slate-600 text-center min-w-[80px]">
+                            <span class="text-3xl font-black text-yellow-400">$</span>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-lg text-white mb-1">Referensi Absolut (Tanda Dolar)</h4>
+                            <p class="text-xs text-slate-300">"Mengunci" sel agar posisinya tidak bergeser saat di-copy (di-drag) ke bawah. <br>Contoh rumus komisi: <code class="bg-slate-900 px-1.5 py-0.5 rounded text-yellow-300 font-mono">=$A$1 * B5</code> (Sel A1 terkunci mutlak).</p>
+                        </div>
+                    </div>
+
+                    <!-- Statistik -->
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                        <div class="bg-emerald-50 border border-emerald-100 p-3 rounded-xl text-center">
+                            <code class="text-emerald-700 font-bold block mb-1 text-sm">=SUM()</code>
+                            <span class="text-[11px] text-emerald-900 font-medium">Total Jumlah Numerik</span>
+                        </div>
+                        <div class="bg-emerald-50 border border-emerald-100 p-3 rounded-xl text-center">
+                            <code class="text-emerald-700 font-bold block mb-1 text-sm">=MAX() / MIN()</code>
+                            <span class="text-[11px] text-emerald-900 font-medium">Nilai Tertinggi / Terendah</span>
+                        </div>
+                        <div class="bg-emerald-50 border border-emerald-100 p-3 rounded-xl text-center">
+                            <code class="text-emerald-700 font-bold block mb-1 text-sm">=COUNT()</code>
+                            <span class="text-[11px] text-emerald-900 font-medium">Banyaknya Data (Frekuensi)</span>
+                        </div>
+                        <div class="bg-emerald-50 border border-emerald-100 p-3 rounded-xl text-center shadow-sm relative overflow-hidden">
+                            <div class="absolute top-0 right-0 bg-emerald-200 text-[9px] px-1 font-bold">BARU</div>
+                            <code class="text-emerald-800 font-bold block mb-1 text-sm">=SUMIF()</code>
+                            <span class="text-[11px] text-emerald-900 font-medium">Total Bersyarat (Cth: Jumlah nilai pria saja)</span>
+                        </div>
+                        
+                        <div class="col-span-2 sm:col-span-4 bg-emerald-100 border border-emerald-200 p-3 rounded-xl text-center flex flex-col sm:flex-row items-center justify-center gap-3">
+                            <code class="text-emerald-800 font-black text-lg bg-white px-3 py-1 rounded-lg shadow-sm font-mono">=AVERAGE()</code>
+                            <span class="text-xs text-emerald-900 font-medium text-left">Fungsi Rata-rata. <br><span class="opacity-75">Hitung Manual: Total Penjumlahan Semua Nilai dibagi Banyaknya Data.</span></span>
+                        </div>
+                    </div>
+
+                    <!-- IF & Teks -->
+                    <div class="grid sm:grid-cols-2 gap-4">
+                        <div class="border-2 border-slate-100 p-5 rounded-2xl bg-white relative">
+                            <div class="absolute -top-3 left-4 bg-brand-500 text-white text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wider">Logika IF Tunggal</div>
+                            <code class="text-brand-600 font-mono text-[11px] font-bold block mb-3 bg-slate-50 p-2 rounded border border-slate-200">=IF(Syarat; "Jika_Benar"; "Jika_Salah")</code>
+                            <p class="text-xs text-slate-600 mb-1">Syarat Lulus KKM &ge; 75:</p>
+                            <code class="text-slate-800 font-mono text-[11px] block bg-yellow-50 p-2 rounded border border-yellow-200">=IF(D5>=75; "LULUS"; "REMIDI")</code>
+                        </div>
+                        
+                        <div class="border-2 border-slate-100 p-5 rounded-2xl bg-white relative">
+                            <div class="absolute -top-3 left-4 bg-rose-500 text-white text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wider">Manipulasi Teks (String)</div>
+                            <ul class="text-[11px] text-slate-700 space-y-2 font-mono bg-slate-800 p-3 rounded border border-slate-200 shadow-inner">
+                                <li><span class="text-rose-400">=LEFT("SUKOHARJO"; 4)</span> <span class="text-slate-400">&rarr; "SUKO"</span></li>
+                                <li><span class="text-rose-400">=RIGHT("INDONESIA"; 3)</span> <span class="text-slate-400">&rarr; "SIA"</span></li>
+                                <li><span class="text-rose-400">=MID("JAKARTA"; 3; 3)</span> <span class="text-slate-400">&rarr; "KAR"</span> <br><span class="text-[9px] text-slate-500">(Mulai huruf ke-3, ambil 3 huruf)</span></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ==========================================
+             BAGIAN 3: SISTEM SIMULASI LATIHAN (QUIZ ENGINE)
+             ========================================== -->
+        <section id="latihan" class="page-section space-y-6 relative hidden mb-20">
+            <div class="absolute -left-4 top-0 w-2 h-full bg-quiz-500 rounded-r-lg opacity-20"></div>
+
+            <div class="flex items-center gap-4 mb-6">
+                <div class="bg-gradient-to-br from-quiz-500 to-rose-700 p-4 rounded-2xl text-white shadow-lg shadow-quiz-200">
+                    <i class="fa-solid fa-laptop-code text-2xl"></i>
+                </div>
+                <div>
+                    <h2 class="text-3xl font-black text-slate-800 tracking-tight">3. Simulasi Latihan Interaktif</h2>
+                    <p class="text-sm text-slate-500 font-medium mt-1">Sesuai Kisi-kisi: 40 PG, 10 PG Kompleks, 5 Uraian.</p>
+                </div>
+            </div>
+
+            <!-- Quiz Dashboard UI -->
+            <div class="bg-white rounded-3xl shadow-lg border border-slate-200 overflow-hidden flex flex-col">
+                <!-- Tabs -->
+                <div class="flex border-b border-slate-200 bg-slate-50 text-sm font-bold overflow-x-auto hide-scrollbar">
+                    <button id="tab-pg" onclick="switchTab('pg')" class="px-6 py-4 text-quiz-600 border-b-2 border-quiz-500 bg-white transition-colors whitespace-nowrap">Pilihan Ganda (40)</button>
+                    <button id="tab-pgk" onclick="switchTab('pgk')" class="px-6 py-4 text-slate-500 hover:text-slate-800 transition-colors whitespace-nowrap">PG Kompleks (10)</button>
+                    <button id="tab-essay" onclick="switchTab('essay')" class="px-6 py-4 text-slate-500 hover:text-slate-800 transition-colors whitespace-nowrap">Uraian (5)</button>
+                </div>
+                
+                <!-- Quiz Container with flexible height for mobile -->
+                <div id="quiz-container" class="p-4 sm:p-8 h-[65vh] sm:h-[600px] overflow-y-auto bg-slate-50/50 space-y-6">
+                    <!-- Dynamic Content Injected by JS -->
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Quiz Data & Logic -->
+    <script>
+        // --- Navigasi Halaman Utama ---
+        function switchPage(pageId) {
+            // Sembunyikan semua section
+            document.querySelectorAll('.page-section').forEach(sec => {
+                sec.classList.remove('block');
+                sec.classList.add('hidden');
+            });
+            // Tampilkan section yang dipilih
+            document.getElementById(pageId).classList.remove('hidden');
+            document.getElementById(pageId).classList.add('block');
+
+            // Perbarui gaya tombol navigasi atas
+            ['bk', 'ad', 'latihan'].forEach(id => {
+                const btn = document.getElementById(`nav-${id}`);
+                if (id === pageId) {
+                    btn.classList.add('bg-white/30', 'border-white/50', 'shadow-md');
+                    btn.classList.remove('bg-white/10', 'border-white/20', 'hover:bg-white/20');
+                } else {
+                    btn.classList.remove('bg-white/30', 'border-white/50', 'shadow-md');
+                    btn.classList.add('bg-white/10', 'border-white/20', 'hover:bg-white/20');
+                }
+            });
+            window.scrollTo(0, 0); // Scroll ke atas tiap pindah menu
+        }
+
+        // 40 Soal PG (C2-C6) Berdasarkan Kisi-Kisi
+        const questionsPG = [
+            { q: "Hakikat Berpikir Komputasional adalah memecahkan masalah agar...", opt: ["Dapat diselesaikan secara spontan dan acak", "Menjadi sistematis, efektif, dan efisien", "Hanya bisa dikerjakan oleh komputer", "Menghabiskan waktu lebih lama untuk berpikir"], ans: 1, exp: "BK melatih kita merancang solusi (algoritma) yang terstruktur dan efisien." },
+            { q: "Perbedaan utama penyelesaian masalah komputasi vs non-komputasi adalah...", opt: ["Komputasi selalu butuh laptop, non-komputasi tidak", "Komputasi menggunakan alur terstruktur, non-komputasi cenderung acak", "Non-komputasi lebih cepat selesai daripada komputasi", "Komputasi menggunakan perasaan, non-komputasi menggunakan logika"], ans: 1, exp: "Solusi komputasional didasarkan pada algoritma (langkah pasti/terstruktur)." },
+            { q: "Memecah tugas persiapan pesta ulang tahun menjadi tim dekorasi, konsumsi, dan undangan adalah penerapan pilar...", opt: ["Pengenalan Pola", "Abstraksi", "Dekomposisi", "Algoritma"], ans: 2, exp: "Dekomposisi = memecah masalah besar jadi kecil." },
+            { q: "Siswa A membuat lipatan origami bunga berulang kali hingga hafal lipatan ke-3 selalu dilipat ke dalam. Ini adalah...", opt: ["Algoritma", "Pengenalan Pola", "Dekomposisi", "Abstraksi"], ans: 1, exp: "Menemukan keteraturan/repetisi adalah pengenalan pola." },
+            { q: "Saat melihat aplikasi rute perjalanan (Maps), kita fokus pada garis jalan dan mengabaikan warna gedung di sekitar. Ini disebut pilar...", opt: ["Abstraksi", "Dekomposisi", "Algoritma", "Pola"], ans: 0, exp: "Abstraksi = eliminasi detail tidak relevan." },
+            { q: "Langkah-langkah mencuci tangan standar: (1) Basahi, (2) Sabun, (3) Gosok, (4) Bilas. Urutan sistematis ini merupakan pilar...", opt: ["Dekomposisi", "Pola", "Abstraksi", "Algoritma"], ans: 3, exp: "Urutan logis sistematis = algoritma." },
+            { q: "Jika kita merebus air (15 menit) sambil memotong sayuran (10 menit) secara bersamaan, prinsip apa yang digunakan untuk efisiensi waktu?", opt: ["Eksekusi Acak", "Eksekusi Paralel", "Eksekusi Sekuensial (Berurutan)", "Debugging"], ans: 1, exp: "Paralel = mengerjakan tugas mandiri bersamaan." },
+            { q: "Dalam antrean kasir toko roti, orang pertama yang datang akan dilayani terlebih dahulu. Ini sesuai dengan struktur data...", opt: ["Stack (LIFO)", "Tree", "Queue (FIFO)", "Graph"], ans: 2, exp: "Queue (Antrean) = First In, First Out." },
+            { q: "Tumpukan kardus barang di gudang mengharuskan kita mengambil kardus paling atas (yang terakhir ditaruh). Ini adalah prinsip...", opt: ["Queue", "FIFO", "Stack (LIFO)", "Sorting"], ans: 2, exp: "Stack (Tumpukan) = Last In, First Out (LIFO)." },
+            { q: "Kondisi batas login salah maksimal 3 kali sebelum akun terkunci disebut sebagai...", opt: ["Looping acak", "Termination condition (Kondisi berhenti)", "Pencarian beruntun", "Abstraksi login"], ans: 1, exp: "Syarat perulangan berhenti = termination condition." },
+            { q: "Aturan: 'Jika cuaca mendung, maka bawa payung'. Ini menerapkan logika...", opt: ["Perulangan", "Percabangan (IF)", "Searching", "Sorting"], ans: 1, exp: "Logika kondisi = IF-THEN." },
+            { q: "Rangkaian gelang: Merah-Merah-Hijau (berulang). Apa warna manik urutan ke-7?", opt: ["Merah", "Hijau", "Putih", "Hitam"], ans: 0, exp: "Pola isi 3. 7 dibagi 3 sisa 1. Urutan 1 = Merah." },
+            { q: "Budi free jam 13-15. Siti free jam 14-16. Kapan irisan waktu luang mereka untuk rapat?", opt: ["13.00 - 14.00", "14.00 - 15.00", "15.00 - 16.00", "Tidak ada waktu luang"], ans: 1, exp: "Waktu yang sama-sama kosong = 14.00 hingga 15.00." },
+            { q: "Mengurutkan nilai ujian dari Tertinggi ke Terendah disebut pengurutan...", opt: ["Ascending", "Descending", "Searching", "Insertion"], ans: 1, exp: "Turun (Besar ke Kecil) = Descending." },
+            { q: "Menyisipkan nama 'Citra' pada urutan presensi setelah huruf B adalah operasi...", opt: ["Deletion", "Insertion", "Searching", "Queue"], ans: 1, exp: "Insertion = penyisipan elemen." },
+            { q: "Mencari file di komputer akan lebih cepat jika folder...", opt: ["Berantakan", "Berisi campur foto dan teks", "Terstruktur dan terurut (Sorted)", "Ukurannya besar"], ans: 2, exp: "Pencarian (Searching) butuh data terstruktur/terurut." },
+            { q: "Memasukkan data ciri hewan (Habitat, Kaki, Pernapasan) ke dalam sebuah tabel disebut proses...", opt: ["Representasi/Pemodelan Data", "Penghapusan Data", "Eksekusi Paralel", "Abstraksi Buta"], ans: 0, exp: "Mengubah teks ke tabel = representasi data." },
+            { q: "Hasil observasi 'Rasa makanan kantin sangat enak' termasuk jenis data...", opt: ["Kuantitatif", "Kualitatif", "Numerik", "Terukur"], ans: 1, exp: "Deskriptif/non-angka = Kualitatif." },
+            { q: "Satuan 1 Megabyte (MB) setara dengan...", opt: ["1000 Bytes", "1024 Kilobytes (KB)", "1024 Gigabytes (GB)", "10 Bit"], ans: 1, exp: "1 MB = 1024 KB." },
+            { q: "Berapa kira-kira kapasitas yang dibutuhkan untuk log data 250 KB setiap hari selama 4 hari?", opt: ["1000 KB (1 MB)", "250 KB", "4 MB", "10 MB"], ans: 0, exp: "250 x 4 = 1000 KB (~1 MB)." },
+            { q: "Pada Excel, tombol undo digunakan untuk kembali ke aksi sebelumnya, mirip kerja struktur data...", opt: ["Queue", "Stack", "Sorting", "Searching"], ans: 1, exp: "Undo membatalkan aksi paling TERAKHIR (Stack/LIFO)." },
+            { q: "Fitur perataan teks (Alignment) agar judul tabel berada tepat di tengah sel adalah...", opt: ["Align Left", "Center & Middle Align", "Justify", "Bottom Align"], ans: 1, exp: "Tengah horizontal (Center) & vertikal (Middle)." },
+            { q: "Agar angka 00125 tidak berubah jadi 125 di Excel, format cell harus diatur ke...", opt: ["Number", "Currency", "Text", "Date"], ans: 2, exp: "Format teks menganggap angka sebagai karakter biasa." },
+            { q: "Simbol yang digunakan untuk referensi sel absolut (mengunci sel) di Excel adalah...", opt: ["@", "#", "$", "&"], ans: 2, exp: "$ digunakan untuk sel absolut." },
+            { q: "Penulisan referensi absolut mutlak untuk sel A1 adalah...", opt: ["A$1", "$A1", "$A$1", "A1$"], ans: 2, exp: "Kunci kolom ($A) dan kunci baris ($1)." },
+            { q: "Fungsi =SUM() digunakan untuk...", opt: ["Mencari rata-rata", "Mencari nilai tertinggi", "Menghitung banyaknya data", "Menjumlahkan nilai sel"], ans: 3, exp: "SUM = Total jumlah." },
+            { q: "Untuk mengetahui berat badan terendah dalam suatu rentang data, digunakan fungsi...", opt: ["=MIN()", "=MAX()", "=COUNT()", "=AVERAGE()"], ans: 0, exp: "MIN = nilai terendah/minimum." },
+            { q: "Fungsi =COUNT() berfungsi untuk menghitung...", opt: ["Total penjumlahan", "Rata-rata data", "Banyaknya data (frekuensi) yang berisi angka", "Nilai paling sering muncul"], ans: 2, exp: "COUNT menghitung jumlah sel yang berisi angka." },
+            { q: "Sintaks penulisan IF yang benar adalah...", opt: ["=IF(Benar; Salah; Syarat)", "=IF(Syarat; Benar; Salah)", "=IF(Syarat)", "=IF(Benar; Syarat)"], ans: 1, exp: "=IF(logical_test; value_if_true; value_if_false)." },
+            { q: "Jika A1=80. Rumus =IF(A1>=75; \"LULUS\"; \"REMIDI\") menghasilkan output?", opt: ["REMIDI", "LULUS", "80", "TRUE"], ans: 1, exp: "80 >= 75 adalah BENAR, maka cetak LULUS." },
+            { q: "Fungsi Excel untuk menjumlahkan data dengan satu syarat (Misal: total nilai laki-laki saja) adalah...", opt: ["SUM", "AVERAGEIF", "SUMIF", "COUNTIF"], ans: 2, exp: "SUMIF = Menjumlah (SUM) bersyarat (IF)." },
+            { q: "Hasil dari =LEFT(\"INDONESIA\"; 4) adalah...", opt: ["INDO", "ONES", "ESIA", "NESI"], ans: 0, exp: "Ambil 4 huruf dari KIRI = I-N-D-O." },
+            { q: "Hasil dari =RIGHT(\"KOMPUTER\"; 3) adalah...", opt: ["KOM", "TER", "PUT", "Mpu"], ans: 1, exp: "Ambil 3 huruf dari KANAN = T-E-R." },
+            { q: "Hasil dari =MID(\"JAKARTA\"; 3; 3) adalah...", opt: ["JAK", "ART", "KAR", "RTA"], ans: 2, exp: "Mulai dari huruf ke-3 (K), ambil 3 huruf (K-A-R)." },
+            { q: "Fitur untuk menyembunyikan baris tanpa menghapus data aslinya disebut...", opt: ["Sort", "Filter", "Delete", "Hide column"], ans: 1, exp: "Filter menyaring tampilan data." },
+            { q: "Jika kita ingin mengurutkan tabel berdasarkan Kelas lalu Nilai Terkecil, kita menggunakan...", opt: ["Filter", "Data Validation", "Custom Sort (Add Level)", "Format Cells"], ans: 2, exp: "Custom Sort = urutan bertingkat." },
+            { q: "Membatasi input pengguna di cell agar hanya bisa mengetik 10 digit angka NISN disebut...", opt: ["Conditional Formatting", "Data Validation (Text Length)", "Merge Cells", "Filter"], ans: 1, exp: "Validasi = membatasi aturan input." },
+            { q: "Manakah yang merupakan diagram visual untuk tabulasi data frekuensi?", opt: ["Tabel Logika", "Diagram Batang / Grafik", "Word Art", "Flowchart"], ans: 1, exp: "Diagram batang mewakili perbandingan frekuensi." },
+            { q: "Perhitungan manual rata-rata (Average) adalah...", opt: ["Menjumlahkan nilai awal dan akhir", "Mencari selisih nilai tertinggi terendah", "Menjumlahkan semua nilai lalu dibagi banyak data", "Mengalikan semua nilai"], ans: 2, exp: "Rumus matematis Mean = Jumlah / Frekuensi." },
+            { q: "Tanda baca pembatas argumen (pemisah logika) pada formula Excel versi Bahasa Indonesia biasanya memakai...", opt: ["Koma (,)", "Titik koma (;)", "Titik dua (:)", "Spasi"], ans: 1, exp: "Pemisah daftar/argumen = Titik koma (;)." }
+        ];
+
+        // 10 Soal PGK (Pilihan Ganda Kompleks - Banyak Jawaban)
+        const questionsPGK = [
+            { q: "Pilihlah karakteristik Berpikir Komputasional yang tepat. (Pilih 2)", opt: ["Sistematis / Terstruktur", "Mengandalkan perasaan", "Spontan / Acak", "Mencari solusi yang efisien"], ans: [0, 3], exp: "BK itu sistematis dan fokus efisiensi/optimasi." },
+            { q: "Manakah contoh penerapan Pilar Pengenalan Pola? (Pilih 2)", opt: ["Membagi kelompok piket", "Memprediksi cuaca berdasar tanda alam awan", "Mengetahui urutan repitisi warna gelang manik", "Mengabaikan warna cat dinding saat mencari pintu"], ans: [1, 2], exp: "Prediksi berulang dan repetisi warna adalah pengenalan pola." },
+            { q: "Dari kegiatan berikut, mana yang bisa dilakukan secara Paralel (bersamaan) untuk hemat waktu? (Pilih 2)", opt: ["Merebus air dan memotong sayur", "Makan dan mengunyah", "Siswa A menata meja dan Siswa B menyebar undangan", "Menyapu lantai lalu mengepel area yang sama"], ans: [0, 2], exp: "Tugas mandiri beda orang/alat bisa paralel." },
+            { q: "Manakah yang menerapkan prinsip STACK (LIFO - Last In First Out)? (Pilih 2)", opt: ["Antrean UKS", "Tumpukan baju di keranjang", "Tombol Undo di MS Word", "Pembeli di kasir kantin"], ans: [1, 2], exp: "Baju paling atas (masuk terakhir) diambil duluan. Undo membatalkan aksi paling akhir." },
+            { q: "Data Kualitatif (deskriptif) ditunjukkan oleh contoh... (Pilih 2)", opt: ["Tinggi siswa 150 cm", "Ruang kelas sangat bersih", "Nasi goreng kantin enak", "Nilai ujian TIK = 85"], ans: [1, 2], exp: "Sangat bersih dan Enak adalah kata sifat (kualitatif)." },
+            { q: "Untuk merapikan judul tabel di Excel, fitur Format Cell yang sering dipakai adalah... (Pilih 2)", opt: ["Data Validation", "Middle Align", "Center Align", "SUMIF"], ans: [1, 2], exp: "Perataan tengah horizontal (Center) dan vertikal (Middle)." },
+            { q: "Fungsi statistik dasar pada Excel meliputi... (Pilih 2)", opt: ["LEFT", "MAX", "MID", "COUNT"], ans: [1, 3], exp: "MAX (Tinggi) dan COUNT (Frekuensi) adalah statistik dasar." },
+            { q: "Pernyataan yang BENAR tentang Referensi Sel Absolut ($) adalah... (Pilih 2)", opt: ["Sel bebas bergeser saat di-copy", "Mengunci posisi kolom atau baris", "Gunakan $A$1 agar sel mutlak tidak bergeser", "Hanya bisa dipakai di fungsi IF"], ans: [1, 2], exp: "Fungsi $ adalah mengunci agar alamat sel tetap mutlak." },
+            { q: "Manakah penulisan output rumus teks yang BENAR? (Pilih 2)", opt: ["=LEFT(\"BUNGA\"; 2) hasilnya BU", "=RIGHT(\"AKU\"; 1) hasilnya K", "=MID(\"SAPI\"; 2; 2) hasilnya AP", "=LEFT(\"BUDI\"; 3) hasilnya UDI"], ans: [0, 2], exp: "LEFT BU. MID mulai dr A sbnyk 2 hrf = AP." },
+            { q: "Fitur Pengelolaan Data (Data Management) di Excel ditunjukkan pada... (Pilih 2)", opt: ["Bold text", "Filter kolom", "Custom Sorting Data", "Insert Picture"], ans: [1, 2], exp: "Filter dan Sorting adalah fitur pengelolaan basis data." }
+        ];
+
+        // 5 Soal Uraian Berdasarkan Kisi-Kisi
+        const questionsEssay = [
+            { id: "U1", title: "Perancangan Algoritma (Piket)", q: "Rumuskan algoritma sistematis untuk membuat jadwal piket kelas yang adil dengan syarat: 'Tidak boleh ada siswa yang piket 2 hari berturut-turut'!", a: "1. Kumpulkan daftar nama siswa.<br>2. Bagi jumlah siswa ke dalam 5 kelompok.<br>3. Tetapkan hari Senin hingga Jumat.<br>4. Masukkan tiap kelompok ke hari yang berbeda.<br>5. <strong>Cek Validasi:</strong> Periksa jadwal, pastikan tidak ada siswa yang masuk di 2 hari berurutan. Jika ada, tukar dengan anggota kelompok lain.<br>6. Cetak jadwal." },
+            { id: "U2", title: "Eksekusi Paralel (Manajemen Waktu)", q: "Dalam persiapan pameran sekolah:<br>- Buat Undangan (2 jam)<br>- Siapkan Karya (2 jam)<br>- Tata Meja (1 jam)<br>Jika dikerjakan sendiri-sendiri berurutan butuh 5 jam. Jelaskan bagaimana penerapan pilar <strong>Paralel</strong> dapat mengefisienkan waktu jika ada 3 siswa!", a: "Dengan Eksekusi Paralel (Dikerjakan bersamaan di waktu yang sama):<br>Pukul 08.00 - 10.00:<br>• Siswa A: Membuat undangan (2 jam)<br>• Siswa B: Menyiapkan karya (2 jam)<br>• Siswa C: Menata meja (selesai jam 09.00).<br><br><strong>Total Waktu:</strong> Hanya butuh maksimal 2 Jam karena dikerjakan paralel, hemat 3 jam dibanding bekerja sendirian bertahap." },
+            { id: "U3", title: "Struktur & Representasi Data", q: "Terdapat data acak inventaris kelas: Kursi (30), Kipas Angin (2), Papan Tulis (1), Meja (15), Proyektor (1).<br>Buatlah rancangan tabel representasi data yang dikelompokkan ke dalam kategori (Mebel dan Elektronik)!", a: "<strong>Tabel Klasifikasi Inventaris:</strong><br><table class='w-full text-xs mt-2 border border-slate-300 bg-slate-50 text-left'><thead class='bg-slate-200'><tr><th class='border p-1'>No</th><th class='border p-1'>Kategori</th><th class='border p-1'>Nama Barang</th><th class='border p-1'>Jumlah</th></tr></thead><tbody><tr><td class='border p-1'>1</td><td class='border p-1 font-semibold' rowspan='3'>Mebel</td><td class='border p-1'>Kursi</td><td class='border p-1'>30</td></tr><tr><td class='border p-1'>2</td><td class='border p-1'>Meja</td><td class='border p-1'>15</td></tr><tr><td class='border p-1'>3</td><td class='border p-1'>Papan Tulis</td><td class='border p-1'>1</td></tr><tr><td class='border p-1'>4</td><td class='border p-1 font-semibold' rowspan='2'>Elektronik</td><td class='border p-1'>Kipas Angin</td><td class='border p-1'>2</td></tr><tr><td class='border p-1'>5</td><td class='border p-1'>Proyektor</td><td class='border p-1'>1</td></tr></tbody></table>" },
+            { id: "U4", title: "Formula Logika IF", q: "Sebuah toko target jualannya Rp 5.000.000. Data penjualan bulan ini di sel B2 adalah Rp 6.500.000.<br>Tuliskan sintaks IF Tunggal untuk memunculkan teks 'BONUS' jika mencapai target, dan 'TIDAK' jika gagal!", a: "Sintaks Formula Excel:<br><code class='bg-slate-800 text-yellow-300 px-2 py-1 rounded font-mono text-sm block mt-2'>=IF(B2>=5000000; &quot;BONUS&quot;; &quot;TIDAK&quot;)</code><br><em>Catatan:</em> Operator menggunakan >= (Lebih besar sama dengan), dan output teks wajib diapit tanda kutip ganda." },
+            { id: "U5", title: "Perhitungan AVERAGE Manual", q: "Siswa menabung 5 hari dengan rincian (dalam Rupiah): 2000, 3000, 5000, 4000, 6000. <br>Sebutkan fungsi Excel-nya dan buktikan dengan perhitungan rata-rata manual!", a: "• <strong>Fungsi Excel:</strong> <code class='bg-slate-200 text-slate-800 px-1 rounded font-mono'>=AVERAGE(2000; 3000; 5000; 4000; 6000)</code><br><br>• <strong>Perhitungan Manual:</strong><br>1. Total Nilai = 2000 + 3000 + 5000 + 4000 + 6000 = <strong>20.000</strong><br>2. Frekuensi / Banyak Data = <strong>5</strong> hari.<br>3. Rata-rata = 20.000 / 5 = <strong>4.000</strong>." }
+        ];
+
+        let userAnswersPG = {};
+        let userAnswersPGK = {};
+        let reviewMode = { pg: false, pgk: false, essay: false };
+        let currentTab = 'pg';
+
+        function switchTab(tabId) {
+            currentTab = tabId;
+            // Update Tab UI
+            ['pg', 'pgk', 'essay'].forEach(id => {
+                const btn = document.getElementById(`tab-${id}`);
+                if(id === tabId) {
+                    btn.classList.replace('text-slate-500', 'text-quiz-600');
+                    btn.classList.add('border-b-2', 'border-quiz-500', 'bg-white');
+                    btn.classList.remove('hover:text-slate-800');
+                } else {
+                    btn.classList.replace('text-quiz-600', 'text-slate-500');
+                    btn.classList.remove('border-b-2', 'border-quiz-500', 'bg-white');
+                    btn.classList.add('hover:text-slate-800');
+                }
+            });
+
+            renderQuiz(tabId);
+        }
+
+        function renderQuiz(tabId) {
+            const container = document.getElementById('quiz-container');
+            container.innerHTML = ''; // Clear
+
+            if(tabId === 'pg') {
+                let scoreHtml = '';
+                if(reviewMode.pg) {
+                    let correctCount = 0;
+                    questionsPG.forEach((q, i) => { if(userAnswersPG[i] === q.ans) correctCount++; });
+                    scoreHtml = `
+                    <div class="bg-emerald-500 text-white p-6 rounded-2xl shadow-lg mb-6 flex items-center justify-between animate-sweep">
+                        <div>
+                            <h3 class="text-xl font-black mb-1">Hasil Latihan Pilihan Ganda</h3>
+                            <p class="text-emerald-100 text-sm">Kamu menjawab benar ${correctCount} dari ${questionsPG.length} soal.</p>
+                        </div>
+                        <div class="text-4xl font-black">${Math.round((correctCount/questionsPG.length)*100)}</div>
+                    </div>`;
+                }
+                
+                let qHTML = questionsPG.map((q, index) => {
+                    const idNum = index + 1;
+                    const isReview = reviewMode.pg;
+                    const userAns = userAnswersPG[index];
+                    
+                    let optHtml = q.opt.map((o, i) => {
+                        let checked = (userAns === i) ? 'checked' : '';
+                        let stateClass = "bg-white border-slate-200 text-slate-700";
+                        let letterClass = "bg-slate-100 border-slate-200 text-slate-700";
+                        
+                        if (isReview) {
+                            if (i === q.ans) {
+                                stateClass = "bg-emerald-50 border-emerald-500 text-emerald-900 font-bold shadow-sm";
+                                letterClass = "bg-emerald-500 text-white border-emerald-500";
+                            } else if (userAns === i) {
+                                stateClass = "bg-rose-50 border-rose-500 text-rose-900 shadow-sm";
+                                letterClass = "bg-rose-500 text-white border-rose-500";
+                            }
+                        }
+
+                        return `
+                        <label class="cursor-pointer block mb-2 ${isReview ? 'pointer-events-none' : ''}">
+                            <input type="radio" name="pg_${index}" value="${i}" class="peer sr-only" ${checked} onchange="userAnswersPG[${index}]=${i}">
+                            <div class="p-3 rounded-lg border ${!isReview ? 'peer-checked:bg-brand-50 peer-checked:border-brand-500 peer-checked:text-brand-900' : ''} ${stateClass} text-sm flex gap-3 items-center transition-all">
+                                <div class="${!isReview ? 'peer-checked:bg-brand-500 peer-checked:text-white peer-checked:border-brand-500' : ''} ${letterClass} w-6 h-6 rounded font-bold text-xs flex items-center justify-center shrink-0 border transition-colors">${String.fromCharCode(65+i)}</div>
+                                <span>${o}</span>
+                            </div>
+                        </label>`;
+                    }).join('');
+                    
+                    let expHtml = isReview ? `
+                        <div class="p-4 mt-4 bg-emerald-50 rounded-xl text-xs text-emerald-900 border border-emerald-200 animate-sweep">
+                            <span class="font-black text-emerald-700 mb-1 block"><i class="fa-solid fa-check-circle"></i> Pembahasan (Kunci: ${String.fromCharCode(65+q.ans)}):</span>
+                            ${q.exp}
+                        </div>` : '';
+
+                    return `
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border-2 border-slate-100 mb-4">
+                        <div class="flex gap-4">
+                            <div class="w-8 h-8 rounded-full bg-quiz-100 text-quiz-600 flex items-center justify-center font-black shrink-0 shadow-inner">${idNum}</div>
+                            <div class="w-full">
+                                <p class="text-sm font-bold text-slate-800 mb-3">${q.q}</p>
+                                <div class="space-y-1 mb-2">${optHtml}</div>
+                                ${expHtml}
+                            </div>
+                        </div>
+                    </div>`;
+                }).join('');
+
+                container.innerHTML = scoreHtml + qHTML;
+
+                if (!reviewMode.pg) {
+                    container.innerHTML += `<button onclick="submitQuiz('pg')" class="w-full py-4 mt-2 bg-brand-600 hover:bg-brand-700 text-white font-black rounded-2xl shadow-lg transition-colors flex justify-center items-center gap-2 uppercase tracking-wide"><i class="fa-solid fa-flag-checkered"></i> Selesai & Cek Jawaban PG</button>`;
+                } else {
+                     container.innerHTML += `<button onclick="resetQuiz('pg')" class="w-full py-4 mt-2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-black rounded-2xl shadow-sm transition-colors flex justify-center items-center gap-2 uppercase tracking-wide"><i class="fa-solid fa-rotate-right"></i> Ulangi Latihan PG</button>`;
+                }
+
+            } else if(tabId === 'pgk') {
+                if(!userAnswersPGK.initialized) {
+                   questionsPGK.forEach((_, i) => userAnswersPGK[i] = []);
+                   userAnswersPGK.initialized = true;
+                }
+
+                let scoreHtml = '';
+                if(reviewMode.pgk) {
+                    let correctCount = 0;
+                    questionsPGK.forEach((q, i) => {
+                        let userA = [...userAnswersPGK[i]].sort();
+                        let realA = [...q.ans].sort();
+                        if(JSON.stringify(userA) === JSON.stringify(realA)) correctCount++;
+                    });
+                    scoreHtml = `
+                    <div class="bg-blue-600 text-white p-6 rounded-2xl shadow-lg mb-6 flex items-center justify-between animate-sweep">
+                        <div>
+                            <h3 class="text-xl font-black mb-1">Hasil Latihan PG Kompleks</h3>
+                            <p class="text-blue-100 text-sm">Kamu menjawab sempurna ${correctCount} dari ${questionsPGK.length} soal.</p>
+                        </div>
+                        <div class="text-4xl font-black">${Math.round((correctCount/questionsPGK.length)*100)}</div>
+                    </div>`;
+                }
+
+                let qHTML = questionsPGK.map((q, index) => {
+                    const idNum = index + 1;
+                    const isReview = reviewMode.pgk;
+                    
+                    let optHtml = q.opt.map((o, i) => {
+                        let isChecked = userAnswersPGK[index].includes(i);
+                        let checkedAttr = isChecked ? 'checked' : '';
+                        let isAns = q.ans.includes(i);
+                        
+                        let stateClass = "bg-white border-slate-200 text-slate-700";
+                        let iconClass = "text-transparent border-slate-300";
+                        let iconHtml = `<i class="fa-solid fa-check text-[10px] ${!isReview ? 'opacity-0 peer-checked:opacity-100 text-blue-600' : ''} transition-opacity"></i>`;
+                        
+                        if (isReview) {
+                            if (isAns) {
+                                stateClass = "bg-emerald-50 border-emerald-500 text-emerald-900 font-bold shadow-sm";
+                                iconClass = "text-emerald-600 border-emerald-500 bg-emerald-100";
+                                iconHtml = `<i class="fa-solid fa-check text-[10px]"></i>`;
+                            } else if (isChecked && !isAns) {
+                                stateClass = "bg-rose-50 border-rose-500 text-rose-900 shadow-sm";
+                                iconClass = "text-rose-600 border-rose-500 bg-rose-100";
+                                iconHtml = `<i class="fa-solid fa-xmark text-[12px]"></i>`;
+                            }
+                        }
+
+                        return `
+                        <label class="cursor-pointer block relative ${isReview ? 'pointer-events-none' : ''}">
+                            <input type="checkbox" value="${i}" class="peer sr-only" ${checkedAttr} onchange="togglePGK(${index}, ${i})">
+                            <div class="p-3 rounded-lg border-2 ${!isReview ? 'peer-checked:bg-blue-50 peer-checked:border-blue-500 peer-checked:text-blue-900' : ''} ${stateClass} text-sm flex gap-3 items-center transition-all h-full">
+                                <div class="${!isReview ? 'peer-checked:border-blue-500 peer-checked:bg-blue-100' : ''} ${iconClass} w-5 h-5 rounded border-2 flex items-center justify-center shrink-0 transition-all">
+                                   ${iconHtml}
+                                </div>
+                                <span>${o}</span>
+                            </div>
+                        </label>`;
+                    }).join('');
+                    
+                    let expHtml = isReview ? `
+                        <div class="p-4 mt-4 bg-emerald-50 rounded-xl text-xs text-emerald-900 border border-emerald-200 animate-sweep">
+                            <span class="font-black text-emerald-700 mb-1 block"><i class="fa-solid fa-check-double"></i> Pembahasan (Kunci: ${q.ans.map(a => String.fromCharCode(65+a)).join(' & ')}):</span>
+                            ${q.exp}
+                        </div>` : '';
+
+                    return `
+                    <div class="bg-gradient-to-r from-white to-blue-50/30 p-5 rounded-2xl shadow-sm border-2 border-blue-100 mb-4">
+                        <div class="flex gap-4">
+                            <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-black shrink-0 shadow-inner">${idNum}</div>
+                            <div class="w-full">
+                                <p class="text-sm font-bold text-slate-800 mb-1">${q.q}</p>
+                                <p class="text-[10px] text-blue-500 font-bold mb-3 uppercase tracking-wide">Pilih lebih dari satu jawaban (Kotak Centang)</p>
+                                <div class="grid sm:grid-cols-2 gap-2 mb-2">${optHtml}</div>
+                                ${expHtml}
+                            </div>
+                        </div>
+                    </div>`;
+                }).join('');
+                
+                container.innerHTML = scoreHtml + qHTML;
+
+                if (!reviewMode.pgk) {
+                    container.innerHTML += `<button onclick="submitQuiz('pgk')" class="w-full py-4 mt-2 bg-blue-600 hover:bg-blue-700 text-white font-black rounded-2xl shadow-lg transition-colors flex justify-center items-center gap-2 uppercase tracking-wide"><i class="fa-solid fa-flag-checkered"></i> Selesai & Cek Jawaban PGK</button>`;
+                } else {
+                     container.innerHTML += `<button onclick="resetQuiz('pgk')" class="w-full py-4 mt-2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-black rounded-2xl shadow-sm transition-colors flex justify-center items-center gap-2 uppercase tracking-wide"><i class="fa-solid fa-rotate-right"></i> Ulangi Latihan PGK</button>`;
+                }
+                
+            } else if (tabId === 'essay') {
+                questionsEssay.forEach((q, index) => {
+                    const isReview = reviewMode.essay;
+                    
+                    let expHtml = isReview ? `
+                        <div class="p-5 mt-4 bg-white text-slate-700 rounded-xl text-sm border-l-4 border-brand-500 animate-sweep shadow-sm text-left">
+                            <h5 class="font-bold text-brand-600 mb-2 border-b pb-2"><i class="fa-solid fa-book-open"></i> Rubrik Kunci Jawaban:</h5>
+                            ${q.a}
+                        </div>` : '';
+
+                    container.innerHTML += `
+                    <div class="bg-slate-800 p-6 rounded-2xl shadow-lg border-2 border-slate-700 text-slate-300 relative overflow-hidden mb-4">
+                        <div class="absolute top-0 right-0 bg-brand-500 text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl shadow-sm tracking-wider">SKOR MAX: 4</div>
+                        <div class="flex gap-4">
+                            <div class="w-8 h-8 rounded-full bg-slate-600 text-white flex items-center justify-center font-black shrink-0 shadow">${q.id}</div>
+                            <div class="w-full text-sm">
+                                <p class="mb-2 font-bold text-brand-400 uppercase tracking-wider text-[11px]">${q.title}</p>
+                                <p class="mb-4 text-white leading-relaxed font-medium">${q.q}</p>
+                                
+                                <textarea class="w-full bg-slate-900 border border-slate-600 rounded-xl p-3 text-slate-200 text-sm focus:outline-none focus:border-brand-500 placeholder-slate-500 mb-2 transition-colors ${isReview ? 'hidden' : ''}" rows="3" placeholder="Ketik draft jawaban kamu di sini... (opsional)"></textarea>
+                                
+                                ${expHtml}
+                            </div>
+                        </div>
+                    </div>`;
+                });
+                
+                if (!reviewMode.essay) {
+                    container.innerHTML += `<button onclick="submitQuiz('essay')" class="w-full py-4 mt-2 bg-brand-600 hover:bg-brand-700 text-white font-black rounded-2xl shadow-lg transition-colors flex justify-center items-center gap-2 uppercase tracking-wide"><i class="fa-solid fa-check-double"></i> Selesai & Lihat Pembahasan Uraian</button>`;
+                } else {
+                     container.innerHTML += `<button onclick="resetQuiz('essay')" class="w-full py-4 mt-2 bg-slate-600 hover:bg-slate-500 text-white font-black rounded-2xl shadow-sm transition-colors flex justify-center items-center gap-2 uppercase tracking-wide"><i class="fa-solid fa-rotate-right"></i> Tutup Pembahasan</button>`;
+                }
+            }
+        }
+
+        function togglePGK(qIndex, optIndex) {
+            let arr = userAnswersPGK[qIndex];
+            if (arr.includes(optIndex)) {
+                userAnswersPGK[qIndex] = arr.filter(v => v !== optIndex);
+            } else {
+                userAnswersPGK[qIndex].push(optIndex);
+            }
+        }
+
+        function submitQuiz(type) {
+            reviewMode[type] = true;
+            renderQuiz(type);
+            document.getElementById('quiz-container').scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function resetQuiz(type) {
+            reviewMode[type] = false;
+            if(type === 'pg') userAnswersPG = {};
+            if(type === 'pgk') {
+                userAnswersPGK = {};
+                userAnswersPGK.initialized = false;
+            }
+            renderQuiz(type);
+            document.getElementById('quiz-container').scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Initialize first tab
+        window.onload = () => switchTab('pg');
+    </script>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 py-8 text-center mt-12 border-t-4 border-brand-500">
+        <p class="text-slate-300 text-sm font-bold">Informatika Menyenangkan! 🚀</p>
+        <p class="text-slate-500 text-xs mt-2 font-medium">Bahan Ajar Interaktif • Kurikulum Merdeka (Fase D)</p>
+    </footer>
+
+</body>
+</html>
