@@ -2,14 +2,15 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Modul Interaktif Informatika Kelas 8</title>
   <style>
     :root {
       --primary: #0d9488;        /* Teal utama */
-      --primary-dark: #115e59;   /* Teal gelap untuk gradasi header */
-      --secondary: #d97706;      /* Amber / Oranye hangat untuk latihan */
-      --bg: #f4f7f6;
+      --primary-dark: #115e59;   /* Teal gelap */
+      --secondary: #d97706;      /* Amber / Oranye hangat */
+      --bg-outer: #e5e7eb;       /* Latar luar saat dibuka di desktop */
+      --bg-app: #f8fafc;         /* Latar dalam layar mobile */
       --card-bg: #ffffff;
       --text-main: #1c1917;
       --text-muted: #57534e;
@@ -21,132 +22,136 @@
       margin: 0;
       padding: 0;
       font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      -webkit-tap-highlight-color: transparent;
     }
 
     body {
-      background-color: var(--bg);
+      background-color: var(--bg-outer);
       color: var(--text-main);
-      line-height: 1.6;
+      line-height: 1.5;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+    }
+
+    /* Container menyerupai layar ponsel (Mobile Frame) */
+    .mobile-app {
+      width: 100%;
+      max-width: 480px;
+      background-color: var(--bg-app);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      box-shadow: 0 0 25px rgba(0, 0, 0, 0.08);
+      position: relative;
+      padding-bottom: 72px; /* Ruang untuk bottom navigation */
     }
 
     header {
       background: linear-gradient(135deg, var(--primary-dark), var(--primary));
       color: white;
-      padding: 2.75rem 1.5rem;
-      text-align: center;
-      box-shadow: 0 4px 12px rgba(17, 94, 89, 0.15);
+      padding: 1.75rem 1.25rem 2.25rem;
+      border-bottom-left-radius: 24px;
+      border-bottom-right-radius: 24px;
+      box-shadow: 0 4px 12px rgba(17, 94, 89, 0.18);
+    }
+
+    .header-tag {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 0.2rem 0.65rem;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      margin-bottom: 0.5rem;
     }
 
     header h1 {
-      font-size: 1.9rem;
+      font-size: 1.35rem;
       font-weight: 700;
-      margin-bottom: 0.45rem;
-      letter-spacing: -0.01em;
+      line-height: 1.3;
+      margin-bottom: 0.3rem;
     }
 
     header p {
-      font-size: 1rem;
-      opacity: 0.92;
+      font-size: 0.85rem;
+      opacity: 0.9;
     }
 
     main {
-      max-width: 1000px;
-      width: 100%;
-      margin: 2rem auto;
-      padding: 0 1.5rem;
+      padding: 1.25rem 1rem;
       flex: 1;
     }
 
-    .filter-bar {
-      display: flex;
-      gap: 0.65rem;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-bottom: 2.25rem;
-    }
-
-    .filter-btn {
-      padding: 0.55rem 1.3rem;
-      border: 1px solid var(--border);
-      background: var(--card-bg);
-      color: var(--text-main);
-      border-radius: 999px;
-      cursor: pointer;
-      font-size: 0.9rem;
-      font-weight: 600;
-      transition: all 0.2s ease;
-    }
-
-    .filter-btn:hover {
-      border-color: var(--primary);
-      color: var(--primary);
-    }
-
-    .filter-btn.active {
-      background: var(--primary);
-      color: white;
-      border-color: var(--primary);
-      box-shadow: 0 2px 6px rgba(13, 148, 136, 0.25);
-    }
-
     .section-group {
-      margin-bottom: 2.75rem;
+      margin-bottom: 1.75rem;
     }
 
     .section-header {
       display: flex;
       align-items: center;
-      gap: 0.6rem;
-      font-size: 1.25rem;
+      justify-content: space-between;
+      font-size: 1rem;
       font-weight: 700;
       color: var(--text-main);
-      padding-bottom: 0.65rem;
-      margin-bottom: 1.35rem;
-      border-bottom: 2px solid var(--border);
+      margin-bottom: 0.85rem;
+      padding: 0 0.25rem;
     }
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1.35rem;
+    .section-count {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      background: #e7e5e4;
+      padding: 0.15rem 0.55rem;
+      border-radius: 999px;
+    }
+
+    .list-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
     }
 
     .card {
       background: var(--card-bg);
       border: 1px solid var(--border);
-      border-top: 4px solid var(--primary);
-      border-radius: 12px;
-      padding: 1.45rem;
+      border-left: 4px solid var(--primary);
+      border-radius: 14px;
+      padding: 1rem 1.1rem;
       text-decoration: none;
       color: inherit;
       display: flex;
-      flex-direction: column;
+      align-items: center;
       justify-content: space-between;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      gap: 0.85rem;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+      transition: transform 0.15s ease, background-color 0.15s ease;
     }
 
-    .card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.08);
+    .card:active {
+      transform: scale(0.98);
+      background-color: #f1f5f9;
     }
 
     .card.latihan-card {
-      border-top-color: var(--secondary);
+      border-left-color: var(--secondary);
+    }
+
+    .card-content {
+      flex: 1;
     }
 
     .badge {
       display: inline-block;
-      width: fit-content;
-      padding: 0.25rem 0.7rem;
-      font-size: 0.75rem;
+      padding: 0.15rem 0.55rem;
+      font-size: 0.68rem;
       font-weight: 700;
-      border-radius: 6px;
-      margin-bottom: 0.85rem;
+      border-radius: 5px;
+      margin-bottom: 0.4rem;
       text-transform: uppercase;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.03em;
     }
 
     .badge-materi {
@@ -160,134 +165,190 @@
     }
 
     .card h3 {
-      font-size: 1.12rem;
-      margin-bottom: 0.5rem;
+      font-size: 0.98rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
       color: var(--text-main);
     }
 
     .card p {
-      font-size: 0.9rem;
+      font-size: 0.8rem;
       color: var(--text-muted);
-      margin-bottom: 1.35rem;
+      line-height: 1.4;
     }
 
-    .card-footer {
-      font-size: 0.88rem;
-      font-weight: 600;
+    .card-arrow {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #f0fdfa;
       color: var(--primary);
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      padding-top: 0.8rem;
-      border-top: 1px solid #f5f5f4;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.95rem;
+      flex-shrink: 0;
     }
 
-    .card.latihan-card .card-footer {
+    .card.latihan-card .card-arrow {
+      background: #fffbeb;
       color: var(--secondary);
     }
 
     footer {
       text-align: center;
-      padding: 1.5rem;
-      font-size: 0.85rem;
+      padding: 1rem;
+      font-size: 0.75rem;
       color: var(--text-muted);
+    }
+
+    /* Bottom Navigation Bar ala Aplikasi Mobile */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 480px;
+      background: #ffffff;
       border-top: 1px solid var(--border);
-      background: var(--card-bg);
+      display: flex;
+      justify-content: space-around;
+      padding: 0.5rem 0;
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.04);
+      z-index: 100;
+    }
+
+    .nav-item {
+      background: none;
+      border: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.2rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 0.25rem 1rem;
+      transition: color 0.2s;
+    }
+
+    .nav-item .nav-icon {
+      font-size: 1.15rem;
+    }
+
+    .nav-item.active {
+      color: var(--primary);
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <h1>Modul Interaktif Informatika Kelas 8</h1>
-    <p>Pilih materi pembelajaran atau latihan evaluasi pada menu di bawah ini</p>
-  </header>
+  <div class="mobile-app">
+    <header>
+      <span class="header-tag">SMP • Informatika</span>
+      <h1>Modul Interaktif Informatika Kelas 8</h1>
+      <p>Pilih materi pembelajaran atau latihan evaluasi</p>
+    </header>
 
-  <main>
-    <div class="filter-bar">
-      <button class="filter-btn active" onclick="filterSection('all', this)">Semua Menu</button>
-      <button class="filter-btn" onclick="filterSection('materi', this)">Materi Pembelajaran</button>
-      <button class="filter-btn" onclick="filterSection('latihan', this)">Latihan & Evaluasi</button>
-    </div>
+    <main>
+      <!-- BAGIAN MATERI (Urutan: XLS -> Sisbil -> Fungsi -> APD) -->
+      <section class="section-group" id="sec-materi">
+        <div class="section-header">
+          <span>📖 Materi Pembelajaran</span>
+          <span class="section-count">4 Modul</span>
+        </div>
+        <div class="list-stack">
+          <a href="xls-78.html" class="card">
+            <div class="card-content">
+              <span class="badge badge-materi">Materi 1</span>
+              <h3>Pengolah Angka (Microsoft Excel)</h3>
+              <p>Dasar lembar kerja, formula aritmetika, serta fungsi statistik pengolah angka.</p>
+            </div>
+            <div class="card-arrow">&rarr;</div>
+          </a>
 
-    <!-- BAGIAN MATERI (Urutan: XLS -> Sisbil -> Fungsi -> APD) -->
-    <section class="section-group" id="sec-materi">
-      <div class="section-header">
-        <span>📖 Materi Pembelajaran</span>
-      </div>
-      <div class="grid">
-        <a href="xls-78.html" class="card">
-          <div>
-            <span class="badge badge-materi">Materi 1</span>
-            <h3>Pengolah Angka (Microsoft Excel)</h3>
-            <p>Dasar-dasar lembar kerja, formula aritmetika, serta fungsi statistik pengolah angka.</p>
-          </div>
-          <div class="card-footer">Buka Materi <span>&rarr;</span></div>
-        </a>
+          <a href="sisbil-8.html" class="card">
+            <div class="card-content">
+              <span class="badge badge-materi">Materi 2</span>
+              <h3>Sistem Bilangan</h3>
+              <p>Pengenalan dan konversi antar basis bilangan desimal, biner, dan oktal.</p>
+            </div>
+            <div class="card-arrow">&rarr;</div>
+          </a>
 
-        <a href="sisbil-8.html" class="card">
-          <div>
-            <span class="badge badge-materi">Materi 2</span>
-            <h3>Sistem Bilangan</h3>
-            <p>Pengenalan dan konversi antar basis bilangan desimal, biner, oktal, dan heksadesimal.</p>
-          </div>
-          <div class="card-footer">Buka Materi <span>&rarr;</span></div>
-        </a>
+          <a href="fungsi-8.html" class="card">
+            <div class="card-content">
+              <span class="badge badge-materi">Materi 3</span>
+              <h3>Fungsi & Himpunan</h3>
+              <p>Konsep berpikir komputasional mengenai pemetaan fungsi, himpunan, dan logika.</p>
+            </div>
+            <div class="card-arrow">&rarr;</div>
+          </a>
 
-        <a href="fungsi-8.html" class="card">
-          <div>
-            <span class="badge badge-materi">Materi 3</span>
-            <h3>Fungsi & Himpunan</h3>
-            <p>Konsep dasar berpikir komputasional mengenai pemetaan fungsi, himpunan, dan logika.</p>
-          </div>
-          <div class="card-footer">Buka Materi <span>&rarr;</span></div>
-        </a>
+          <a href="apd-8.html" class="card">
+            <div class="card-content">
+              <span class="badge badge-materi">Materi 4</span>
+              <h3>Algoritma dan Pemrograman</h3>
+              <p>Konsep dasar algoritma, struktur kontrol percabangan, perulangan, dan pemrograman visual.</p>
+            </div>
+            <div class="card-arrow">&rarr;</div>
+          </a>
+        </div>
+      </section>
 
-        <a href="apd-8.html" class="card">
-          <div>
-            <span class="badge badge-materi">Materi 4</span>
-            <h3>Analisis & Pengolahan Data</h3>
-            <p>Teknik pencarian data, fungsi referensi (VLOOKUP/HLOOKUP), dan ringkasan data.</p>
-          </div>
-          <div class="card-footer">Buka Materi <span>&rarr;</span></div>
-        </a>
-      </div>
-    </section>
+      <!-- BAGIAN LATIHAN & EVALUASI -->
+      <section class="section-group" id="sec-latihan">
+        <div class="section-header">
+          <span>🎯 Latihan & Evaluasi (UH)</span>
+          <span class="section-count">2 Paket</span>
+        </div>
+        <div class="list-stack">
+          <a href="uh8-sisbil.html" class="card latihan-card">
+            <div class="card-content">
+              <span class="badge badge-latihan">Latihan / UH</span>
+              <h3>Latihan & UH: Sistem Bilangan</h3>
+              <p>Latihan soal interaktif konversi bilangan desimal, biner, dan oktal.</p>
+            </div>
+            <div class="card-arrow">&rarr;</div>
+          </a>
 
-    <!-- BAGIAN LATIHAN & EVALUASI -->
-    <section class="section-group" id="sec-latihan">
-      <div class="section-header">
-        <span>🎯 Latihan & Evaluasi (UH)</span>
-      </div>
-      <div class="grid">
-        <a href="uh8-sisbil.html" class="card latihan-card">
-          <div>
-            <span class="badge badge-latihan">Latihan / UH</span>
-            <h3>Latihan & UH: Sistem Bilangan</h3>
-            <p>Latihan soal interaktif konversi bilangan desimal, biner, oktal, dan heksadesimal.</p>
-          </div>
-          <div class="card-footer">Mulai Kerjakan <span>&rarr;</span></div>
-        </a>
+          <a href="uh8-fh.html" class="card latihan-card">
+            <div class="card-content">
+              <span class="badge badge-latihan">Latihan / UH</span>
+              <h3>Latihan & UH: Fungsi & Himpunan</h3>
+              <p>Uji pemahaman konsep fungsi, himpunan, dan pemecahan masalah logika.</p>
+            </div>
+            <div class="card-arrow">&rarr;</div>
+          </a>
+        </div>
+      </section>
 
-        <a href="uh8-fh.html" class="card latihan-card">
-          <div>
-            <span class="badge badge-latihan">Latihan / UH</span>
-            <h3>Latihan & UH: Fungsi & Himpunan</h3>
-            <p>Uji pemahaman konsep fungsi, himpunan, dan pemecahan masalah berpikir komputasional.</p>
-          </div>
-          <div class="card-footer">Mulai Kerjakan <span>&rarr;</span></div>
-        </a>
-      </div>
-    </section>
-  </main>
+      <footer>
+        &copy; 2026 Modul Interaktif Informatika Kelas 8
+      </footer>
+    </main>
 
-  <footer>
-    &copy; 2026 Modul Interaktif Informatika Kelas 8
-  </footer>
+    <!-- Navigasi Bawah Khas Mobile -->
+    <nav class="bottom-nav">
+      <button class="nav-item active" onclick="filterSection('all', this)">
+        <span class="nav-icon">🏠</span>
+        <span>Semua</span>
+      </button>
+      <button class="nav-item" onclick="filterSection('materi', this)">
+        <span class="nav-icon">📖</span>
+        <span>Materi</span>
+      </button>
+      <button class="nav-item" onclick="filterSection('latihan', this)">
+        <span class="nav-icon">🎯</span>
+        <span>Latihan</span>
+      </button>
+    </nav>
+  </div>
 
   <script>
     function filterSection(type, btn) {
-      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
 
       const secMateri = document.getElementById('sec-materi');
@@ -303,6 +364,8 @@
         secMateri.style.display = 'none';
         secLatihan.style.display = 'block';
       }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   </script>
 
