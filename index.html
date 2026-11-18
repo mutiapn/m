@@ -3,17 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portal Pembelajaran & Evaluasi Informatika</title>
+  <title>Modul Interaktif Informatika Kelas 8</title>
   <style>
     :root {
-      --primary: #2563eb;
-      --primary-hover: #1d4ed8;
-      --accent: #059669;
-      --bg: #f8fafc;
+      --primary: #0d9488;        /* Teal utama */
+      --primary-dark: #115e59;   /* Teal gelap untuk gradasi header */
+      --secondary: #d97706;      /* Amber / Oranye hangat untuk latihan */
+      --bg: #f4f7f6;
       --card-bg: #ffffff;
-      --text-main: #0f172a;
-      --text-muted: #64748b;
-      --border: #e2e8f0;
+      --text-main: #1c1917;
+      --text-muted: #57534e;
+      --border: #e7e5e4;
     }
 
     * {
@@ -33,26 +33,27 @@
     }
 
     header {
-      background: linear-gradient(135deg, #1e3a8a, var(--primary));
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
       color: white;
-      padding: 2.5rem 1.5rem;
+      padding: 2.75rem 1.5rem;
       text-align: center;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 12px rgba(17, 94, 89, 0.15);
     }
 
     header h1 {
-      font-size: 1.85rem;
-      margin-bottom: 0.4rem;
+      font-size: 1.9rem;
       font-weight: 700;
+      margin-bottom: 0.45rem;
+      letter-spacing: -0.01em;
     }
 
     header p {
       font-size: 1rem;
-      opacity: 0.9;
+      opacity: 0.92;
     }
 
     main {
-      max-width: 1050px;
+      max-width: 1000px;
       width: 100%;
       margin: 2rem auto;
       padding: 0 1.5rem;
@@ -61,14 +62,14 @@
 
     .filter-bar {
       display: flex;
-      gap: 0.6rem;
+      gap: 0.65rem;
       justify-content: center;
       flex-wrap: wrap;
-      margin-bottom: 2rem;
+      margin-bottom: 2.25rem;
     }
 
     .filter-btn {
-      padding: 0.5rem 1.1rem;
+      padding: 0.55rem 1.3rem;
       border: 1px solid var(--border);
       background: var(--card-bg);
       color: var(--text-main);
@@ -76,89 +77,113 @@
       cursor: pointer;
       font-size: 0.9rem;
       font-weight: 600;
-      transition: all 0.2s;
+      transition: all 0.2s ease;
     }
 
-    .filter-btn:hover,
+    .filter-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
     .filter-btn.active {
       background: var(--primary);
       color: white;
       border-color: var(--primary);
+      box-shadow: 0 2px 6px rgba(13, 148, 136, 0.25);
     }
 
-    .section-title {
-      font-size: 1.2rem;
+    .section-group {
+      margin-bottom: 2.75rem;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 1.25rem;
       font-weight: 700;
-      margin: 1.5rem 0 1rem;
-      padding-bottom: 0.5rem;
+      color: var(--text-main);
+      padding-bottom: 0.65rem;
+      margin-bottom: 1.35rem;
       border-bottom: 2px solid var(--border);
-      color: #1e293b;
     }
 
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1.25rem;
-      margin-bottom: 2rem;
+      gap: 1.35rem;
     }
 
     .card {
       background: var(--card-bg);
       border: 1px solid var(--border);
+      border-top: 4px solid var(--primary);
       border-radius: 12px;
-      padding: 1.35rem;
+      padding: 1.45rem;
       text-decoration: none;
       color: inherit;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
     .card:hover {
       transform: translateY(-4px);
-      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
-      border-color: var(--primary);
+      box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.08);
+    }
+
+    .card.latihan-card {
+      border-top-color: var(--secondary);
     }
 
     .badge {
       display: inline-block;
       width: fit-content;
-      padding: 0.2rem 0.65rem;
+      padding: 0.25rem 0.7rem;
       font-size: 0.75rem;
       font-weight: 700;
       border-radius: 6px;
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.85rem;
       text-transform: uppercase;
+      letter-spacing: 0.04em;
     }
 
-    .badge-7 { background: #dbeafe; color: #1e40af; }
-    .badge-8 { background: #dcfce7; color: #166534; }
-    .badge-78 { background: #fef3c7; color: #92400e; }
+    .badge-materi {
+      background: #ccfbf1;
+      color: #115e59;
+    }
+
+    .badge-latihan {
+      background: #fef3c7;
+      color: #92400e;
+    }
 
     .card h3 {
-      font-size: 1.1rem;
-      margin-bottom: 0.4rem;
+      font-size: 1.12rem;
+      margin-bottom: 0.5rem;
       color: var(--text-main);
     }
 
     .card p {
-      font-size: 0.88rem;
+      font-size: 0.9rem;
       color: var(--text-muted);
-      margin-bottom: 1.2rem;
+      margin-bottom: 1.35rem;
     }
 
     .card-footer {
-      font-size: 0.85rem;
+      font-size: 0.88rem;
       font-weight: 600;
       color: var(--primary);
       display: flex;
       align-items: center;
       justify-content: space-between;
+      padding-top: 0.8rem;
+      border-top: 1px solid #f5f5f4;
     }
 
-    .card.exam .card-footer {
-      color: var(--accent);
+    .card.latihan-card .card-footer {
+      color: var(--secondary);
     }
 
     footer {
@@ -174,122 +199,110 @@
 <body>
 
   <header>
-    <h1>Portal Pembelajaran Informatika</h1>
-    <p>Pilih materi pembelajaran, latihan, atau ujian harian di bawah ini</p>
+    <h1>Modul Interaktif Informatika Kelas 8</h1>
+    <p>Pilih materi pembelajaran atau latihan evaluasi pada menu di bawah ini</p>
   </header>
 
   <main>
     <div class="filter-bar">
-      <button class="filter-btn active" onclick="filterMenu('all', this)">Semua Menu</button>
-      <button class="filter-btn" onclick="filterMenu('kelas7', this)">Kelas 7</button>
-      <button class="filter-btn" onclick="filterMenu('kelas8', this)">Kelas 8</button>
-      <button class="filter-btn" onclick="filterMenu('materi', this)">Materi & Latihan</button>
-      <button class="filter-btn" onclick="filterMenu('ujian', this)">Ulangan Harian (UH)</button>
+      <button class="filter-btn active" onclick="filterSection('all', this)">Semua Menu</button>
+      <button class="filter-btn" onclick="filterSection('materi', this)">Materi Pembelajaran</button>
+      <button class="filter-btn" onclick="filterSection('latihan', this)">Latihan & Evaluasi</button>
     </div>
 
-    <div class="section-title" id="title-materi">Materi & Latihan Interaktif</div>
-    <div class="grid" id="grid-materi">
-      <a href="latasater7.html" class="card" data-tags="kelas7 materi">
-        <div>
-          <span class="badge badge-7">Kelas 7</span>
-          <h3>Latihan ASAT / Semester 7</h3>
-          <p>Latihan soal dan pembahasan materi Informatika untuk persiapan evaluasi Kelas 7.</p>
-        </div>
-        <div class="card-footer">Buka Halaman <span>&rarr;</span></div>
-      </a>
+    <!-- BAGIAN MATERI (Urutan: XLS -> Sisbil -> Fungsi -> APD) -->
+    <section class="section-group" id="sec-materi">
+      <div class="section-header">
+        <span>📖 Materi Pembelajaran</span>
+      </div>
+      <div class="grid">
+        <a href="xls-78.html" class="card">
+          <div>
+            <span class="badge badge-materi">Materi 1</span>
+            <h3>Pengolah Angka (Microsoft Excel)</h3>
+            <p>Dasar-dasar lembar kerja, formula aritmetika, serta fungsi statistik pengolah angka.</p>
+          </div>
+          <div class="card-footer">Buka Materi <span>&rarr;</span></div>
+        </a>
 
-      <a href="xls-78.html" class="card" data-tags="kelas7 kelas8 materi">
-        <div>
-          <span class="badge badge-78">Kelas 7 & 8</span>
-          <h3>Analisis Data (Microsoft Excel)</h3>
-          <p>Pengenalan lembar kerja, rumus dasar, serta pengolahan data angka dan teks.</p>
-        </div>
-        <div class="card-footer">Buka Halaman <span>&rarr;</span></div>
-      </a>
+        <a href="sisbil-8.html" class="card">
+          <div>
+            <span class="badge badge-materi">Materi 2</span>
+            <h3>Sistem Bilangan</h3>
+            <p>Pengenalan dan konversi antar basis bilangan desimal, biner, oktal, dan heksadesimal.</p>
+          </div>
+          <div class="card-footer">Buka Materi <span>&rarr;</span></div>
+        </a>
 
-      <a href="apd-8.html" class="card" data-tags="kelas8 materi">
-        <div>
-          <span class="badge badge-8">Kelas 8</span>
-          <h3>Algoritma dan Pemrograman Dasar (APD)</h3>
-          <p>Materi lanjutan pengolahan data, fungsi logika, dan visualisasi informasi Kelas 8.</p>
-        </div>
-        <div class="card-footer">Buka Halaman <span>&rarr;</span></div>
-      </a>
+        <a href="fungsi-8.html" class="card">
+          <div>
+            <span class="badge badge-materi">Materi 3</span>
+            <h3>Fungsi & Himpunan</h3>
+            <p>Konsep dasar berpikir komputasional mengenai pemetaan fungsi, himpunan, dan logika.</p>
+          </div>
+          <div class="card-footer">Buka Materi <span>&rarr;</span></div>
+        </a>
 
-      <a href="fungsi-8.html" class="card" data-tags="kelas8 materi">
-        <div>
-          <span class="badge badge-8">Kelas 8</span>
-          <h3>Fungsi & Berpikir Komputasional</h3>
-          <p>Konsep himpunan, fungsi, ekspresi logika, dan algoritma dasar Kelas 8.</p>
-        </div>
-        <div class="card-footer">Buka Halaman <span>&rarr;</span></div>
-      </a>
+        <a href="apd-8.html" class="card">
+          <div>
+            <span class="badge badge-materi">Materi 4</span>
+            <h3>Analisis & Pengolahan Data</h3>
+            <p>Teknik pencarian data, fungsi referensi (VLOOKUP/HLOOKUP), dan ringkasan data.</p>
+          </div>
+          <div class="card-footer">Buka Materi <span>&rarr;</span></div>
+        </a>
+      </div>
+    </section>
 
-      <a href="sisbil-8.html" class="card" data-tags="kelas8 materi">
-        <div>
-          <span class="badge badge-8">Kelas 8</span>
-          <h3>Sistem Bilangan</h3>
-          <p>Konversi bilangan desimal, biner, oktal, dan heksadesimal dalam sistem komputer.</p>
-        </div>
-        <div class="card-footer">Buka Halaman <span>&rarr;</span></div>
-      </a>
-    </div>
+    <!-- BAGIAN LATIHAN & EVALUASI -->
+    <section class="section-group" id="sec-latihan">
+      <div class="section-header">
+        <span>🎯 Latihan & Evaluasi (UH)</span>
+      </div>
+      <div class="grid">
+        <a href="uh8-sisbil.html" class="card latihan-card">
+          <div>
+            <span class="badge badge-latihan">Latihan / UH</span>
+            <h3>Latihan & UH: Sistem Bilangan</h3>
+            <p>Latihan soal interaktif konversi bilangan desimal, biner, oktal, dan heksadesimal.</p>
+          </div>
+          <div class="card-footer">Mulai Kerjakan <span>&rarr;</span></div>
+        </a>
 
-    <div class="section-title" id="title-ujian">Evaluasi & Ulangan Harian (UH)</div>
-    <div class="grid" id="grid-ujian">
-      <a href="uh7-xls.html" class="card exam" data-tags="kelas7 ujian">
-        <div>
-          <span class="badge badge-7">UH Kelas 7</span>
-          <h3>UH 7: Pengolah Angka (Excel)</h3>
-          <p>Penilaian harian kompetensi penggunaan rumus dan fungsi dasar Microsoft Excel.</p>
-        </div>
-        <div class="card-footer">Mulai Ujian <span>&rarr;</span></div>
-      </a>
-
-      <a href="uh8-fh.html" class="card exam" data-tags="kelas8 ujian">
-        <div>
-          <span class="badge badge-8">UH Kelas 8</span>
-          <h3>UH 8: Fungsi & Himpunan</h3>
-          <p>Penilaian harian materi berpikir komputasional mengenai fungsi dan himpunan.</p>
-        </div>
-        <div class="card-footer">Mulai Ujian <span>&rarr;</span></div>
-      </a>
-
-      <a href="uh8-sisbil.html" class="card exam" data-tags="kelas8 ujian">
-        <div>
-          <span class="badge badge-8">UH Kelas 8</span>
-          <h3>UH 8: Sistem Bilangan</h3>
-          <p>Penilaian harian konversi antar basis bilangan (biner, desimal, oktal, heksadesimal).</p>
-        </div>
-        <div class="card-footer">Mulai Ujian <span>&rarr;</span></div>
-      </a>
-    </div>
+        <a href="uh8-fh.html" class="card latihan-card">
+          <div>
+            <span class="badge badge-latihan">Latihan / UH</span>
+            <h3>Latihan & UH: Fungsi & Himpunan</h3>
+            <p>Uji pemahaman konsep fungsi, himpunan, dan pemecahan masalah berpikir komputasional.</p>
+          </div>
+          <div class="card-footer">Mulai Kerjakan <span>&rarr;</span></div>
+        </a>
+      </div>
+    </section>
   </main>
 
   <footer>
-    &copy; 2026 Portal Pembelajaran Informatika SMP
+    &copy; 2026 Modul Interaktif Informatika Kelas 8
   </footer>
 
   <script>
-    function filterMenu(category, btn) {
+    function filterSection(type, btn) {
       document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
 
-      const cards = document.querySelectorAll('.card');
-      cards.forEach(card => {
-        const tags = card.getAttribute('data-tags');
-        if (category === 'all' || tags.includes(category)) {
-          card.style.display = 'flex';
-        } else {
-          card.style.display = 'none';
-        }
-      });
+      const secMateri = document.getElementById('sec-materi');
+      const secLatihan = document.getElementById('sec-latihan');
 
-      const hasMateri = [...document.querySelectorAll('#grid-materi .card')].some(c => c.style.display !== 'none');
-      const hasUjian = [...document.querySelectorAll('#grid-ujian .card')].some(c => c.style.display !== 'none');
-
-      document.getElementById('title-materi').style.display = hasMateri ? 'block' : 'none';
-      document.getElementById('title-ujian').style.display = hasUjian ? 'block' : 'none';
+      if (type === 'all') {
+        secMateri.style.display = 'block';
+        secLatihan.style.display = 'block';
+      } else if (type === 'materi') {
+        secMateri.style.display = 'block';
+        secLatihan.style.display = 'none';
+      } else if (type === 'latihan') {
+        secMateri.style.display = 'none';
+        secLatihan.style.display = 'block';
+      }
     }
   </script>
 
