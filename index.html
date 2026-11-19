@@ -2,15 +2,14 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Modul Interaktif Informatika Kelas 8</title>
   <style>
     :root {
       --primary: #0d9488;        /* Teal utama */
       --primary-dark: #115e59;   /* Teal gelap */
       --secondary: #d97706;      /* Amber / Oranye hangat */
-      --bg-outer: #e5e7eb;       /* Latar luar saat dibuka di desktop */
-      --bg-app: #f8fafc;         /* Latar dalam layar mobile */
+      --bg-app: #f4f7f6;         /* Latar aplikasi */
       --card-bg: #ffffff;
       --text-main: #1c1917;
       --text-muted: #57534e;
@@ -26,91 +25,101 @@
     }
 
     body {
-      background-color: var(--bg-outer);
+      background-color: var(--bg-app);
       color: var(--text-main);
       line-height: 1.5;
       min-height: 100vh;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
+      padding-bottom: 72px; /* Ruang bottom nav pada mode mobile */
     }
 
-    /* Container menyerupai layar ponsel (Mobile Frame) */
-    .mobile-app {
+    .app-container {
       width: 100%;
-      max-width: 480px;
-      background-color: var(--bg-app);
-      min-height: 100vh;
+      flex: 1;
       display: flex;
       flex-direction: column;
-      box-shadow: 0 0 25px rgba(0, 0, 0, 0.08);
-      position: relative;
-      padding-bottom: 72px; /* Ruang untuk bottom navigation */
     }
 
+    /* HEADER: Mobile First */
     header {
       background: linear-gradient(135deg, var(--primary-dark), var(--primary));
       color: white;
-      padding: 1.75rem 1.25rem 2.25rem;
+      padding: 1.75rem 1.25rem 2.15rem;
       border-bottom-left-radius: 24px;
       border-bottom-right-radius: 24px;
-      box-shadow: 0 4px 12px rgba(17, 94, 89, 0.18);
+      box-shadow: 0 4px 12px rgba(17, 94, 89, 0.16);
+    }
+
+    .header-inner {
+      max-width: 1024px;
+      margin: 0 auto;
     }
 
     .header-tag {
       display: inline-block;
       background: rgba(255, 255, 255, 0.2);
-      padding: 0.2rem 0.65rem;
+      padding: 0.2rem 0.7rem;
       border-radius: 999px;
-      font-size: 0.72rem;
+      font-size: 0.74rem;
       font-weight: 600;
       letter-spacing: 0.03em;
       margin-bottom: 0.5rem;
     }
 
     header h1 {
-      font-size: 1.35rem;
+      font-size: 1.4rem;
       font-weight: 700;
       line-height: 1.3;
       margin-bottom: 0.3rem;
     }
 
     header p {
-      font-size: 0.85rem;
-      opacity: 0.9;
+      font-size: 0.88rem;
+      opacity: 0.92;
+    }
+
+    /* NAVIGASI DESKTOP (Tersembunyi di Mobile) */
+    .desktop-nav {
+      display: none;
     }
 
     main {
-      padding: 1.25rem 1rem;
+      width: 100%;
+      max-width: 1024px;
+      margin: 0 auto;
+      padding: 1.35rem 1rem;
       flex: 1;
     }
 
     .section-group {
-      margin-bottom: 1.75rem;
+      margin-bottom: 2rem;
     }
 
     .section-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      font-size: 1rem;
+      font-size: 1.05rem;
       font-weight: 700;
       color: var(--text-main);
-      margin-bottom: 0.85rem;
-      padding: 0 0.25rem;
+      margin-bottom: 0.9rem;
+      padding: 0 0.2rem;
     }
 
     .section-count {
-      font-size: 0.75rem;
+      font-size: 0.76rem;
       font-weight: 600;
       color: var(--text-muted);
       background: #e7e5e4;
-      padding: 0.15rem 0.55rem;
+      padding: 0.2rem 0.65rem;
       border-radius: 999px;
     }
 
-    .list-stack {
-      display: flex;
-      flex-direction: column;
+    /* LIST CARD: 1 Kolom Vertikal di Mobile */
+    .menu-grid {
+      display: grid;
+      grid-template-columns: 1fr;
       gap: 0.85rem;
     }
 
@@ -119,15 +128,15 @@
       border: 1px solid var(--border);
       border-left: 4px solid var(--primary);
       border-radius: 14px;
-      padding: 1rem 1.1rem;
+      padding: 1.05rem 1.15rem;
       text-decoration: none;
       color: inherit;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 0.85rem;
+      gap: 0.9rem;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
-      transition: transform 0.15s ease, background-color 0.15s ease;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
     }
 
     .card:active {
@@ -145,11 +154,11 @@
 
     .badge {
       display: inline-block;
-      padding: 0.15rem 0.55rem;
-      font-size: 0.68rem;
+      padding: 0.18rem 0.6rem;
+      font-size: 0.7rem;
       font-weight: 700;
-      border-radius: 5px;
-      margin-bottom: 0.4rem;
+      border-radius: 6px;
+      margin-bottom: 0.45rem;
       text-transform: uppercase;
       letter-spacing: 0.03em;
     }
@@ -165,21 +174,21 @@
     }
 
     .card h3 {
-      font-size: 0.98rem;
+      font-size: 1rem;
       font-weight: 700;
       margin-bottom: 0.25rem;
       color: var(--text-main);
     }
 
     .card p {
-      font-size: 0.8rem;
+      font-size: 0.82rem;
       color: var(--text-muted);
-      line-height: 1.4;
+      line-height: 1.45;
     }
 
     .card-arrow {
-      width: 32px;
-      height: 32px;
+      width: 34px;
+      height: 34px;
       border-radius: 50%;
       background: #f0fdfa;
       color: var(--primary);
@@ -187,8 +196,9 @@
       align-items: center;
       justify-content: center;
       font-weight: 700;
-      font-size: 0.95rem;
+      font-size: 1rem;
       flex-shrink: 0;
+      transition: transform 0.18s ease, background-color 0.18s ease;
     }
 
     .card.latihan-card .card-arrow {
@@ -198,23 +208,23 @@
 
     footer {
       text-align: center;
-      padding: 1rem;
-      font-size: 0.75rem;
+      padding: 1.25rem;
+      font-size: 0.8rem;
       color: var(--text-muted);
     }
 
-    /* Bottom Navigation Bar ala Aplikasi Mobile */
+    /* BOTTOM NAVIGATION: Aktif di Mobile */
     .bottom-nav {
       position: fixed;
       bottom: 0;
+      left: 0;
       width: 100%;
-      max-width: 480px;
       background: #ffffff;
       border-top: 1px solid var(--border);
       display: flex;
       justify-content: space-around;
       padding: 0.5rem 0;
-      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.04);
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
       z-index: 100;
     }
 
@@ -225,11 +235,11 @@
       flex-direction: column;
       align-items: center;
       gap: 0.2rem;
-      font-size: 0.72rem;
+      font-size: 0.74rem;
       font-weight: 600;
       color: var(--text-muted);
       cursor: pointer;
-      padding: 0.25rem 1rem;
+      padding: 0.25rem 1.25rem;
       transition: color 0.2s;
     }
 
@@ -240,25 +250,151 @@
     .nav-item.active {
       color: var(--primary);
     }
+
+    /* =========================================================
+       PENYESUAIAN TAMPILAN KOMPUTER / TABLET (>= 768px)
+       ========================================================= */
+    @media (min-width: 768px) {
+      body {
+        padding-bottom: 0;
+      }
+
+      header {
+        padding: 2.5rem 2rem;
+        border-radius: 0;
+        text-align: center;
+      }
+
+      header h1 {
+        font-size: 1.9rem;
+      }
+
+      header p {
+        font-size: 1rem;
+      }
+
+      /* Sembunyikan bottom nav, tampilkan filter pill di atas */
+      .bottom-nav {
+        display: none;
+      }
+
+      .desktop-nav {
+        display: flex;
+        justify-content: center;
+        gap: 0.75rem;
+        margin-bottom: 2rem;
+      }
+
+      .desktop-btn {
+        padding: 0.55rem 1.4rem;
+        border: 1px solid var(--border);
+        background: var(--card-bg);
+        color: var(--text-main);
+        border-radius: 999px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .desktop-btn:hover {
+        border-color: var(--primary);
+        color: var(--primary);
+      }
+
+      .desktop-btn.active {
+        background: var(--primary);
+        color: white;
+        border-color: var(--primary);
+        box-shadow: 0 3px 8px rgba(13, 148, 136, 0.25);
+      }
+
+      main {
+        padding: 2rem 2rem 1rem;
+      }
+
+      .section-header {
+        font-size: 1.2rem;
+        padding-bottom: 0.6rem;
+        border-bottom: 2px solid var(--border);
+        margin-bottom: 1.25rem;
+      }
+
+      /* Grid 2 Kolom Rapi di Komputer */
+      .menu-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.25rem;
+      }
+
+      .card {
+        padding: 1.35rem 1.4rem;
+      }
+
+      .card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.08);
+        border-color: var(--primary);
+      }
+
+      .card.latihan-card:hover {
+        border-color: var(--secondary);
+      }
+
+      .card:hover .card-arrow {
+        background: var(--primary);
+        color: white;
+        transform: translateX(3px);
+      }
+
+      .card.latihan-card:hover .card-arrow {
+        background: var(--secondary);
+        color: white;
+      }
+
+      .card h3 {
+        font-size: 1.08rem;
+      }
+
+      .card p {
+        font-size: 0.88rem;
+      }
+
+      footer {
+        border-top: 1px solid var(--border);
+        background: var(--card-bg);
+        margin-top: 2rem;
+        padding: 1.5rem;
+        font-size: 0.85rem;
+      }
+    }
   </style>
 </head>
 <body>
 
-  <div class="mobile-app">
+  <div class="app-container">
     <header>
-      <span class="header-tag">SMP • Informatika</span>
-      <h1>Modul Interaktif Informatika Kelas 8</h1>
-      <p>Pilih materi pembelajaran atau latihan evaluasi</p>
+      <div class="header-inner">
+        <span class="header-tag">SMP • Informatika</span>
+        <h1>Modul Interaktif Informatika Kelas 8</h1>
+        <p>Pilih materi pembelajaran atau latihan evaluasi pada menu di bawah ini</p>
+      </div>
     </header>
 
     <main>
+      <!-- Tab Filter Khusus Layar Komputer -->
+      <div class="desktop-nav">
+        <button class="desktop-btn active" data-filter="all" onclick="filterSection('all')">Semua Menu</button>
+        <button class="desktop-btn" data-filter="materi" onclick="filterSection('materi')">Materi Pembelajaran</button>
+        <button class="desktop-btn" data-filter="latihan" onclick="filterSection('latihan')">Latihan & Evaluasi</button>
+      </div>
+
       <!-- BAGIAN MATERI (Urutan: XLS -> Sisbil -> Fungsi -> APD) -->
       <section class="section-group" id="sec-materi">
         <div class="section-header">
           <span>📖 Materi Pembelajaran</span>
           <span class="section-count">4 Modul</span>
         </div>
-        <div class="list-stack">
+        <div class="menu-grid">
           <a href="xls-78.html" class="card">
             <div class="card-content">
               <span class="badge badge-materi">Materi 1</span>
@@ -303,7 +439,7 @@
           <span>🎯 Latihan & Evaluasi (UH)</span>
           <span class="section-count">2 Paket</span>
         </div>
-        <div class="list-stack">
+        <div class="menu-grid">
           <a href="uh8-sisbil.html" class="card latihan-card">
             <div class="card-content">
               <span class="badge badge-latihan">Latihan / UH</span>
@@ -323,23 +459,23 @@
           </a>
         </div>
       </section>
-
-      <footer>
-        &copy; 2026 Modul Interaktif Informatika Kelas 8
-      </footer>
     </main>
 
-    <!-- Navigasi Bawah Khas Mobile -->
+    <footer>
+      &copy; 2026 Modul Interaktif Informatika Kelas 8
+    </footer>
+
+    <!-- Navigasi Bawah Khusus Layar Mobile -->
     <nav class="bottom-nav">
-      <button class="nav-item active" onclick="filterSection('all', this)">
+      <button class="nav-item active" data-filter="all" onclick="filterSection('all')">
         <span class="nav-icon">🏠</span>
         <span>Semua</span>
       </button>
-      <button class="nav-item" onclick="filterSection('materi', this)">
+      <button class="nav-item" data-filter="materi" onclick="filterSection('materi')">
         <span class="nav-icon">📖</span>
         <span>Materi</span>
       </button>
-      <button class="nav-item" onclick="filterSection('latihan', this)">
+      <button class="nav-item" data-filter="latihan" onclick="filterSection('latihan')">
         <span class="nav-icon">🎯</span>
         <span>Latihan</span>
       </button>
@@ -347,9 +483,15 @@
   </div>
 
   <script>
-    function filterSection(type, btn) {
-      document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
+    function filterSection(type) {
+      // Sinkronkan status aktif baik pada tombol mobile maupun desktop
+      document.querySelectorAll('[data-filter]').forEach(btn => {
+        if (btn.getAttribute('data-filter') === type) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
 
       const secMateri = document.getElementById('sec-materi');
       const secLatihan = document.getElementById('sec-latihan');
