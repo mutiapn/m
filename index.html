@@ -273,7 +273,6 @@
         font-size: 1rem;
       }
 
-      /* Sembunyikan bottom nav, tampilkan filter pill di atas */
       .bottom-nav {
         display: none;
       }
@@ -320,7 +319,6 @@
         margin-bottom: 1.25rem;
       }
 
-      /* Grid 2 Kolom Rapi di Komputer */
       .menu-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 1.25rem;
@@ -388,7 +386,7 @@
         <button class="desktop-btn" data-filter="latihan" onclick="filterSection('latihan')">Latihan & Evaluasi</button>
       </div>
 
-      <!-- BAGIAN MATERI (Urutan: XLS -> Sisbil -> Fungsi -> APD) -->
+      <!-- BAGIAN MATERI -->
       <section class="section-group" id="sec-materi">
         <div class="section-header">
           <span>📖 Materi Pembelajaran</span>
@@ -437,7 +435,7 @@
       <section class="section-group" id="sec-latihan">
         <div class="section-header">
           <span>🎯 Latihan & Evaluasi (UH)</span>
-          <span class="section-count">2 Paket</span>
+          <span class="section-count">3 Paket</span>
         </div>
         <div class="menu-grid">
           <a href="uh8-sisbil.html" class="card latihan-card">
@@ -454,6 +452,15 @@
               <span class="badge badge-latihan">Latihan / UH</span>
               <h3>Latihan & UH: Fungsi & Himpunan</h3>
               <p>Uji pemahaman konsep fungsi, himpunan, dan pemecahan masalah logika.</p>
+            </div>
+            <div class="card-arrow">&rarr;</div>
+          </a>
+
+          <a href="latasater8.html" class="card latihan-card">
+            <div class="card-content">
+              <span class="badge badge-latihan">Latihan Sumatif</span>
+              <h3>Latihan ASATER Kelas 8</h3>
+              <p>Latihan soal terpadu persiapan Asesmen Sumatif Akhir Semester Informatika Kelas 8.</p>
             </div>
             <div class="card-arrow">&rarr;</div>
           </a>
@@ -484,7 +491,6 @@
 
   <script>
     function filterSection(type) {
-      // Sinkronkan status aktif baik pada tombol mobile maupun desktop
       document.querySelectorAll('[data-filter]').forEach(btn => {
         if (btn.getAttribute('data-filter') === type) {
           btn.classList.add('active');
