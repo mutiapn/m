@@ -1,0 +1,1383 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pembahasan ASATER Informatika Kelas 8</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+              900: '#312e81',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Custom scrollbar hiding for horizontal category pills */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    /* Smooth reveal animation */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in {
+      animation: fadeIn 0.25s ease-out forwards;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased pb-24 sm:pb-12 selection:bg-indigo-100 selection:text-indigo-900">
+
+  <!-- Sticky Top Header -->
+  <header class="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
+    <div class="max-w-3xl mx-auto px-4 pt-3 pb-2.5">
+      <!-- Title & Mode Toggle Row -->
+      <div class="flex items-center justify-between gap-2 mb-2.5">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-xl bg-indigo-600 text-white flex items-center justify-center font-bold text-lg shadow-sm shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+          </div>
+          <div>
+            <h1 class="text-base sm:text-lg font-extrabold text-slate-900 leading-tight">ASATER Informatika 8</h1>
+            <p class="text-[11px] sm:text-xs text-slate-500 font-medium">Bank Soal, Kunci & Pembahasan Lengkap (55 Soal)</p>
+          </div>
+        </div>
+
+        <!-- Global Mode Toggle Button -->
+        <button id="modeToggleBtn" onclick="toggleGlobalMode()" class="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all shadow-sm border cursor-pointer active:scale-95 bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100">
+          <span id="modeIcon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+          </span>
+          <span id="modeLabel">Mode Pembahasan</span>
+        </button>
+      </div>
+
+      <!-- Search Input & Topic Filter -->
+      <div class="flex gap-2 mb-2.5">
+        <div class="relative flex-1">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          <input 
+            type="text" 
+            id="searchInput" 
+            placeholder="Cari no. soal atau kata kunci (misal: biner, stack, 23)..." 
+            class="w-full pl-9 pr-8 py-2 bg-slate-100 border border-transparent focus:bg-white focus:border-indigo-500 rounded-xl text-xs sm:text-sm text-slate-800 placeholder-slate-400 outline-none transition-all"
+            oninput="handleSearch()"
+          />
+          <button id="clearSearchBtn" onclick="clearSearch()" class="hidden absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-0.5">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+          </button>
+        </div>
+        <select id="topicSelect" onchange="handleTopicFilter()" class="bg-slate-100 border border-transparent focus:bg-white focus:border-indigo-500 rounded-xl px-2.5 py-2 text-xs font-medium text-slate-700 outline-none cursor-pointer max-w-[130px] sm:max-w-[170px]">
+          <option value="ALL">Semua Topik</option>
+          <option value="Fungsi & Pemetaan">Fungsi (1-8, 41-42, 51)</option>
+          <option value="Himpunan">Himpunan (9-16, 43-44, 52)</option>
+          <option value="Sistem Bilangan">Bilangan (17-24, 45-46, 53)</option>
+          <option value="Algoritma & Pseudocode">Algoritma (25-32, 47-48, 54)</option>
+          <option value="Struktur Data Stack">Stack (33-40, 49-50, 55)</option>
+        </select>
+      </div>
+
+      <!-- Desktop/Tablet Section Tabs -->
+      <div class="hidden sm:flex gap-1.5 overflow-x-auto no-scrollbar">
+        <button onclick="setSection('ALL')" data-sec="ALL" class="sec-tab px-3 py-1.5 rounded-lg text-xs font-semibold transition-all bg-indigo-600 text-white">Semua (55)</button>
+        <button onclick="setSection('PG')" data-sec="PG" class="sec-tab px-3 py-1.5 rounded-lg text-xs font-semibold transition-all bg-slate-100 text-slate-600 hover:bg-slate-200">I. Pilihan Ganda (1-40)</button>
+        <button onclick="setSection('PGK')" data-sec="PGK" class="sec-tab px-3 py-1.5 rounded-lg text-xs font-semibold transition-all bg-slate-100 text-slate-600 hover:bg-slate-200">II. PG Kompleks (41-50)</button>
+        <button onclick="setSection('URAIAN')" data-sec="URAIAN" class="sec-tab px-3 py-1.5 rounded-lg text-xs font-semibold transition-all bg-slate-100 text-slate-600 hover:bg-slate-200">III. Uraian (51-55)</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Info Banner -->
+  <main class="max-w-3xl mx-auto px-4 pt-4">
+    <div id="modeBanner" class="mb-4 p-3 rounded-2xl bg-indigo-50 border border-indigo-100 flex items-center justify-between gap-3">
+      <div class="flex items-center gap-2.5">
+        <span class="w-7 h-7 rounded-lg bg-indigo-600/10 text-indigo-700 flex items-center justify-center shrink-0">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+        </span>
+        <p id="bannerText" class="text-xs text-indigo-900 leading-relaxed">
+          <strong>Mode Pembahasan Aktif:</strong> Kunci jawaban & pembahasan langsung ditampilkan. Klik tombol mode di kanan atas untuk latihan mandiri.
+        </p>
+      </div>
+      <span id="resultCount" class="text-xs font-bold text-indigo-700 bg-white px-2.5 py-1 rounded-lg border border-indigo-100 shrink-0">55 Soal</span>
+    </div>
+
+    <!-- Questions Container -->
+    <div id="questionsList" class="space-y-4">
+      <!-- Cards injected via JS -->
+    </div>
+
+    <!-- Empty State -->
+    <div id="emptyState" class="hidden text-center py-14 px-4 bg-white rounded-2xl border border-slate-200 shadow-sm">
+      <div class="w-12 h-12 rounded-2xl bg-slate-100 text-slate-400 flex items-center justify-center mx-auto mb-3">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      </div>
+      <h3 class="text-sm font-bold text-slate-800 mb-1">Soal tidak ditemukan</h3>
+      <p class="text-xs text-slate-500 mb-4">Coba gunakan kata kunci lain atau atur ulang filter bagian soal.</p>
+      <button onclick="resetAllFilters()" class="px-4 py-2 bg-indigo-600 text-white text-xs font-semibold rounded-xl hover:bg-indigo-700 transition">Reset Filter</button>
+    </div>
+  </main>
+
+  <!-- Floating Scroll to Top Button -->
+  <button id="scrollTopBtn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="fixed bottom-20 sm:bottom-6 right-4 z-20 w-10 h-10 rounded-full bg-slate-900/85 text-white shadow-lg flex items-center justify-center backdrop-blur-sm opacity-0 pointer-events-none transition-all duration-200 hover:bg-indigo-600" aria-label="Kembali ke atas">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
+  </button>
+
+  <!-- Mobile Bottom Navigation Bar (Thumb-friendly) -->
+  <nav class="sm:hidden fixed bottom-0 inset-x-0 z-30 bg-white/95 backdrop-blur-md border-t border-slate-200 px-2 py-1.5 shadow-[0_-4px_12px_rgba(0,0,0,0.04)]">
+    <div class="grid grid-cols-4 gap-1">
+      <button onclick="setSection('ALL')" data-sec="ALL" class="mobile-tab flex flex-col items-center justify-center py-1.5 px-1 rounded-xl text-[11px] font-bold transition-all bg-indigo-50 text-indigo-700">
+        <span>Semua</span>
+        <span class="text-[10px] font-medium opacity-80">1 - 55</span>
+      </button>
+      <button onclick="setSection('PG')" data-sec="PG" class="mobile-tab flex flex-col items-center justify-center py-1.5 px-1 rounded-xl text-[11px] font-semibold transition-all text-slate-500 hover:bg-slate-50">
+        <span>I. PG</span>
+        <span class="text-[10px] font-normal opacity-80">1 - 40</span>
+      </button>
+      <button onclick="setSection('PGK')" data-sec="PGK" class="mobile-tab flex flex-col items-center justify-center py-1.5 px-1 rounded-xl text-[11px] font-semibold transition-all text-slate-500 hover:bg-slate-50">
+        <span>II. Kompleks</span>
+        <span class="text-[10px] font-normal opacity-80">41 - 50</span>
+      </button>
+      <button onclick="setSection('URAIAN')" data-sec="URAIAN" class="mobile-tab flex flex-col items-center justify-center py-1.5 px-1 rounded-xl text-[11px] font-semibold transition-all text-slate-500 hover:bg-slate-50">
+        <span>III. Uraian</span>
+        <span class="text-[10px] font-normal opacity-80">51 - 55</span>
+      </button>
+    </div>
+  </nav>
+
+  <script>
+    // =========================================================================
+    // BANK DATA 55 SOAL LENGKAP LATIHAN ASATER INFORMATIKA KELAS 8
+    // =========================================================================
+    const QUESTIONS = [
+      // BAGIAN I: PILIHAN GANDA (1 - 40)
+      {
+        id: 1,
+        section: 'PG',
+        topic: 'Fungsi & Pemetaan',
+        question: 'Sebuah mesin penjual minuman otomatis (vending machine) menerima uang kertas dan pilihan tombol minuman dari pembeli, lalu memverifikasi nominal uang serta ketersediaan stok di dalam sistem, hingga mengeluarkan kaleng minuman dingin ke kotak pengambilan. Berdasarkan ilustrasi tersebut, komponen yang berperan sebagai <b>output</b> adalah...',
+        options: {
+          A: 'Uang kertas yang dimasukkan pembeli',
+          B: 'Tombol pilihan minuman yang ditekan',
+          C: 'Kaleng minuman dingin yang keluar ke kotak pengambilan',
+          D: 'Proses verifikasi nominal uang dan stok'
+        },
+        answer: ['C'],
+        explanation: 'Dalam konsep sistem komputer dan fungsi (Input → Proses → Output):<br>• <b>Input (Masukan):</b> Uang kertas dan pilihan tombol minuman (opsi A dan B).<br>• <b>Proses:</b> Verifikasi nominal uang dan stok (opsi D).<br>• <b>Output (Keluaran):</b> Hasil akhir berupa <b>kaleng minuman dingin yang keluar ke kotak pengambilan</b> (C).'
+      },
+      {
+        id: 2,
+        section: 'PG',
+        topic: 'Fungsi & Pemetaan',
+        question: 'Sebuah fungsi didefinisikan sebagai <code>g(x) = x + 7</code>. Manakah penjelasan yang paling tepat mengenai proses yang terjadi pada fungsi tersebut?',
+        options: {
+          A: 'Fungsi tersebut mengalikan setiap input (x) dengan 7 untuk menghasilkan output.',
+          B: 'Fungsi tersebut menambahkan nilai 7 pada setiap input (x) untuk menghasilkan output.',
+          C: 'Fungsi tersebut membagi setiap input (x) dengan 7 untuk menghasilkan output.',
+          D: 'Fungsi tersebut mengurangi setiap input (x) sebesar 7 untuk menghasilkan output.'
+        },
+        answer: ['B'],
+        explanation: 'Notasi <code>g(x) = x + 7</code> menggunakan operator penjumlahan (<code>+</code>). Artinya, setiap nilai masukan <code>x</code> akan ditambah dengan <code>7</code> untuk menghasilkan nilai keluaran <code>g(x)</code>.'
+      },
+      {
+        id: 3,
+        section: 'PG',
+        topic: 'Fungsi & Pemetaan',
+        question: 'Perhatikan tabel masukan (input) dan keluaran (output) suatu fungsi berikut ini:',
+        extraHtml: `
+          <div class="my-3 overflow-hidden rounded-xl border border-slate-200 max-w-xs">
+            <table class="w-full text-xs text-center">
+              <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
+                <tr><th class="py-2 px-3 border-r border-slate-200">Input (x)</th><th class="py-2 px-3">Output (y)</th></tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200 bg-white font-mono">
+                <tr><td class="py-1.5 border-r border-slate-200">1</td><td>5</td></tr>
+                <tr><td class="py-1.5 border-r border-slate-200">2</td><td>8</td></tr>
+                <tr><td class="py-1.5 border-r border-slate-200">3</td><td>11</td></tr>
+                <tr><td class="py-1.5 border-r border-slate-200">4</td><td>14</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="text-sm text-slate-800">Pola rumus fungsi yang tepat untuk menghasilkan nilai keluaran pada tabel tersebut adalah...</p>
+        `,
+        options: {
+          A: 'y = 2x + 1',
+          B: 'y = 3x - 2',
+          C: 'y = x² + 1',
+          D: 'y = 3x + 2'
+        },
+        answer: ['D'],
+        explanation: 'Perhatikan selisih antar output: 5 → 8 → 11 → 14 selalu bertambah <b>3</b>, sehingga koefisien <code>x</code> adalah <code>3</code> (<code>3x</code>).<br>Uji dengan <code>x = 1</code> pada rumus <code>y = 3x + 2</code>:<br>• x = 1 → y = 3(1) + 2 = <b>5</b> (Cocok)<br>• x = 2 → y = 3(2) + 2 = <b>8</b> (Cocok)<br>• x = 3 → y = 3(3) + 2 = <b>11</b> (Cocok)<br>• x = 4 → y = 3(4) + 2 = <b>14</b> (Cocok)'
+      },
+      {
+        id: 4,
+        section: 'PG',
+        topic: 'Fungsi & Pemetaan',
+        question: 'Suatu fungsi <code>h(x)</code> dirumuskan dengan <code>h(x) = 4x - 3</code>. Apabila nilai masukan (x) yang diberikan adalah 6, maka nilai keluaran <code>h(6)</code> adalah...',
+        options: {
+          A: '15',
+          B: '21',
+          C: '24',
+          D: '27'
+        },
+        answer: ['B'],
+        explanation: 'Substitusikan nilai <code>x = 6</code> ke dalam rumus fungsi:<br><code>h(6) = 4(6) - 3</code><br><code>h(6) = 24 - 3 = 21</code>.'
+      },
+      {
+        id: 5,
+        section: 'PG',
+        topic: 'Fungsi & Pemetaan',
+        question: 'Sebuah layanan cetak foto digital menetapkan biaya jasa edit tetap sebesar Rp15.000 per pesanan dan biaya cetak Rp1.500 untuk setiap lembar foto. Jika seorang pelanggan mencetak <code>n</code> lembar foto, model fungsi total biaya <code>B(n)</code> yang harus dibayar adalah...',
+        options: {
+          A: 'B(n) = 15.000n + 1.500',
+          B: 'B(n) = 1.500n + 15.000',
+          C: 'B(n) = 16.500n',
+          D: 'B(n) = 1.500(n + 15.000)'
+        },
+        answer: ['B'],
+        explanation: '• Biaya variabel (bergantung jumlah lembar <code>n</code>) = <code>1.500 × n = 1.500n</code>.<br>• Biaya tetap per pesanan (konstanta) = <code>15.000</code>.<br>Jadi total biaya adalah <code>B(n) = 1.500n + 15.000</code>.'
+      },
+      {
+        id: 6,
+        section: 'PG',
+        topic: 'Fungsi & Pemetaan',
+        question: 'Sebuah sistem sensor menggunakan fungsi <code>f(x) = x² + 3</code> untuk menghitung indeks tekanan. Jika nilai masukan awal <code>x = 2</code> berubah menjadi <code>x = 6</code>, selisih peningkatan nilai output yang dihasilkan sistem adalah...',
+        options: {
+          A: '12',
+          B: '24',
+          C: '32',
+          D: '39'
+        },
+        answer: ['C'],
+        explanation: '1. Hitung output awal saat <code>x = 2</code>:<br><code>f(2) = 2² + 3 = 4 + 3 = 7</code>.<br>2. Hitung output akhir saat <code>x = 6</code>:<br><code>f(6) = 6² + 3 = 36 + 3 = 39</code>.<br>3. Selisih peningkatan = <code>39 - 7 = 32</code>.'
+      },
+      {
+        id: 7,
+        section: 'PG',
+        topic: 'Fungsi & Pemetaan',
+        question: 'Sebuah mesin penyandi teks bekerja dengan aturan fungsi: Setiap huruf konsonan digeser maju 1 huruf dalam urutan abjad (misal: B → C, K → L), sedangkan huruf vokal tetap. Ketika kata <b>"BUKU"</b> dimasukkan, mesin menghasilkan keluaran <b>"C V L U"</b>. Di manakah letak kesalahan proses fungsi pada mesin tersebut?',
+        options: {
+          A: "Mesin gagal mengubah huruf konsonan 'B' menjadi 'C'.",
+          B: "Mesin salah mengubah huruf vokal 'U' pertama menjadi 'V'.",
+          C: "Mesin tidak mengubah huruf konsonan 'K' menjadi 'L'.",
+          D: 'Mesin seharusnya mengubah semua huruf vokal dan konsonan.'
+        },
+        answer: ['B'],
+        explanation: 'Mari telusuri setiap huruf pada kata <b>B - U - K - U</b>:<br>• <b>B</b> (konsonan) → digeser maju 1 huruf menjadi <b>C</b> (Benar).<br>• <b>U</b> (vokal) → seharusnya tetap <b>U</b>, tetapi mesin mengubahnya menjadi <b>V</b> (<b>Salah</b>).<br>• <b>K</b> (konsonan) → digeser maju 1 huruf menjadi <b>L</b> (Benar).<br>• <b>U</b> (vokal) → tetap <b>U</b> (Benar).<br>Seharusnya keluaran yang benar adalah "C U L U".'
+      },
+      {
+        id: 8,
+        section: 'PG',
+        topic: 'Fungsi & Pemetaan',
+        question: 'Sebuah aplikasi penyewaan sepeda listrik mengenakan tarif awal sebesar Rp10.000 untuk 1 jam pertama, dan biaya tambahan Rp4.000 untuk setiap jam berikutnya. Jika <code>t</code> menyatakan lama pemakaian dalam jam (untuk <code>t ≥ 1</code>) dan <code>f(t)</code> menyatakan total biaya sewa, model fungsi yang paling tepat adalah...',
+        options: {
+          A: 'f(t) = 10.000t + 4.000',
+          B: 'f(t) = 4.000t + 6.000',
+          C: 'f(t) = 4.000t + 10.000',
+          D: 'f(t) = 10.000(t - 1) + 4.000'
+        },
+        answer: ['B'],
+        explanation: 'Untuk <code>t</code> jam pemakaian (<code>t ≥ 1</code>):<br>• 1 jam pertama dikenakan Rp10.000.<br>• Sisa waktu berikutnya adalah <code>(t - 1)</code> jam dengan tarif Rp4.000/jam.<br>Model fungsi: <code>f(t) = 10.000 + 4.000(t - 1)</code><br>Sederhanakan: <code>f(t) = 10.000 + 4.000t - 4.000 = 4.000t + 6.000</code>.<br><i>Cek:</i> Jika <code>t = 1</code>, <code>f(1) = 4.000(1) + 6.000 = 10.000</code> (Sesuai!).'
+      },
+      {
+        id: 9,
+        section: 'PG',
+        topic: 'Himpunan',
+        question: 'Suatu kumpulan objek disebut himpunan apabila anggotanya dapat didefinisikan secara jelas dan terukur. Perhatikan kelompok objek berikut:<br>(1) Kelompok siswa kelas VIII yang memiliki tinggi badan di atas 160 cm<br>(2) Kelompok aplikasi smartphone yang tampilannya menarik<br>(3) Kelompok bilangan prima kurang dari 20<br>(4) Kelompok makanan tradisional yang rasanya lezat<br>Manakah yang merupakan himpunan yang tepat?',
+        options: {
+          A: '(1) dan (2)',
+          B: '(1) dan (3)',
+          C: '(2) dan (4)',
+          D: '(3) dan (4)'
+        },
+        answer: ['B'],
+        explanation: '• Pernyataan (1) terukur jelas (angka > 160 cm) → <b>Himpunan</b>.<br>• Pernyataan (2) bersifat relatif/subjektif ("menarik") → <b>Bukan himpunan</b>.<br>• Pernyataan (3) terdefinisi jelas {2, 3, 5, 7, 11, 13, 17, 19} → <b>Himpunan</b>.<br>• Pernyataan (4) bersifat relatif/subjektif ("lezat") → <b>Bukan himpunan</b>.'
+      },
+      {
+        id: 10,
+        section: 'PG',
+        topic: 'Himpunan',
+        question: 'Diketahui himpunan <code>K = {2, 4, 6, 8}</code> dan himpunan <code>L = {1, 3, 5, 7}</code>. Pernyataan yang paling tepat mengenai hubungan antara himpunan K dan himpunan L adalah...',
+        options: {
+          A: 'Himpunan K dan L merupakan himpunan saling lepas karena tidak memiliki satu pun anggota yang sama.',
+          B: 'Himpunan K merupakan himpunan bagian dari L karena sama-sama bilangan bulat.',
+          C: 'Himpunan K dan L adalah himpunan yang sama karena jumlah anggotanya empat.',
+          D: 'Himpunan L memuat seluruh anggota himpunan K.'
+        },
+        answer: ['A'],
+        explanation: 'Himpunan K berisi bilangan genap {2, 4, 6, 8} dan L berisi bilangan ganjil {1, 3, 5, 7}. Irisannya kosong (<code>K ∩ L = ∅</code>), sehingga keduanya disebut <b>himpunan saling lepas (disjoint)</b>. (Catatan: Himpunan dengan jumlah anggota sama disebut ekuivalen, bukan himpunan yang sama).'
+      },
+      {
+        id: 11,
+        section: 'PG',
+        topic: 'Himpunan',
+        question: 'Dalam inventaris laboratorium komputer, terdapat himpunan aplikasi pengolah kata <code>A = {Word, Docs, Writer}</code> dan himpunan aplikasi perkantoran gratis <code>B = {Docs, Writer, Calc, Impress}</code>. Hasil dari gabungan himpunan <code>A ∪ B</code> adalah...',
+        options: {
+          A: '{Docs, Writer}',
+          B: '{Word, Calc, Impress}',
+          C: '{Word, Docs, Writer, Calc, Impress}',
+          D: '{Word, Docs, Calc}'
+        },
+        answer: ['C'],
+        explanation: 'Operasi <b>Gabungan (Union / ∪)</b> menggabungkan seluruh anggota dari himpunan A dan himpunan B tanpa menuliskan anggota yang sama lebih dari satu kali:<br><code>A ∪ B = {Word, Docs, Writer, Calc, Impress}</code>.'
+      },
+      {
+        id: 12,
+        section: 'PG',
+        topic: 'Himpunan',
+        question: 'Seorang teknisi jaringan mengelompokkan protokol komunikasi data:<br>• Himpunan <code>M = {HTTP, HTTPS, FTP, SMTP}</code><br>• Himpunan <code>N = {SSH, FTP, Telnet, HTTPS}</code><br>Hasil dari irisan <code>M ∩ N</code> yang menunjukkan protokol bersama pada kedua himpunan adalah...',
+        options: {
+          A: '{FTP, HTTPS}',
+          B: '{HTTP, SMTP}',
+          C: '{SSH, Telnet}',
+          D: '{HTTP, FTP, SSH}'
+        },
+        answer: ['A'],
+        explanation: 'Operasi <b>Irisan (Intersection / ∩)</b> mencari anggota yang ada di himpunan M sekaligus ada di himpunan N. Anggota yang sama di keduanya adalah <code>FTP</code> dan <code>HTTPS</code>.'
+      },
+      {
+        id: 13,
+        section: 'PG',
+        topic: 'Himpunan',
+        question: 'Perhatikan data peminatan ekstrakurikuler berikut:<br>• Semesta (S) = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12}<br>• Himpunan P (Siswa menyukai Desain Poster) = {1, 2, 4, 6, 8}<br>• Himpunan V (Siswa menyukai Editing Video) = {4, 6, 7, 9, 11}<br>• Irisan P dan V (P ∩ V) = {4, 6}<br>• Anggota di luar P dan V ((P ∪ V)ᶜ) = {3, 5, 10, 12}<br>Siswa yang ditunjukkan oleh nomor <b>7, 9, dan 11</b> merupakan kelompok siswa yang...',
+        options: {
+          A: 'Hanya menyukai Desain Poster saja',
+          B: 'Menyukai Desain Poster dan Editing Video sekaligus',
+          C: 'Hanya menyukai Editing Video saja',
+          D: 'Tidak menyukai kedua bidang tersebut'
+        },
+        answer: ['C'],
+        explanation: 'Himpunan V = {4, 6, 7, 9, 11}. Karena {4, 6} adalah irisan (menyukai keduanya), maka sisa anggota V yaitu <code>V - P = {7, 9, 11}</code> adalah siswa yang <b>hanya menyukai Editing Video saja</b>.'
+      },
+      {
+        id: 14,
+        section: 'PG',
+        topic: 'Himpunan',
+        question: 'Sebuah sistem seleksi beasiswa prestasi menyaring dua basis data siswa:<br>• Daftar X (Siswa juara olimpiade sains): {Rina, Sinta, Tono, Umar}<br>• Daftar Y (Siswa aktif organisasi OSIS): {Tono, Umar, Vina, Wawan}<br>Panitia ingin mengambil daftar siswa yang memenuhi <b>kedua kriteria sekaligus</b> (juara olimpiade dan aktif OSIS). Operasi himpunan yang harus diterapkan adalah...',
+        options: {
+          A: 'Gabungan (Union)',
+          B: 'Irisan (Intersection)',
+          C: 'Selisih (Difference)',
+          D: 'Komplemen (Complement)'
+        },
+        answer: ['B'],
+        explanation: 'Kata kunci <b>"kedua kriteria sekaligus"</b> atau penghubung logika <b>DAN</b> dalam himpunan direpresentasikan oleh operasi <b>Irisan (Intersection / X ∩ Y)</b>, yaitu {Tono, Umar}.'
+      },
+      {
+        id: 15,
+        section: 'PG',
+        topic: 'Himpunan',
+        question: 'Sebuah platform streaming musik mengelompokkan pengguna. P adalah himpunan pendengar genre Pop dan J adalah himpunan pendengar genre Jazz. Tim promosi ingin membuat aturan playlist khusus: <i>"Rekomendasi diberikan hanya kepada pengguna yang mendengarkan Pop ATAU Jazz, TETAPI TIDAK KEDUANYA"</i>. Model operasi himpunan yang paling tepat adalah...',
+        options: {
+          A: '(P ∪ J) \\ (P ∩ J)',
+          B: '(P ∩ J) \\ (P ∪ J)',
+          C: 'P ∩ J',
+          D: '(P \\ J) ∩ (J \\ P)'
+        },
+        answer: ['A'],
+        explanation: '• "Pop ATAU Jazz" = Gabungan <code>(P ∪ J)</code>.<br>• "TETAPI TIDAK KEDUANYA" = dikurangi/selisih dengan irisannya <code>\\ (P ∩ J)</code>.<br>Dalam himpunan, operasi ini disebut <i>Beda Setangkup</i>: <code>(P ∪ J) \\ (P ∩ J)</code>.'
+      },
+      {
+        id: 16,
+        section: 'PG',
+        topic: 'Himpunan',
+        question: 'Dalam seleksi tim lomba robotik sekolah, panitia menetapkan dua syarat:<br>1. Peserta wajib terdaftar dalam Himpunan A (Siswa yang lulus ujian perakitan rangkaian).<br>2. Peserta <b>tidak boleh</b> termasuk dalam Himpunan B (Siswa yang pernah melanggar tata tertib lab).<br>Formulasi himpunan yang tepat untuk menentukan daftar siswa yang lolos seleksi adalah...',
+        options: {
+          A: 'A ∪ B',
+          B: 'A ∩ B',
+          C: 'A - B',
+          D: 'B - A'
+        },
+        answer: ['C'],
+        explanation: 'Anggota himpunan A yang bukan merupakan anggota himpunan B dirumuskan sebagai <b>Selisih Himpunan A terhadap B</b>, yaitu <code>A - B</code> (atau <code>A \\ B</code>).'
+      },
+      {
+        id: 17,
+        section: 'PG',
+        topic: 'Sistem Bilangan',
+        question: 'Diketahui sebuah data bilangan dituliskan sebagai <code>742₈</code>. Berdasarkan notasi penulisan tersebut, sistem bilangan yang digunakan adalah...',
+        options: {
+          A: 'Basis 2 (Biner)',
+          B: 'Basis 8 (Oktal)',
+          C: 'Basis 10 (Desimal)',
+          D: 'Basis 16 (Heksadesimal)'
+        },
+        answer: ['B'],
+        explanation: 'Angka subskrip kecil di akhir bilangan (<code>₈</code>) menunjukkan radiks atau basis bilangan tersebut. Angka 8 menandakan sistem bilangan <b>Basis 8 (Oktal)</b>.'
+      },
+      {
+        id: 18,
+        section: 'PG',
+        topic: 'Sistem Bilangan',
+        question: 'Diberikan kode warna digital dalam bentuk bilangan heksadesimal <code>2F₁₆</code>. Karakteristik utama dari sistem bilangan heksadesimal yang digunakan adalah...',
+        options: {
+          A: 'Menggunakan 10 simbol angka dari 0 sampai 9',
+          B: 'Hanya menggunakan 2 simbol angka yaitu 0 dan 1',
+          C: 'Menggunakan 16 simbol yang terdiri dari angka 0-9 dan huruf A-F',
+          D: 'Berbasis 8 dengan rentang digit dari 0 sampai 7'
+        },
+        answer: ['C'],
+        explanation: 'Sistem bilangan <b>Heksadesimal (Basis 16)</b> menggunakan 16 simbol unik, yaitu angka <code>0, 1, 2, 3, 4, 5, 6, 7, 8, 9</code> dan huruf <code>A (10), B (11), C (12), D (13), E (14), F (15)</code>.'
+      },
+      {
+        id: 19,
+        section: 'PG',
+        topic: 'Sistem Bilangan',
+        question: 'Dalam praktikum sistem komputer, Raka diminta mengonversi bilangan desimal <code>13₁₀</code> ke dalam bentuk bilangan biner. Hasil konversi yang benar adalah...',
+        options: {
+          A: '1101₂',
+          B: '1011₂',
+          C: '1110₂',
+          D: '1001₂'
+        },
+        answer: ['A'],
+        explanation: 'Pembagian berulang <code>13</code> dengan basis <code>2</code>:<br>• 13 ÷ 2 = 6 sisa <b>1</b> (LSB)<br>• 6 ÷ 2 = 3 sisa <b>0</b><br>• 3 ÷ 2 = 1 sisa <b>1</b><br>• 1 ÷ 2 = 0 sisa <b>1</b> (MSB)<br>Dibaca dari bawah ke atas: <code>1101₂</code> (8 + 4 + 0 + 1 = 13).'
+      },
+      {
+        id: 20,
+        section: 'PG',
+        topic: 'Sistem Bilangan',
+        question: 'Nilai bilangan desimal <code>74₁₀</code> apabila dikonversikan ke dalam sistem bilangan berbasis 8 (oktal) akan menghasilkan nilai...',
+        options: {
+          A: '102₈',
+          B: '112₈',
+          C: '122₈',
+          D: '132₈'
+        },
+        answer: ['B'],
+        explanation: 'Pembagian berulang <code>74</code> dengan basis <code>8</code>:<br>• 74 ÷ 8 = 9 sisa <b>2</b> (karena 8 × 9 = 72)<br>• 9 ÷ 8 = 1 sisa <b>1</b><br>• 1 ÷ 8 = 0 sisa <b>1</b><br>Dibaca dari bawah ke atas: <code>112₈</code>.'
+      },
+      {
+        id: 21,
+        section: 'PG',
+        topic: 'Sistem Bilangan',
+        question: 'Saat membaca alamat perangkat jaringan, Nisa menemukan deret biner <code>10110₂</code>. Nilai bilangan tersebut jika diubah ke dalam sistem desimal adalah...',
+        options: {
+          A: '20',
+          B: '21',
+          C: '22',
+          D: '24'
+        },
+        answer: ['C'],
+        explanation: 'Kalikan setiap digit biner dengan nilai tempat 2ⁿ dari kanan ke kiri:<br><code>(1 × 2⁴) + (0 × 2³) + (1 × 2²) + (1 × 2¹) + (0 × 2⁰)</code><br><code>= 16 + 0 + 4 + 2 + 0 = 22₁₀</code>.'
+      },
+      {
+        id: 22,
+        section: 'PG',
+        topic: 'Sistem Bilangan',
+        question: 'Perhatikan empat penulisan bilangan berikut:<br>(1) <code>1111₂</code><br>(2) <code>15₁₀</code><br>(3) <code>F₁₆</code><br>(4) <code>17₈</code><br>Pasangan penulisan bilangan yang memiliki nilai sama adalah...',
+        options: {
+          A: '(1), (2), dan (3) saja',
+          B: '(1) dan (4) saja',
+          C: '(2) dan (3) saja',
+          D: 'Semuanya ((1), (2), (3), dan (4))'
+        },
+        answer: ['D'],
+        explanation: 'Mari konversi semuanya ke desimal:<br>• (1) <code>1111₂</code> = 8 + 4 + 2 + 1 = <b>15</b><br>• (2) <code>15₁₀</code> = <b>15</b><br>• (3) <code>F₁₆</code> = <b>15</b> (karena F dalam heksadesimal bernilai 15)<br>• (4) <code>17₈</code> = (1 × 8¹) + (7 × 8⁰) = 8 + 7 = <b>15</b><br>Jadi <b>semuanya</b> bernilai sama yaitu 15!'
+      },
+      {
+        id: 23,
+        section: 'PG',
+        topic: 'Sistem Bilangan',
+        question: 'Dina mengonversi bilangan desimal <code>22₁₀</code> ke biner menggunakan metode pembagian berulang dengan angka 2 sebagai berikut:<br><code>22 ÷ 2 = 11 sisa 0</code><br><code>11 ÷ 2 = 5 sisa 1</code><br><code>5 ÷ 2 = 2 sisa 1</code><br><code>2 ÷ 2 = 1 sisa 0</code><br><code>1 ÷ 2 = 0 sisa 1</code><br>Dina menuliskan hasil akhir binernya adalah <code>01101₂</code> (dibaca dari atas ke bawah). Evaluasi yang paling tepat terhadap pekerjaan Dina adalah...',
+        options: {
+          A: 'Langkah pembagian Dina keliru pada operasi 11 ÷ 2.',
+          B: 'Urutan pembacaan sisa pembagian Dina terbalik; seharusnya dibaca dari bawah ke atas menjadi 10110₂.',
+          C: 'Pembagian seharusnya berhenti ketika hasil bagi bernilai 1.',
+          D: 'Hasil konversi Dina sudah tepat baik dari perhitungan maupun pembacaannya.'
+        },
+        answer: ['B'],
+        explanation: 'Langkah pembagian Dina sudah benar seluruhnya, namun aturan konversi pembagian berulang mengharuskan sisa bagi dibaca dari <b>bawah ke atas</b> (dari sisa terakhir/MSB ke sisa pertama/LSB), sehingga hasilnya adalah <code>10110₂</code>.'
+      },
+      {
+        id: 24,
+        section: 'PG',
+        topic: 'Sistem Bilangan',
+        question: 'Seorang teknisi sedang memeriksa log kerusakan memori komputer (memory dump) yang panjangnya mencapai ribuan bit biner. Untuk memudahkan pembacaan oleh manusia sekaligus menjaga ringkasnya tampilan layar tanpa kehilangan kesesuaian pengelompokan 4-bit biner, sistem bilangan manakah yang paling efisien digunakan?',
+        options: {
+          A: 'Sistem biner mentah, karena tidak memerlukan konversi apa pun.',
+          B: 'Sistem heksadesimal, karena setiap 1 digit heksadesimal mewakili tepat 4 bit biner secara ringkas.',
+          C: 'Sistem oktal, karena setiap 1 digit oktal mewakili kelompok 4 bit biner.',
+          D: 'Sistem desimal, karena setiap 1 digit desimal mewakili 4 bit biner secara langsung.'
+        },
+        answer: ['B'],
+        explanation: 'Karena <code>16 = 2⁴</code>, setiap <b>1 digit heksadesimal</b> dapat mewakili tepat <b>4 bit (1 nibble) biner</b> secara langsung. Ini membuat deret biner yang panjang menjadi 4 kali lebih ringkas dan mudah dibaca manusia.'
+      },
+      {
+        id: 25,
+        section: 'PG',
+        topic: 'Algoritma & Pseudocode',
+        question: 'Perhatikan algoritma menyeduh mi instan berikut:<br>1. Rebus air di dalam panci hingga mendidih.<br>2. Masukkan mi ke dalam air mendidih selama 3 menit.<br>3. Tuangkan bumbu ke dalam mangkuk sambil menunggu mi matang.<br>4. Tiriskan mi yang sudah matang dan masukkan ke dalam mangkuk.<br>5. Aduk mi bersama bumbu hingga tercampur rata.<br>Apa tujuan utama dari langkah ke-4 dalam algoritma tersebut?',
+        options: {
+          A: 'Mendinginkan suhu mi agar cepat dimakan',
+          B: 'Memisahkan mi dari air rebusan sebelum dicampur bumbu',
+          C: 'Menambah volume kuah di dalam mangkuk',
+          D: 'Membuat tekstur mi menjadi lebih keras'
+        },
+        answer: ['B'],
+        explanation: 'Kata kerja <b>"Tiriskan"</b> berarti memisahkan air dari bahan makanan (mi) sehingga mi siap dicampur dengan bumbu di dalam mangkuk.'
+      },
+      {
+        id: 26,
+        section: 'PG',
+        topic: 'Algoritma & Pseudocode',
+        question: 'Perhatikan simbol flowchart algoritma berikut ini!',
+        extraHtml: `
+          <div class="my-3 flex justify-center">
+            <div class="bg-slate-50 border border-slate-200 rounded-xl px-6 py-4 flex flex-col items-center">
+              <svg width="110" height="72" viewBox="0 0 110 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <polygon points="55,4 104,36 55,68 6,36" fill="#EEF2FF" stroke="#4F46E5" stroke-width="2.5" stroke-linejoin="round"/>
+                <text x="55" y="40" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#312E81">Kondisi?</text>
+              </svg>
+              <span class="text-[11px] text-slate-500 mt-1 font-medium">Simbol Belah Ketupat (Decision)</span>
+            </div>
+          </div>
+          <p class="text-sm text-slate-800">Fungsi utama dari simbol flowchart di atas adalah...</p>
+        `,
+        options: {
+          A: 'Menandai titik mulai (start) atau selesai (end) program',
+          B: 'Menunjukkan proses perhitungan atau pengolahan data',
+          C: 'Mengambil keputusan percabangan berdasarkan kondisi tertentu (Ya/Tidak)',
+          D: 'Menampilkan hasil keluaran (output) ke layar monitor'
+        },
+        answer: ['C'],
+        explanation: '• Simbol belah ketupat (<b>Decision</b>) berfungsi untuk <b>mengambil keputusan percabangan</b> berdasarkan kondisi logika (Ya/Tidak atau True/False).<br>• Opsi A = Terminator (Oval).<br>• Opsi B = Process (Persegi panjang).<br>• Opsi D = Input/Output (Jajar genjang).'
+      },
+      {
+        id: 27,
+        section: 'PG',
+        topic: 'Algoritma & Pseudocode',
+        question: 'Perhatikan langkah-langkah acak untuk mengunduh dan memasang aplikasi di ponsel:<br>(1) Tekan tombol "Instal" dan tunggu proses selesai.<br>(2) Buka toko aplikasi (Play Store / App Store).<br>(3) Ketik nama aplikasi pada kolom pencarian.<br>(4) Pilih aplikasi yang sesuai dari hasil pencarian.<br>Urutan algoritma yang logis dan benar adalah...',
+        options: {
+          A: '(2) - (3) - (4) - (1)',
+          B: '(2) - (4) - (3) - (1)',
+          C: '(3) - (2) - (4) - (1)',
+          D: '(1) - (2) - (3) - (4)'
+        },
+        answer: ['A'],
+        explanation: 'Urutan logis: Buka toko aplikasi <b>(2)</b> → Ketik nama aplikasi <b>(3)</b> → Pilih aplikasi yang sesuai <b>(4)</b> → Tekan tombol Instal <b>(1)</b>.'
+      },
+      {
+        id: 28,
+        section: 'PG',
+        topic: 'Algoritma & Pseudocode',
+        question: 'Perhatikan potongan pseudocode percabangan berikut:',
+        extraHtml: `
+          <pre class="my-3 p-3 bg-slate-900 text-slate-100 rounded-xl text-xs font-mono overflow-x-auto leading-relaxed">ALGORITMA CekSuhu
+VAR suhu : integer
+MULAI
+  suhu = 37
+  IF suhu > 38 THEN
+    PRINT "Demam Tinggi"
+  ELSE IF suhu >= 36 THEN
+    PRINT "Suhu Normal"
+  ELSE
+    PRINT "Hipotermia"
+  ENDIF
+SELESAI</pre>
+          <p class="text-sm text-slate-800">Keluaran yang ditampilkan saat pseudocode tersebut dijalankan adalah...</p>
+        `,
+        options: {
+          A: 'Demam Tinggi',
+          B: 'Suhu Normal',
+          C: 'Hipotermia',
+          D: 'Tidak ada keluaran'
+        },
+        answer: ['B'],
+        explanation: 'Nilai variabel <code>suhu = 37</code>.<br>• Cek kondisi 1: <code>37 > 38</code> → <b>Salah (False)</b>.<br>• Cek kondisi 2: <code>37 >= 36</code> → <b>Benar (True)</b>, maka program menjalankan perintah di dalamnya yaitu <code>PRINT "Suhu Normal"</code>.'
+      },
+      {
+        id: 29,
+        section: 'PG',
+        topic: 'Algoritma & Pseudocode',
+        question: 'Perhatikan algoritma untuk menghitung keliling persegi panjang berikut:<br><code>1. Mulai</code><br><code>2. Masukkan nilai Panjang (P)</code><br><code>3. Masukkan nilai Lebar (L)</code><br><code>4. Keliling = P * L</code><br><code>5. Tampilkan Keliling</code><br><code>6. Selesai</code><br>Di manakah letak kesalahan logika pada algoritma tersebut?',
+        options: {
+          A: 'Langkah 2 seharusnya meminta nilai jari-jari.',
+          B: 'Langkah 4 menggunakan rumus luas (P * L), seharusnya 2 * (P + L).',
+          C: 'Langkah 5 seharusnya menampilkan nilai P dan L saja.',
+          D: 'Langkah 3 harus dijalankan sebelum langkah 1.'
+        },
+        answer: ['B'],
+        explanation: 'Rumus <code>P * L</code> adalah rumus <b>Luas</b> persegi panjang, bukan Keliling. Untuk menghitung keliling, langkah 4 harus diperbaiki menjadi <code>Keliling = 2 * (P + L)</code>.'
+      },
+      {
+        id: 30,
+        section: 'PG',
+        topic: 'Algoritma & Pseudocode',
+        question: 'Perhatikan alur pseudocode berikut:',
+        extraHtml: `
+          <pre class="my-3 p-3 bg-slate-900 text-slate-100 rounded-xl text-xs font-mono overflow-x-auto leading-relaxed">Input(X, Y)
+Z = X
+X = Y
+Y = Z
+Output(X, Y)</pre>
+          <p class="text-sm text-slate-800">Jika nilai masukan awal adalah <code>X = 20</code> dan <code>Y = 35</code>, bagaimanakah keluaran akhir yang dihasilkan program?</p>
+        `,
+        options: {
+          A: 'X = 20 dan Y = 35',
+          B: 'X = 35 dan Y = 20',
+          C: 'X = 55 dan Y = 35',
+          D: 'X = 20 dan Y = 55'
+        },
+        answer: ['B'],
+        explanation: 'Algoritma ini adalah algoritma klasik <b>pertukaran nilai dua variabel (swap)</b> menggunakan variabel bantu <code>Z</code>:<br>1. <code>Z = X</code> → <code>Z = 20</code><br>2. <code>X = Y</code> → <code>X = 35</code><br>3. <code>Y = Z</code> → <code>Y = 20</code><br>Hasil akhir: <code>X = 35</code> dan <code>Y = 20</code>.'
+      },
+      {
+        id: 31,
+        section: 'PG',
+        topic: 'Algoritma & Pseudocode',
+        question: 'Perhatikan potongan algoritma berikut:',
+        extraHtml: `
+          <pre class="my-3 p-3 bg-slate-900 text-slate-100 rounded-xl text-xs font-mono overflow-x-auto leading-relaxed">Inisialisasi:
+  hasil = 0
+Perulangan:
+  Untuk i dari 1 sampai 4 lakukan:
+    Jika i mod 2 == 1 maka:
+      hasil = hasil + i
+    Lainnya:
+      hasil = hasil + 2
+Cetak hasil</pre>
+          <p class="text-sm text-slate-800">(Catatan: <code>mod</code> adalah sisa hasil bagi). Berapakah nilai akhir variabel <code>hasil</code>?</p>
+        `,
+        options: {
+          A: '6',
+          B: '8',
+          C: '10',
+          D: '12'
+        },
+        answer: ['B'],
+        explanation: 'Mari telusuri perulangan untuk <code>i = 1</code> sampai <code>4</code> (awal <code>hasil = 0</code>):<br>• <b>i = 1:</b> <code>1 mod 2 == 1</code> (ganjil/Benar) → <code>hasil = 0 + 1 = 1</code><br>• <b>i = 2:</b> <code>2 mod 2 == 0</code> (genap/Lainnya) → <code>hasil = 1 + 2 = 3</code><br>• <b>i = 3:</b> <code>3 mod 2 == 1</code> (ganjil/Benar) → <code>hasil = 3 + 3 = 6</code><br>• <b>i = 4:</b> <code>4 mod 2 == 0</code> (genap/Lainnya) → <code>hasil = 6 + 2 = 8</code><br>Nilai akhir variabel <code>hasil</code> adalah <b>8</b>.'
+      },
+      {
+        id: 32,
+        section: 'PG',
+        topic: 'Algoritma & Pseudocode',
+        question: 'Seorang siswa merancang algoritma untuk menghitung kecepatan rata-rata kendaraan berdasarkan jarak tempuh dan waktu perjalanan:',
+        extraHtml: `
+          <pre class="my-3 p-3 bg-slate-900 text-slate-100 rounded-xl text-xs font-mono overflow-x-auto leading-relaxed">ALGORITMA HitungKecepatan
+  INPUT jarak
+  INPUT waktu
+  [ ... X ... ]
+  PRINT kecepatan</pre>
+          <p class="text-sm text-slate-800">Baris perintah <code>[ ... X ... ]</code> yang tepat untuk melengkapi algoritma tersebut adalah...</p>
+        `,
+        options: {
+          A: 'kecepatan = jarak + waktu',
+          B: 'kecepatan = jarak * waktu',
+          C: 'kecepatan = jarak / waktu',
+          D: 'kecepatan = jarak - waktu'
+        },
+        answer: ['C'],
+        explanation: 'Rumus fisika untuk menghitung kecepatan rata-rata adalah jarak dibagi waktu (<code>v = s / t</code>), sehingga dalam pemrograman ditulis <code>kecepatan = jarak / waktu</code>.'
+      },
+      {
+        id: 33,
+        section: 'PG',
+        topic: 'Struktur Data Stack',
+        question: 'Petugas perpustakaan menyusun buku-buku yang baru dikembalikan ke dalam satu kotak secara bertumpuk dari bawah ke atas. Saat akan merapikan buku ke rak, petugas selalu mengambil buku yang berada di posisi paling atas terlebih dahulu (buku yang terakhir diletakkan). Konsep pengelolaan data seperti ini dikenal dengan istilah...',
+        options: {
+          A: 'Queue (Antrean)',
+          B: 'Stack (Tumpukan)',
+          C: 'Tree (Pohon)',
+          D: 'Graph (Jaringan)'
+        },
+        answer: ['B'],
+        explanation: 'Struktur data di mana elemen yang terakhir masuk akan pertama kali keluar (<i>Last In, First Out / LIFO</i>) disebut <b>Stack (Tumpukan)</b>.'
+      },
+      {
+        id: 34,
+        section: 'PG',
+        topic: 'Struktur Data Stack',
+        question: 'Empat buah kartu warna dimasukkan ke dalam kotak penyimpanan sempit secara berurutan dari awal hingga akhir: <b>Kartu Biru, Kartu Putih, Kartu Hitam, dan Kartu Oranye</b>. Kartu-kartu tersebut membentuk struktur tumpukan (stack). Kartu manakah yang berada di posisi paling atas (top)?',
+        options: {
+          A: 'Kartu Biru',
+          B: 'Kartu Putih',
+          C: 'Kartu Hitam',
+          D: 'Kartu Oranye'
+        },
+        answer: ['D'],
+        explanation: 'Urutan tumpukan dari bawah (dasar) ke atas (top):<br>1. Kartu Biru (paling bawah)<br>2. Kartu Putih<br>3. Kartu Hitam<br>4. <b>Kartu Oranye</b> (terakhir masuk → paling atas / top).'
+      },
+      {
+        id: 35,
+        section: 'PG',
+        topic: 'Struktur Data Stack',
+        question: 'Perhatikan beberapa peristiwa berikut ini:<br>(1) Antrean pengendara motor di gerbang loket parkir.<br>(2) Tumpukan nampan di meja prasmanan kantin.<br>(3) Penumpang kereta yang mengantre masuk peron.<br>(4) Tumpukan koin di dalam celengan tabung sempit.<br>Peristiwa yang menerapkan prinsip <b>LIFO (Last In, First Out)</b> atau Stack ditunjukkan oleh nomor...',
+        options: {
+          A: '(1) dan (3)',
+          B: '(1) dan (4)',
+          C: '(2) dan (3)',
+          D: '(2) dan (4)'
+        },
+        answer: ['D'],
+        explanation: '• (1) dan (3) adalah antrean yang menggunakan prinsip <b>FIFO</b> (First In, First Out / Queue).<br>• (2) Tumpukan nampan dan (4) Tumpukan koin dalam tabung menerapkan prinsip <b>LIFO (Stack)</b> karena benda yang paling atas (terakhir ditaruh) akan diambil terlebih dahulu.'
+      },
+      {
+        id: 36,
+        section: 'PG',
+        topic: 'Struktur Data Stack',
+        question: 'Rina menumpuk kotak makan berlabel angka secara vertikal. Urutan kotak yang dimasukkan adalah nomor <code>12, 30, 18, dan 45</code>. Jika belum ada satu pun kotak yang diambil kembali, kotak nomor berapakah yang berada di posisi paling atas?',
+        options: {
+          A: '12',
+          B: '30',
+          C: '18',
+          D: '45'
+        },
+        answer: ['D'],
+        explanation: 'Kotak yang terakhir dimasukkan adalah nomor <b>45</b>, sehingga kotak nomor 45 berada di puncak tumpukan (top).'
+      },
+      {
+        id: 37,
+        section: 'PG',
+        topic: 'Struktur Data Stack',
+        question: 'Sari sedang menggambar di aplikasi desain grafis. Ia melakukan tiga langkah berurutan: <b>membuat lingkaran, mewarnai biru, lalu menambahkan teks judul</b>. Ketika Sari menekan tombol <b>Undo</b> (batal) sebanyak satu kali, tindakan manakah yang pertama kali dibatalkan?',
+        options: {
+          A: 'Membuat lingkaran',
+          B: 'Mewarnai biru',
+          C: 'Menambahkan teks judul',
+          D: 'Menghapus seluruh kanvas'
+        },
+        answer: ['C'],
+        explanation: 'Fitur <b>Undo</b> bekerja dengan prinsip <i>Stack (LIFO)</i>: tindakan yang paling akhir dilakukan (<b>menambahkan teks judul</b>) akan menjadi tindakan pertama yang dibatalkan saat Undo ditekan.'
+      },
+      {
+        id: 38,
+        section: 'PG',
+        topic: 'Struktur Data Stack',
+        question: 'Perhatikan urutan operasi pada sebuah stack berikut:<br>• <code>PUSH("Apel")</code><br>• <code>PUSH("Jeruk")</code><br>• <code>PUSH("Mangga")</code><br>• <code>POP()</code><br>• <code>PUSH("Anggur")</code><br>• <code>POP()</code><br>Elemen yang berada pada posisi paling atas (top) setelah seluruh instruksi dijalankan adalah...',
+        options: {
+          A: 'Mangga',
+          B: 'Anggur',
+          C: 'Jeruk',
+          D: 'Apel'
+        },
+        answer: ['C'],
+        explanation: 'Simulasi isi stack dari bawah ke atas:<br>1. <code>PUSH("Apel")</code> → [Apel]<br>2. <code>PUSH("Jeruk")</code> → [Apel, Jeruk]<br>3. <code>PUSH("Mangga")</code> → [Apel, Jeruk, Mangga]<br>4. <code>POP()</code> (keluarkan Mangga) → [Apel, Jeruk]<br>5. <code>PUSH("Anggur")</code> → [Apel, Jeruk, Anggur]<br>6. <code>POP()</code> (keluarkan Anggur) → [Apel, <b>Jeruk</b>]<br>Elemen paling atas (top) adalah <b>Jeruk</b>.'
+      },
+      {
+        id: 39,
+        section: 'PG',
+        topic: 'Struktur Data Stack',
+        question: 'Seorang siswa mengedit slide presentasi dengan urutan tindakan sebagai berikut:<br>1. Menyisipkan judul "Sistem Komputer"<br>2. Mengubah jenis huruf menjadi Arial<br>3. Menambahkan gambar perangkat keras<br>Apabila siswa tersebut menekan tombol <b>Undo sebanyak 2 kali berturut-turut</b>, apa yang terjadi pada slide presentasi berdasarkan prinsip Stack?',
+        options: {
+          A: 'Judul "Sistem Komputer" terhapus dan gambar hilang.',
+          B: 'Gambar perangkat keras hilang, lalu jenis huruf kembali ke semula (judul tetap ada).',
+          C: 'Judul "Sistem Komputer" terhapus terlebih dahulu, lalu jenis huruf kembali ke semula.',
+          D: 'Seluruh perubahan langsung terhapus hanya dengan satu kali klik Undo.'
+        },
+        answer: ['B'],
+        explanation: '• <b>Undo ke-1:</b> Membatalkan tindakan ke-3 (menghapus gambar perangkat keras).<br>• <b>Undo ke-2:</b> Membatalkan tindakan ke-2 (mengembalikan jenis huruf ke semula).<br>Tindakan ke-1 (judul "Sistem Komputer") tetap ada di slide.'
+      },
+      {
+        id: 40,
+        section: 'PG',
+        topic: 'Struktur Data Stack',
+        question: 'Peramban web (web browser) menggunakan struktur data Stack untuk mengelola fitur tombol <b>"Back"</b> (Kembali ke halaman sebelumnya). Alasan utama struktur data Stack paling cocok digunakan untuk fitur tersebut adalah...',
+        options: {
+          A: 'Dapat melompat langsung ke halaman pertama yang dibuka tanpa melewati halaman tengah.',
+          B: 'Menyimpan riwayat halaman secara berurutan dan mengeluarkan halaman yang terakhir dikunjungi terlebih dahulu.',
+          C: 'Menghubungkan seluruh situs web dalam bentuk jaringan bercabang dua arah.',
+          D: 'Menyimpan data alamat situs secara permanen dalam bentuk tabel baris dan kolom.'
+        },
+        answer: ['B'],
+        explanation: 'Saat pengguna menjelajah halaman web (Halaman A → B → C), riwayat disimpan bertumpuk. Ketika tombol <i>Back</i> ditekan, browser langsung mengambil halaman yang paling terakhir dikunjungi sebelum halaman saat ini (prinsip LIFO).'
+      },
+
+      // BAGIAN II: PILIHAN GANDA KOMPLEKS (41 - 50)
+      {
+        id: 41,
+        section: 'PGK',
+        topic: 'Fungsi & Pemetaan',
+        question: 'Diberikan dua buah fungsi pengolah kata sebagai berikut:<br>• <b>Fungsi F(kata):</b> Menghitung jumlah total huruf pada kata lalu dikalikan 3.<br>• <b>Fungsi G(kata):</b> Menghitung jumlah huruf konsonan pada kata lalu dikalikan 4.<br>Jika masukan yang diberikan adalah <code>kata = "ALGORITMA"</code>, manakah <b>dua</b> pernyataan yang benar?',
+        options: {
+          A: 'Hasil keluaran Fungsi F adalah 27.',
+          B: 'Hasil keluaran Fungsi G adalah 20.',
+          C: 'Hasil keluaran Fungsi F lebih kecil daripada hasil keluaran Fungsi G.',
+          D: 'Selisih keluaran antara Fungsi F dan Fungsi G adalah 5.'
+        },
+        answer: ['A', 'B'],
+        explanation: 'Analisis kata <b>"ALGORITMA"</b>:<br>• Total huruf = 9 huruf (A-L-G-O-R-I-T-M-A) → <code>F("ALGORITMA") = 9 × 3 = 27</code> (<b>A Benar</b>).<br>• Huruf konsonan = L, G, R, T, M (5 huruf) → <code>G("ALGORITMA") = 5 × 4 = 20</code> (<b>B Benar</b>).<br>• Opsi C salah karena 27 > 20; Opsi D salah karena selisihnya 27 - 20 = 7.'
+      },
+      {
+        id: 42,
+        section: 'PGK',
+        topic: 'Fungsi & Pemetaan',
+        question: 'Sebuah layanan pengiriman paket kilat mengenakan biaya administrasi tetap sebesar Rp12.000 ditambah ongkos kirim Rp3.000 per kilogram (kg) berat paket. Namun, pelanggan mendapatkan promo gratis ongkir untuk 2 kg pertama. Jika <code>w</code> adalah total berat paket (dalam kg, dengan <code>w > 2</code>), evaluasilah pemodelan fungsi total biaya <code>T(w)</code> dengan memilih <b>2</b> jawaban yang tepat!',
+        options: {
+          A: 'T(w) = 12.000 + 3.000(w - 2)',
+          B: 'T(w) = 3.000w + 6.000',
+          C: 'T(w) = 12.000 + 3.000w - 2',
+          D: 'T(w) = 3.000w + 12.000'
+        },
+        answer: ['A', 'B'],
+        explanation: 'Karena 2 kg pertama gratis ongkir, berat yang dikenakan biaya kirim adalah <code>(w - 2)</code> kg.<br>• Bentuk awal: <code>T(w) = 12.000 + 3.000(w - 2)</code> (<b>A Benar</b>).<br>• Bentuk jabaran aljabar: <code>T(w) = 12.000 + 3.000w - 6.000 = 3.000w + 6.000</code> (<b>B Benar</b>).'
+      },
+      {
+        id: 43,
+        section: 'PGK',
+        topic: 'Himpunan',
+        question: 'Pendataan terhadap 45 siswa kelas VIII mengenai kepemilikan akun media edukasi menghasilkan data:<br>• 28 siswa memiliki akun Quizizz (Q)<br>• 22 siswa memiliki akun Kahoot (K)<br>• 12 siswa memiliki kedua akun tersebut<br>• Sisanya belum memiliki kedua akun tersebut<br>Berdasarkan analisis data himpunan tersebut, manakah <b>dua</b> pernyataan yang benar?',
+        options: {
+          A: 'Banyaknya siswa yang hanya memiliki akun Quizizz saja adalah 16 siswa.',
+          B: 'Banyaknya siswa yang hanya memiliki akun Kahoot saja adalah 10 siswa.',
+          C: 'Total siswa yang memiliki minimal satu akun adalah 50 siswa.',
+          D: 'Banyaknya siswa yang tidak memiliki kedua akun tersebut adalah 12 siswa.'
+        },
+        answer: ['A', 'B'],
+        explanation: 'Perhitungan diagram Venn (Total S = 45):<br>• Hanya Quizizz = <code>28 - 12 = 16</code> siswa (<b>A Benar</b>).<br>• Hanya Kahoot = <code>22 - 12 = 10</code> siswa (<b>B Benar</b>).<br>• Minimal satu akun (Q ∪ K) = <code>16 + 12 + 10 = 38</code> siswa (C salah).<br>• Tidak punya keduanya = <code>45 - 38 = 7</code> siswa (D salah).'
+      },
+      {
+        id: 44,
+        section: 'PGK',
+        topic: 'Himpunan',
+        question: 'Hasil survei penggunaan bahasa pemrograman pada 40 siswa anggota klub IT menunjukkan:<br>• 24 siswa mempelajari Python<br>• 19 siswa mempelajari Scratch<br>• 5 siswa belum mempelajari keduanya<br>Evaluasilah diagram Venn yang merepresentasikan kondisi tersebut dengan memilih <b>2</b> pernyataan yang benar!',
+        options: {
+          A: 'Siswa yang mempelajari kedua bahasa pemrograman (Python dan Scratch) berjumlah 8 orang.',
+          B: 'Pada diagram Venn, wilayah "Hanya Python" berisi 16 siswa.',
+          C: 'Siswa yang hanya mempelajari Scratch berjumlah 15 orang.',
+          D: 'Jumlah anggota himpunan semesta (S) pada diagram tersebut adalah 43 siswa.'
+        },
+        answer: ['A', 'B'],
+        explanation: 'Misalkan irisan (keduanya) = <code>x</code>:<br><code>(24 - x) + x + (19 - x) + 5 = 40</code><br><code>48 - x = 40 → x = 8</code> siswa (<b>A Benar</b>).<br>• Wilayah "Hanya Python" = <code>24 - 8 = 16</code> siswa (<b>B Benar</b>).<br>• Wilayah "Hanya Scratch" = <code>19 - 8 = 11</code> siswa (C salah); Semesta S = 40 siswa (D salah).'
+      },
+      {
+        id: 45,
+        section: 'PGK',
+        topic: 'Sistem Bilangan',
+        question: 'Sebuah sensor kelembapan mengirimkan data pembacaan dalam sistem bilangan oktal bernilai <code>63₈</code>. Sistem pusat perlu mengonversi nilai ini ke dalam bentuk biner dan desimal untuk pencatatan laporan. Manakah <b>dua</b> representasi bilangan yang bernilai setara dengan data sensor tersebut?',
+        options: {
+          A: 'Biner: 110011₂',
+          B: 'Biner: 110101₂',
+          C: 'Desimal: 51₁₀',
+          D: 'Desimal: 55₁₀'
+        },
+        answer: ['A', 'C'],
+        explanation: '1. <b>Konversi Oktal ke Biner</b> (ubah tiap digit oktal ke 3-bit biner):<br>• <code>6₈ = 110₂</code><br>• <code>3₈ = 011₂</code><br>Gabungkan menjadi <code>110011₂</code> (<b>A Benar</b>).<br>2. <b>Konversi Oktal ke Desimal:</b><br><code>(6 × 8¹) + (3 × 8⁰) = 48 + 3 = 51₁₀</code> (<b>C Benar</b>).'
+      },
+      {
+        id: 46,
+        section: 'PGK',
+        topic: 'Sistem Bilangan',
+        question: 'Kamu diminta merancang modul penyimpan pesan rahasia berbasis standar karakter ASCII pada komputer. Sistem ini mengubah setiap huruf menjadi kode numerik standar lalu menyimpannya secara efisien. Rancangan alur pemrosesan sistem bilangan yang paling tepat adalah... (Pilih <b>2</b> jawaban)',
+        options: {
+          A: 'Memetakan setiap karakter ke nilai kode Desimal ASCII, lalu mengubahnya menjadi Biner 8-bit untuk disimpan di memori.',
+          B: 'Mengonversi deret biner tersebut ke representasi Heksadesimal agar tampilan kode terenkripsi lebih ringkas dan mudah dibaca.',
+          C: 'Menyimpan karakter langsung dalam bentuk angka Desimal tanpa menggunakan satuan bit maupun byte.',
+          D: 'Mengubah kode karakter menjadi angka Romawi agar tidak dapat dikenali oleh sistem operasi.'
+        },
+        answer: ['A', 'B'],
+        explanation: '• Secara fisik, memori komputer hanya dapat menyimpan data dalam bentuk sinyal listrik biner (0 dan 1), dengan standar ASCII menggunakan 8-bit (1 byte) per karakter (<b>A Benar</b>).<br>• Untuk menampilkan byte/biner ke layar programmer/pengguna agar ringkas (2 digit heksadesimal per byte), digunakan heksadesimal (<b>B Benar</b>).'
+      },
+      {
+        id: 47,
+        section: 'PGK',
+        topic: 'Algoritma & Pseudocode',
+        question: 'Perhatikan dua metode algoritma untuk menemukan nilai terendah dalam sekumpulan N data acak:<br>• <b>Metode P:</b> Memeriksa dan membandingkan setiap angka dari elemen pertama hingga terakhir satu per satu.<br>• <b>Metode Q:</b> Mengurutkan seluruh data dari terbesar ke terkecil terlebih dahulu, lalu mengambil elemen paling akhir.<br>Jika tersedia 2.000 data angka acak, manakah <b>dua</b> pernyataan yang benar terkait efektivitas kedua metode tersebut?',
+        options: {
+          A: 'Metode Q jauh lebih cepat karena langsung mengambil elemen paling belakang.',
+          B: 'Metode P lebih efektif karena tidak membutuhkan proses pengurutan seluruh data terlebih dahulu.',
+          C: 'Metode P melakukan jumlah langkah komputasi yang jauh lebih sedikit dibandingkan Metode Q.',
+          D: 'Metode Q lebih hemat daya pemrosesan saat ukuran data mencapai jutaan baris.'
+        },
+        answer: ['B', 'C'],
+        explanation: 'Untuk sekadar mencari nilai minimum (terendah), kita tidak perlu mengurutkan seluruh data:<br>• <b>Metode P</b> (Linear Search) hanya melewati data 1 kali (kompleksitas <code>O(N)</code> = 2.000 langkah).<br>• <b>Metode Q</b> harus mengurutkan data terlebih dahulu (kompleksitas <code>O(N log N)</code> atau <code>O(N²)</code>) yang memakan jauh lebih banyak waktu dan daya komputasi. Jadi <b>B dan C Benar</b>.'
+      },
+      {
+        id: 48,
+        section: 'PGK',
+        topic: 'Algoritma & Pseudocode',
+        question: 'Sebuah aplikasi kasir kecil perlu mengurutkan 8 data nominal transaksi dari yang terbesar ke terkecil. Pengembang membandingkan penggunaan algoritma <i>Selection Sort</i> dan <i>Bubble Sort</i>. Manakah <b>dua</b> evaluasi yang paling tepat mengenai pemilihan algoritma untuk kasus tersebut?',
+        options: {
+          A: 'Selection Sort melakukan jumlah pertukaran (swap) posisi data yang lebih sedikit dibandingkan Bubble Sort.',
+          B: 'Bubble Sort selalu bekerja lebih cepat daripada Selection Sort pada semua kondisi data acak.',
+          C: 'Kedua algoritma tersebut layak digunakan karena jumlah data sangat kecil (8 data) sehingga perbedaan kecepatannya tidak terasa.',
+          D: 'Bubble Sort hanya dapat digunakan untuk mengurutkan data dari nilai terkecil ke terbesar saja.'
+        },
+        answer: ['A', 'C'],
+        explanation: '• <i>Selection Sort</i> hanya melakukan maksimal 1 kali pertukaran (swap) pada setiap iterasi luar, jauh lebih sedikit dibanding <i>Bubble Sort</i> yang menukar elemen bersebelahan berkali-kali (<b>A Benar</b>).<br>• Karena jumlah data hanya 8 elemen, kedua algoritma sama-sama selesai dalam hitungan mikrodetik sehingga keduanya layak dipakai (<b>C Benar</b>).'
+      },
+      {
+        id: 49,
+        section: 'PGK',
+        topic: 'Struktur Data Stack',
+        question: 'Andi sedang mengidentifikasi berbagai proses kerja perangkat lunak dan aktivitas sehari-hari yang menerapkan prinsip struktur data <b>Stack (LIFO)</b>. Manakah <b>dua</b> skenario berikut yang menerapkan prinsip Stack secara tepat?',
+        options: {
+          A: 'Sistem antrean panggilan masuk pada layanan pelanggan (call center).',
+          B: 'Fitur tombol Undo untuk membatalkan langkah pengeditan terakhir pada aplikasi gambar.',
+          C: 'Pengambilan piring bersih dari bagian paling atas rak tumpukan.',
+          D: 'Pencetakan dokumen secara berurutan sesuai waktu pengiriman ke printer.'
+        },
+        answer: ['B', 'C'],
+        explanation: '• Opsi A (call center) dan Opsi D (antrean cetak/print spooler) menggunakan konsep <b>Queue (FIFO)</b>.<br>• Opsi B (tombol Undo) dan Opsi C (mengambil piring teratas dari tumpukan) menerapkan prinsip <b>Stack (LIFO)</b>.'
+      },
+      {
+        id: 50,
+        section: 'PGK',
+        topic: 'Struktur Data Stack',
+        question: 'Seorang siswa melakukan simulasi operasi pada sebuah stack data sebagai berikut:<br><b>Kondisi Awal:</b> <code>[Buku_A, Buku_B]</code> ("Buku_B" adalah top)<br>• <b>Langkah 1:</b> <code>Push("Buku_C")</code><br>• <b>Langkah 2:</b> <code>Pop()</code><br>• <b>Langkah 3:</b> <code>Pop()</code><br>• <b>Langkah 4:</b> <code>Push("Buku_D")</code><br>Analisislah kondisi stack selama dan setelah proses tersebut! Manakah <b>dua</b> pernyataan yang benar?',
+        options: {
+          A: 'Setelah Langkah 2 dijalankan, elemen teratas (top) dari stack adalah "Buku_B".',
+          B: 'Setelah Langkah 3 dijalankan, stack berada dalam kondisi kosong.',
+          C: 'Elemen "Buku_A" dikeluarkan dari stack pada Langkah 3.',
+          D: 'Setelah seluruh langkah selesai, isi stack adalah [Buku_A, Buku_D] dengan "Buku_D" sebagai top.'
+        },
+        answer: ['A', 'D'],
+        explanation: 'Telusuri perubahan stack:<br>• Awal: <code>[Buku_A, Buku_B]</code><br>• Langkah 1 <code>Push("Buku_C")</code> → <code>[Buku_A, Buku_B, Buku_C]</code><br>• Langkah 2 <code>Pop()</code> (Buku_C keluar) → <code>[Buku_A, Buku_B]</code> (Top = <b>Buku_B</b> → <b>A Benar</b>)<br>• Langkah 3 <code>Pop()</code> (Buku_B keluar) → <code>[Buku_A]</code> (Belum kosong, B & C salah)<br>• Langkah 4 <code>Push("Buku_D")</code> → <code>[Buku_A, Buku_D]</code> dengan <b>Buku_D</b> sebagai top (<b>D Benar</b>).'
+      },
+
+      // BAGIAN III: URAIAN (51 - 55)
+      {
+        id: 51,
+        section: 'URAIAN',
+        topic: 'Fungsi & Pemetaan',
+        question: 'Seorang pembina ekstrakurikuler Informatika ingin membuat fungsi otomatis untuk menentukan status kelayakan peserta lomba. Syarat dinyatakan lolos seleksi adalah nilai rata-rata dari 3 tes (Tes Logika, Tes Praktik, dan Tes Wawancara) <b>minimal 80</b>, <b>DAN</b> nilai Tes Praktik <b>tidak boleh kurang dari 75</b>.<br>Rancanglah fungsi <b>Cek Kelayakan</b> tersebut secara lengkap mencakup komponen <b>Input</b>, langkah <b>Proses</b> logika percabangan, serta <b>Output</b> yang dihasilkan ("LOLOS" atau "TIDAK LOLOS")!',
+        answer: ['Rancangan Fungsi CekKelayakan(logika, praktik, wawancara)'],
+        explanation: `
+          <div class="space-y-2 text-xs sm:text-sm">
+            <p><b>1. Komponen Input:</b><br>Tiga buah nilai numerik peserta, yaitu <code>nilai_logika</code>, <code>nilai_praktik</code>, dan <code>nilai_wawancara</code>.</p>
+            <p><b>2. Komponen Proses (Perhitungan & Logika Percabangan):</b><br>
+            • Hitung nilai rata-rata: <code>rata_rata = (nilai_logika + nilai_praktik + nilai_wawancara) / 3</code><br>
+            • Evaluasi syarat gabungan menggunakan operator logika <b>AND</b>:<br>
+            <code>JIKA (rata_rata >= 80) DAN (nilai_praktik >= 75) MAKA</code><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<code>status = "LOLOS"</code><br>
+            <code>SELAIN ITU</code><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<code>status = "TIDAK LOLOS"</code></p>
+            <p><b>3. Komponen Output:</b><br>Mengembalikan nilai teks (string) berupa <b>"LOLOS"</b> atau <b>"TIDAK LOLOS"</b>.</p>
+          </div>
+        `
+      },
+      {
+        id: 52,
+        section: 'URAIAN',
+        topic: 'Himpunan',
+        question: 'Diketahui hasil pendataan terhadap 120 siswa SMP Kelas VIII mengenai keikutsertaan klub minat bakat:<br>• Himpunan P: Siswa klub Pemrograman<br>• Himpunan R: Siswa klub Robotik<br>• Himpunan M: Siswa klub Multimedia<br>Rincian distribusi anggota:<br>• Hanya Pemrograman = 25 siswa | Hanya Robotik = 20 siswa | Hanya Multimedia = 18 siswa<br>• Pemrograman & Robotik saja = 12 siswa | Robotik & Multimedia saja = 10 siswa | Pemrograman & Multimedia saja = 14 siswa<br>• Mengikuti ketiga klub sekaligus = 6 siswa | Tidak mengikuti klub apa pun = 15 siswa<br>Jelaskan <b>perbedaan mendasar</b> antara himpunan siswa pada wilayah <code>(P ∩ R)</code> dengan wilayah <code>(P ∩ R \\ M)</code> dalam konteks data klub tersebut, kemudian <b>hitunglah jumlah anggota masing-masing</b>!',
+        answer: ['(P ∩ R) = 18 siswa  |  (P ∩ R \\ M) = 12 siswa'],
+        explanation: `
+          <div class="space-y-2 text-xs sm:text-sm">
+            <p><b>1. Perbedaan Mendasar:</b><br>
+            • <b>Wilayah <code>(P ∩ R)</code>:</b> Menyatakan seluruh siswa yang mengikuti klub Pemrograman <b>dan</b> Robotik sekaligus, <i>tanpa mempedulikan</i> apakah mereka juga ikut Multimedia atau tidak (termasuk yang ikut ketiganya).<br>
+            • <b>Wilayah <code>(P ∩ R \\ M)</code>:</b> Menyatakan siswa yang <b>hanya</b> mengikuti klub Pemrograman dan Robotik saja, dan <b>tidak</b> mengikuti klub Multimedia.</p>
+            <p><b>2. Perhitungan Jumlah Anggota:</b><br>
+            • <b>Jumlah anggota <code>(P ∩ R)</code>:</b><br>
+            = (Pemrograman & Robotik saja) + (Ketiga klub sekaligus)<br>
+            = <code>12 + 6 = 18 siswa</code>.<br>
+            • <b>Jumlah anggota <code>(P ∩ R \\ M)</code>:</b><br>
+            = Pemrograman & Robotik saja = <code>12 siswa</code>.</p>
+          </div>
+        `
+      },
+      {
+        id: 53,
+        section: 'URAIAN',
+        topic: 'Sistem Bilangan',
+        question: 'Fajar mengonversi bilangan desimal <code>53₁₀</code> menjadi bilangan biner dengan langkah pembagian berulang berikut:<br><code>53 ÷ 2 = 26, sisa 1</code><br><code>26 ÷ 2 = 13, sisa 0</code><br><code>13 ÷ 2 = 6, sisa 1</code><br><code>6 ÷ 2 = 3, sisa 0</code><br><code>3 ÷ 2 = 1, sisa 1</code><br><code>1 ÷ 2 = 0, sisa 1</code><br>Fajar menyimpulkan hasil akhir binernya adalah <code>101011₂</code> (ditulis dari sisa pembagian paling atas ke paling bawah).<br>Temukan kesalahan dalam penyimpulan hasil akhir Fajar, jelaskan aturan pembacaan sisa pembagian yang benar, dan tuliskan hasil konversi yang tepat!',
+        answer: ['Hasil konversi yang tepat adalah 110101₂'],
+        explanation: `
+          <div class="space-y-2 text-xs sm:text-sm">
+            <p><b>1. Letak Kesalahan:</b><br>Langkah pembagian yang dilakukan Fajar sudah benar, tetapi ia <b>terbalik dalam menyusun urutan sisa pembagian</b> (membaca dari atas ke bawah).</p>
+            <p><b>2. Aturan Pembacaan yang Benar:</b><br>Pada metode pembagian berulang (<i>repeated division</i>), sisa pembagian pertama merupakan digit paling kanan/bernilai terkecil (<i>Least Significant Bit / LSB</i>), sedangkan sisa pembagian terakhir merupakan digit paling kiri/bernilai terbesar (<i>Most Significant Bit / MSB</i>). Oleh karena itu, sisa pembagian harus ditulis dari <b>bawah ke atas</b>.</p>
+            <p><b>3. Hasil Konversi yang Tepat:</b><br>Dibaca dari bawah ke atas: <code>110101₂</code>.<br><i>Pembuktian:</i> <code>32 + 16 + 0 + 4 + 0 + 1 = 53₁₀</code>.</p>
+          </div>
+        `
+      },
+      {
+        id: 54,
+        section: 'URAIAN',
+        topic: 'Algoritma & Pseudocode',
+        question: 'Sebuah palang pintu parkir otomatis diprogram dengan aturan kondisi status kartu sebagai berikut:<br>• Jika <code>status == "Valid"</code>, maka <code>aksi = "BUKA PALANG"</code>.<br>• Jika <code>status == "Saldo Kurang"</code>, maka <code>aksi = "TAMPILKAN TOP UP"</code>.<br>• Jika <code>status == "Tidak Terbaca"</code>, maka <code>aksi = "TEMPEL ULANG KARTU"</code>.<br>Saat pengendara menempelkan kartu, sensor membaca status kartu saat ini adalah <b>"Saldo Kurang"</b>.<br>Jelaskan secara runtut bagaimana algoritma memproses masukan sensor tersebut hingga menghasilkan keputusan/aksi yang tepat!',
+        answer: ['Keputusan akhir: aksi = "TAMPILKAN TOP UP"'],
+        explanation: `
+          <div class="space-y-2 text-xs sm:text-sm">
+            <p>Alur pemrosesan algoritma percabangan (<code>IF - ELSE IF</code>) berjalan secara berurutan dari atas ke bawah:</p>
+            <ol class="list-decimal pl-5 space-y-1">
+              <li><b>Input:</b> Sistem menerima data dari sensor dan menyimpannya ke variabel <code>status = "Saldo Kurang"</code>.</li>
+              <li><b>Evaluasi Kondisi 1:</b> Sistem memeriksa apakah <code>status == "Valid"</code>. Karena <code>"Saldo Kurang" != "Valid"</code>, kondisi bernilai <b>False (Salah)</b> sehingga aksi membuka palang dilewati.</li>
+              <li><b>Evaluasi Kondisi 2:</b> Sistem memeriksa kondisi berikutnya, yaitu apakah <code>status == "Saldo Kurang"</code>. Kondisi ini bernilai <b>True (Benar)</b>.</li>
+              <li><b>Eksekusi & Output:</b> Karena kondisi ke-2 terpenuhi, sistem menetapkan nilai <code>aksi = "TAMPILKAN TOP UP"</code> dan mengirim sinyal ke layar mesin parkir untuk menampilkan instruksi isi ulang saldo (kondisi ke-3 tidak perlu diperiksa lagi).</li>
+            </ol>
+          </div>
+        `
+      },
+      {
+        id: 55,
+        section: 'URAIAN',
+        topic: 'Struktur Data Stack',
+        question: 'Seorang petugas perpustakaan menyusun kotak arsip secara vertikal dalam satu lemari sempit berbentuk tumpukan (Stack). Urutan kotak dari bawah ke atas adalah: <b>Arsip_2022, Arsip_2023, Arsip_2024, dan Arsip_2025</b>. Kepala sekolah meminta petugas mengambil kotak <b>Arsip_2023</b> yang berada di bagian tengah bawah. Karena lemari sempit, petugas harus memindahkan kotak di atasnya ke meja sementara (Stack Sementara).<br>Buatlah rancangan prosedur keluar-masuk data stack (operasi <code>Pop</code> dan <code>Push</code>) langkah demi langkah untuk mengambil <code>Arsip_2023</code> sekaligus mengembalikan susunan kotak lainnya agar kembali rapi seperti semula!',
+        answer: ['Prosedur 8 Langkah Pop & Push menggunakan Stack Sementara'],
+        explanation: `
+          <div class="space-y-2 text-xs sm:text-sm">
+            <p><b>Kondisi Awal:</b><br>• <code>Lemari</code> = [Arsip_2022, Arsip_2023, Arsip_2024, Arsip_2025] (Top: Arsip_2025)<br>• <code>Meja_Sementara</code> = [] (Kosong)</p>
+            <p><b>Langkah-Langkah Prosedur (Pop & Push):</b></p>
+            <ol class="list-decimal pl-5 space-y-1">
+              <li><code>Pop(Lemari)</code> → keluarkan <b>Arsip_2025</b>, lalu <code>Push(Meja_Sementara, Arsip_2025)</code>.</li>
+              <li><code>Pop(Lemari)</code> → keluarkan <b>Arsip_2024</b>, lalu <code>Push(Meja_Sementara, Arsip_2024)</code>.<br><i>(Sekarang posisi puncak/top di Lemari adalah Arsip_2023, sedangkan Meja_Sementara berisi [Arsip_2025, Arsip_2024]).</i></li>
+              <li><code>Pop(Lemari)</code> → ambil <b>Arsip_2023</b> dan serahkan kepada Kepala Sekolah.</li>
+              <li><code>Pop(Meja_Sementara)</code> → ambil <b>Arsip_2024</b>, lalu <code>Push(Lemari, Arsip_2024)</code>.</li>
+              <li><code>Pop(Meja_Sementara)</code> → ambil <b>Arsip_2025</b>, lalu <code>Push(Lemari, Arsip_2025)</code>.</li>
+            </ol>
+            <p><b>Kondisi Akhir:</b><br>• <code>Lemari</code> = [Arsip_2022, Arsip_2024, Arsip_2025] (Tersusun rapi kembali sesuai urutan tahun).<br>• <code>Meja_Sementara</code> = [] (Kembali kosong).</p>
+          </div>
+        `
+      }
+    ];
+
+    // =========================================================================
+    // STATE MANAGEMENT
+    // =========================================================================
+    let state = {
+      section: 'ALL',        // 'ALL' | 'PG' | 'PGK' | 'URAIAN'
+      topic: 'ALL',          // 'ALL' | topic name
+      search: '',            // search query string
+      showAllAnswers: true,  // true = Mode Pembahasan, false = Mode Belajar
+      revealedIds: new Set(),// tracks individually revealed cards in Study Mode
+      userSelections: {}     // tracks user practice clicks { [qId]: Set(['A']) }
+    };
+
+    // =========================================================================
+    // RENDERING ENGINE
+    // =========================================================================
+    function getTopicBadgeColor(topic) {
+      switch (topic) {
+        case 'Fungsi & Pemetaan': return 'bg-blue-50 text-blue-700 border-blue-200';
+        case 'Himpunan': return 'bg-purple-50 text-purple-700 border-purple-200';
+        case 'Sistem Bilangan': return 'bg-amber-50 text-amber-700 border-amber-200';
+        case 'Algoritma & Pseudocode': return 'bg-cyan-50 text-cyan-700 border-cyan-200';
+        case 'Struktur Data Stack': return 'bg-rose-50 text-rose-700 border-rose-200';
+        default: return 'bg-slate-100 text-slate-700 border-slate-200';
+      }
+    }
+
+    function getSectionLabel(section) {
+      if (section === 'PG') return 'Pilihan Ganda';
+      if (section === 'PGK') return 'PG Kompleks (2 Jawaban)';
+      return 'Uraian';
+    }
+
+    function renderQuestions() {
+      const container = document.getElementById('questionsList');
+      const emptyState = document.getElementById('emptyState');
+      const resultCount = document.getElementById('resultCount');
+
+      const query = state.search.trim().toLowerCase();
+
+      const filtered = QUESTIONS.filter(q => {
+        // Section filter
+        if (state.section !== 'ALL' && q.section !== state.section) return false;
+        // Topic filter
+        if (state.topic !== 'ALL' && q.topic !== state.topic) return false;
+        // Search filter
+        if (query !== '') {
+          const isNumericSearch = /^\d+$/.test(query);
+          if (isNumericSearch) {
+            // Match question number directly or inside text
+            return String(q.id) === query || String(q.id).includes(query);
+          }
+          const plainQuestion = q.question.replace(/<[^>]*>?/gm, '').toLowerCase();
+          const plainExplanation = q.explanation.replace(/<[^>]*>?/gm, '').toLowerCase();
+          const optionsText = q.options ? Object.values(q.options).join(' ').toLowerCase() : '';
+          return (
+            plainQuestion.includes(query) ||
+            plainExplanation.includes(query) ||
+            optionsText.includes(query) ||
+            q.topic.toLowerCase().includes(query)
+          );
+        }
+        return true;
+      });
+
+      resultCount.textContent = `${filtered.length} Soal`;
+
+      if (filtered.length === 0) {
+        container.innerHTML = '';
+        emptyState.classList.remove('hidden');
+        return;
+      }
+
+      emptyState.classList.add('hidden');
+
+      container.innerHTML = filtered.map(q => {
+        const isRevealed = state.showAllAnswers || state.revealedIds.has(q.id);
+        const badgeClass = getTopicBadgeColor(q.topic);
+        const userPicked = state.userSelections[q.id] || new Set();
+
+        // Build Options HTML for PG and PGK
+        let optionsHtml = '';
+        if (q.options) {
+          optionsHtml = `<div class="mt-3.5 space-y-2">`;
+          for (const [key, text] of Object.entries(q.options)) {
+            const isCorrect = q.answer.includes(key);
+            const isUserSelected = userPicked.has(key);
+
+            let cardStyle = 'bg-white border-slate-200 text-slate-700 hover:border-indigo-300 hover:bg-slate-50/80';
+            let circleStyle = 'bg-slate-100 text-slate-600 border-slate-200';
+            let statusBadge = '';
+
+            if (isRevealed) {
+              if (isCorrect) {
+                cardStyle = 'bg-emerald-50/90 border-emerald-500 text-emerald-950 font-medium shadow-xs';
+                circleStyle = 'bg-emerald-600 text-white border-emerald-600';
+                statusBadge = `<span class="ml-auto text-[11px] font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-md shrink-0 flex items-center gap-1">
+                  <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Benar
+                </span>`;
+              } else if (isUserSelected && !isCorrect) {
+                cardStyle = 'bg-rose-50/80 border-rose-300 text-rose-900';
+                circleStyle = 'bg-rose-500 text-white border-rose-500';
+                statusBadge = `<span class="ml-auto text-[11px] font-semibold text-rose-700 bg-rose-100 px-2 py-0.5 rounded-md shrink-0">Pilihanmu</span>`;
+              } else {
+                cardStyle = 'bg-white border-slate-200/80 text-slate-500 opacity-85';
+              }
+            } else {
+              // Study mode interactive selection
+              if (isUserSelected) {
+                cardStyle = 'bg-indigo-50 border-indigo-500 text-indigo-950 font-medium';
+                circleStyle = 'bg-indigo-600 text-white border-indigo-600';
+              }
+            }
+
+            optionsHtml += `
+              <button type="button" onclick="handleOptionClick(${q.id}, '${key}', '${q.section}')" class="w-full text-left p-2.5 sm:p-3 rounded-xl border transition-all flex items-start gap-2.5 cursor-pointer active:scale-[0.99] ${cardStyle}">
+                <span class="w-6 h-6 rounded-lg border text-xs font-bold flex items-center justify-center shrink-0 mt-0.5 transition-colors ${circleStyle}">${key}</span>
+                <span class="text-xs sm:text-sm leading-relaxed flex-1">${text}</span>
+                ${statusBadge}
+              </button>
+            `;
+          }
+          optionsHtml += `</div>`;
+        }
+
+        // Answer & Explanation Box
+        let solutionHtml = '';
+        if (isRevealed) {
+          const answerSummary = q.section === 'URAIAN'
+            ? q.answer[0]
+            : `Jawaban Benar: <b>${q.answer.join(' dan ')}</b>`;
+
+          solutionHtml = `
+            <div class="mt-4 pt-3.5 border-t border-slate-100 animate-fade-in">
+              <div class="bg-emerald-50/80 border border-emerald-200 rounded-xl p-3 sm:p-3.5">
+                <div class="flex items-center justify-between gap-2 mb-2">
+                  <div class="flex items-center gap-1.5 text-emerald-800 font-bold text-xs sm:text-sm">
+                    <span class="w-5 h-5 rounded-full bg-emerald-600 text-white flex items-center justify-center shrink-0">
+                      <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                    </span>
+                    <span>${answerSummary}</span>
+                  </div>
+                  ${!state.showAllAnswers ? `<button onclick="toggleSingleReveal(${q.id})" class="text-[11px] font-semibold text-emerald-700 hover:underline cursor-pointer">Sembunyikan</button>` : ''}
+                </div>
+                <div class="text-xs sm:text-[13px] text-slate-700 leading-relaxed bg-white/90 rounded-lg p-2.5 sm:p-3 border border-emerald-100">
+                  <div class="text-[11px] font-bold uppercase tracking-wider text-emerald-700 mb-1">Pembahasan Langkah-demi-Langkah:</div>
+                  ${q.explanation}
+                </div>
+              </div>
+            </div>
+          `;
+        } else {
+          solutionHtml = `
+            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between gap-2">
+              <span class="text-[11px] text-slate-400 italic">
+                ${q.options ? (q.section === 'PGK' ? 'Pilih 2 opsi di atas untuk berlatih, lalu cek pembahasan.' : 'Pilih 1 opsi di atas untuk berlatih, lalu cek pembahasan.') : 'Coba susun jawabanmu dulu sebelum membuka kunci.'}
+              </span>
+              <button onclick="toggleSingleReveal(${q.id})" class="px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold shadow-xs transition-all flex items-center gap-1.5 shrink-0 cursor-pointer active:scale-95">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                <span>Lihat Pembahasan</span>
+              </button>
+            </div>
+          `;
+        }
+
+        return `
+          <article id="soal-${q.id}" class="bg-white rounded-2xl border border-slate-200/90 shadow-xs p-4 sm:p-5 transition-all hover:border-slate-300">
+            <!-- Card Header -->
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+              <div class="flex items-center gap-2">
+                <span class="px-2.5 py-1 rounded-lg bg-slate-900 text-white text-xs font-extrabold tracking-wide">No. ${q.id}</span>
+                <span class="px-2.5 py-1 rounded-lg border text-[11px] font-semibold ${badgeClass}">${q.topic}</span>
+              </div>
+              <span class="text-[11px] font-medium text-slate-400">${getSectionLabel(q.section)}</span>
+            </div>
+
+            <!-- Question Body -->
+            <div class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+              ${q.question}
+            </div>
+            ${q.extraHtml || ''}
+
+            <!-- Options (if PG / PGK) -->
+            ${optionsHtml}
+
+            <!-- Answer & Explanation -->
+            ${solutionHtml}
+          </article>
+        `;
+      }).join('');
+    }
+
+    // =========================================================================
+    // INTERACTION HANDLERS
+    // =========================================================================
+    function setSection(sec) {
+      state.section = sec;
+
+      // Update Desktop Tabs
+      document.querySelectorAll('.sec-tab').forEach(btn => {
+        if (btn.dataset.sec === sec) {
+          btn.className = 'sec-tab px-3 py-1.5 rounded-lg text-xs font-semibold transition-all bg-indigo-600 text-white shadow-xs';
+        } else {
+          btn.className = 'sec-tab px-3 py-1.5 rounded-lg text-xs font-semibold transition-all bg-slate-100 text-slate-600 hover:bg-slate-200';
+        }
+      });
+
+      // Update Mobile Bottom Tabs
+      document.querySelectorAll('.mobile-tab').forEach(btn => {
+        if (btn.dataset.sec === sec) {
+          btn.className = 'mobile-tab flex flex-col items-center justify-center py-1.5 px-1 rounded-xl text-[11px] font-bold transition-all bg-indigo-50 text-indigo-700';
+        } else {
+          btn.className = 'mobile-tab flex flex-col items-center justify-center py-1.5 px-1 rounded-xl text-[11px] font-semibold transition-all text-slate-500 hover:bg-slate-50';
+        }
+      });
+
+      renderQuestions();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function handleTopicFilter() {
+      state.topic = document.getElementById('topicSelect').value;
+      renderQuestions();
+    }
+
+    function handleSearch() {
+      const input = document.getElementById('searchInput');
+      const clearBtn = document.getElementById('clearSearchBtn');
+      state.search = input.value;
+      if (state.search.length > 0) {
+        clearBtn.classList.remove('hidden');
+      } else {
+        clearBtn.classList.add('hidden');
+      }
+      renderQuestions();
+    }
+
+    function clearSearch() {
+      const input = document.getElementById('searchInput');
+      input.value = '';
+      state.search = '';
+      document.getElementById('clearSearchBtn').classList.add('hidden');
+      renderQuestions();
+    }
+
+    function resetAllFilters() {
+      state.section = 'ALL';
+      state.topic = 'ALL';
+      document.getElementById('topicSelect').value = 'ALL';
+      clearSearch();
+      setSection('ALL');
+    }
+
+    function toggleGlobalMode() {
+      state.showAllAnswers = !state.showAllAnswers;
+      const btn = document.getElementById('modeToggleBtn');
+      const label = document.getElementById('modeLabel');
+      const icon = document.getElementById('modeIcon');
+      const bannerText = document.getElementById('bannerText');
+
+      if (state.showAllAnswers) {
+        btn.className = 'flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all shadow-sm border cursor-pointer active:scale-95 bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100';
+        label.textContent = 'Mode Pembahasan';
+        icon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>`;
+        bannerText.innerHTML = '<strong>Mode Pembahasan Aktif:</strong> Kunci jawaban & pembahasan langsung ditampilkan. Klik tombol mode di kanan atas untuk latihan mandiri.';
+      } else {
+        state.revealedIds.clear();
+        btn.className = 'flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all shadow-sm border cursor-pointer active:scale-95 bg-amber-50 text-amber-800 border-amber-200 hover:bg-amber-100';
+        label.textContent = 'Mode Belajar';
+        icon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" x2="22" y1="2" y2="22"/></svg>`;
+        bannerText.innerHTML = '<strong>Mode Belajar Aktif:</strong> Semua jawaban disembunyikan. Klik opsi jawaban untuk berlatih, lalu tekan <em>Lihat Pembahasan</em> pada tiap soal.';
+      }
+
+      renderQuestions();
+    }
+
+    function toggleSingleReveal(id) {
+      if (state.revealedIds.has(id)) {
+        state.revealedIds.delete(id);
+      } else {
+        state.revealedIds.add(id);
+      }
+      renderQuestions();
+    }
+
+    function handleOptionClick(qId, optionKey, section) {
+      // Allow interactive selection in Study Mode
+      if (state.showAllAnswers) return;
+
+      if (!state.userSelections[qId]) {
+        state.userSelections[qId] = new Set();
+      }
+
+      const currentSet = state.userSelections[qId];
+
+      if (section === 'PG') {
+        if (currentSet.has(optionKey)) {
+          currentSet.clear();
+        } else {
+          currentSet.clear();
+          currentSet.add(optionKey);
+        }
+      } else if (section === 'PGK') {
+        if (currentSet.has(optionKey)) {
+          currentSet.delete(optionKey);
+        } else {
+          if (currentSet.size >= 2) {
+            // Remove oldest selection so max 2 can be picked
+            const firstItem = currentSet.values().next().value;
+            currentSet.delete(firstItem);
+          }
+          currentSet.add(optionKey);
+        }
+      }
+
+      renderQuestions();
+    }
+
+    // Scroll to top button visibility
+    window.addEventListener('scroll', () => {
+      const btn = document.getElementById('scrollTopBtn');
+      if (window.scrollY > 400) {
+        btn.classList.remove('opacity-0', 'pointer-events-none');
+        btn.classList.add('opacity-100');
+      } else {
+        btn.classList.add('opacity-0', 'pointer-events-none');
+        btn.classList.remove('opacity-100');
+      }
+    });
+
+    // Initial render
+    window.onload = function() {
+      renderQuestions();
+    };
+  </script>
+</body>
+</html>
